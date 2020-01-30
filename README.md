@@ -1,91 +1,45 @@
-# 📝 react-mde
+# react-smde
 
-![npm](https://img.shields.io/npm/dt/react-mde)
-[![MinZipped](https://badgen.net/bundlephobia/minzip/react-mde)](https://bundlephobia.com/result?p=react-mde)
-[![twitter](https://img.shields.io/twitter/follow/andrerpena?style=social)](https://twitter.com/andrerpena)
-
-A simple yet powerful and extensible **React Markdown Editor**. React-mde has no 3rd party dependencies.
+An unopinationed simple **Markdown Editor** for React.
 
 ## Demo
 
-- [Demo](http://andrerpena.me/react-mde/)
-- [Demo on CodeSandbox](https://codesandbox.io/s/react-mde-latest-bm6p3)
-
-## Goal
-
-The goal is to make react-mde to look and behave like the Github's Markdown editor. These are the major remaining features/changes. I plan to tackle them in orde but if you want to help, that would be amazing.
-
-- [ ] [Design improvements](https://github.com/andrerpena/react-mde/issues/207) (under development)
-- [ ] [Image upload support](https://github.com/andrerpena/react-mde/issues/189)
-
+- [Demo]()
+- [Demo on CodeSandbox]()
 
 ## Installing
 
-    npm i react-mde
-    
-## Markdown Preview
+    npm i react-smde
 
-React-mde is agnostic regarding how to preview Markdown. The examples will use [Showdown](https://github.com/showdownjs/showdown)
+## Usage
 
-    npm install showdown
-    
-> from version 7.4, it is also possible to return a Promise to React Element from `generateMarkdownPreview`, which makes
-it possible to use [ReactMarkdown](https://github.com/rexxars/react-markdown) as a preview. [View issue](https://github.com/andrerpena/react-mde/issues/161).
-    
-## Using
+react-smde is a controlled component.
 
-React-mde is a completely controlled component.
-
-Minimal example using Showdown. [View live on CodeSandBox](https://codesandbox.io/s/react-mde-latest-bm6p3):
 ```jsx
-import * as React from "react";
-import ReactMde from "react-mde";
-import ReactDOM from "react-dom";
-import * as Showdown from "showdown";
-import "react-mde/lib/styles/css/react-mde-all.css";
+import MDEditor from "react-smde";
+import ReactMarkdown from "react-markdown";
+import "react-smde/index.css";
 
-const converter = new Showdown.Converter({
-  tables: true,
-  simplifiedAutoLink: true,
-  strikethrough: true,
-  tasklists: true
-});
+class App extends Component {
+  state = {
+    value: "## Hello"
+  };
 
-export default function App() {
-  const [value, setValue] = React.useState("**Hello world!!!**");
-  const [selectedTab, setSelectedTab] = React.useState<"write" | "preview">("write");
-  return (
+  handleValueChange = value => this.setState({ value });
+
+  render = () => (
     <div className="container">
-      <ReactMde
-        value={value}
-        onChange={setValue}
-        selectedTab={selectedTab}
-        onTabChange={setSelectedTab}
-        generateMarkdownPreview={markdown =>
-          Promise.resolve(converter.makeHtml(markdown))
-        }
-      />
+      <MDEditor onChange={this.handleValueChange} value={this.state.value}>
+        <ReactMarkdown skipHtml className="mde-preview-content">
+          {this.state.value}
+        </ReactMarkdown>
+      </MDEditor>
     </div>
   );
 }
 ```
 
-### Customizing Icons
-
-React-mde comes with SVG icons extracted from [FontAwesome](https://fontawesome.com/) included.
-
-You can customize the way icons are resolved by passing your own `getIcon` that will return a ReactNode
-given a command name.
-
-```jsx
-<ReactMde
-    getIcon={(commandName) => <MyCustomIcon name={commandName} />}
-    onChange={this.handleValueChange}
-    // ...
-/>
-```
-
-## React-mde Props
+## Props
 
 The types are described below
 
@@ -93,104 +47,100 @@ The types are described below
 - **onChange**: (value: string): Event handler for the `onChange` event.
 - **selectedTab: "write" | "preview"**: The currently selected tab.
 - **onTabChange: (tab) => void**: Function called when the selected tab changes.
-- **classes?**: [An object](https://github.com/andrerpena/react-mde/blob/master/src/classes.ts) containing the following optional properties: *reactMde*, *toolbar*, *preview*, *textArea*, *grip* and *suggestionsDropdown*. 
-This allows for passing class names to each of the inner components of React-mde. Classes defined in the *classes* prop
-follow the specification of [Jed Watson's classNames project](https://github.com/JedWatson/classnames).
-- **className?: string**: OBSOLETE - Optional class name to be added to the top level element. Use the *classes* prop instead.
+- **classes?**: [An object](https://github.com/andrerpena/react-mde/blob/master/src/classes.ts) containing the following optional properties: _reactMde_, _toolbar_, _preview_, _textArea_, _grip_ and _suggestionsDropdown_.
+  This allows for passing class names to each of the inner components of React-mde. Classes defined in the _classes_ prop
+  follow the specification of [Jed Watson's classNames project](https://github.com/JedWatson/classnames).
+- **className?: string**: OBSOLETE - Optional class name to be added to the top level element. Use the _classes_ prop instead.
 - **commands?: CommandGroup[]**: An array of `CommandGroup`, which, each one, contain a `commands` property (array of `Command`). If no commands are specified, the default will be used. Commands are explained in more details below.
-- **generateMarkdownPreview: (markdown: string) => Promise<string | ReactElement>;**: Function that should return a Promise to the generated HTML or a React element for the preview. If this `prop` is falsy, then no preview is going to be generated.
-- **getIcon?: (commandName: string) => React.ReactNode }** An optional set of button content options, including an `iconProvider` to allow custom icon rendering.
-options. It is recommended to [inspect the layouts source code](https://github.com/andrerpena/react-mde/tree/master/src/components-layout) to see what options can be passed to each
-while the documentation is not complete.
-- **loadingPreview**: What to display in the preview while it is loading. Value can be string, React Element or anything React can render.
-- **emptyPreviewHtml (deprecated)**: What to display in the preview while it is loading. Deprecated in favor of loadingPreview
-- **readOnly?: boolean**: Flag to render the editor in read-only mode.
+- **readOnly: boolean**: Flag to render the editor in read-only mode.
 - **textAreaProps**: Extra props to be passed to the `textarea` component.
-- **l18n**: A localization option. It contains the strings `write` and `preview`.
 - **minEditorHeight (number)**: The minimum height of the editor.
 - **maxEditorHeight (number)**: The max height of the editor (after that, it will scroll).
+- **maxEditorWidth (number)**: The max width of the editor.
 - **minPreviewHeight (number)**: The minimum height of the preview.
 - **loadSuggestions (text: string, triggeredBy: string) => Promise<Suggestion[]>**: Function to load mention suggestions based on the
-given `text` and `triggeredBy` (character that triggered the suggestions). The result should be an array of `{preview: React.ReactNode, value: string}`.
-The `preview` is what is going to be displayed in the suggestions box. The `value` is what is going to be inserted in the `textarea` on click or enter.
+  given `text` and `triggeredBy` (character that triggered the suggestions). The result should be an array of `{preview: React.ReactNode, value: string}`.
+  The `preview` is what is going to be displayed in the suggestions box. The `value` is what is going to be inserted in the `textarea` on click or enter.
 - **suggestionTriggerCharacters (string[])**: Characters that will trigger mention suggestions to be loaded. This property is useless
-without `loadSuggestions`.
+  without `loadSuggestions`.
 
-## Styling
+## Markdown Previewing
 
-The following styles from React-mde should be added: (Both .scss and .css files are available. No need to use sass-loader if you don't want)
-
-Easiest way: import `react-mde-all.css`:
-
-    import 'react-mde/lib/styles/css/react-mde-all.css';
-    
-If you want to have a more granular control over the styles, you can [import each individual file](https://github.com/andrerpena/react-mde/tree/master/src/styles).
-    
-If you're using SASS, you can override these variables: https://github.com/andrerpena/react-mde/blob/master/src/styles/variables.scss
-
-## XSS concerns
-
-React-mde does not automatically sanitize the HTML preview. If your using Showdown,
-this has been taken from [their documentation](https://github.com/showdownjs/showdown/wiki/Markdown's-XSS-Vulnerability-(and-how-to-mitigate-it)):
-    
-> Cross-side scripting is a well known technique to gain access to private information of the users
-of a website. The attacker injects spurious HTML content (a script) on the web page which will read 
-the user’s cookies and do something bad with it (like steal credentials). As a countermeasure,
- you should filter any suspicious content coming from user input. Showdown doesn’t include an 
- XSS filter, so you must provide your own. But be careful in how you do it…
- 
-You might want to take a look at [showdown-xss-filter](https://github.com/VisionistInc/showdown-xss-filter).
-
-Starting from version 7.4, it is also possible to return a Promise to a React Element from `generateMarkdownPreview`, which makes
-it possible to use [ReactMarkdown](https://github.com/rexxars/react-markdown) as a preview. [View issue](https://github.com/andrerpena/react-mde/issues/161).
-ReactMarkdown has built-in XSS protection.
-  
-
-## Commands
-
-You can create your own commands or reuse existing commands. The `commands` property of React-mde
-expects an array of `CommandGroup`, which contains an array of commands called `commands`. You can also
-import the existing commands as displayed below:
-
+react-smde is unopinated when it comes to previewing markdown content. Therefore, you **must** supply your own Markdown previewer as `children` to the `MDEditor`. The demo provided in the source and the example below utilizes [react-markdown](https://github.com/rexxars/react-markdown)
 
 ```jsx
-import ReactMde, {commands} from "react-mde";
+import MDEditor from "react-smde";
+import ReactMarkdown from "react-markdown";
 
-const listCommands = [
-    {
-        commands: [
-            commands.orderedListCommand,
-            commands.unorderedListCommand,
-            commands.checkedListCommand
-        ]
-    }
-]
+class App extends Component {
+  state = {
+    value: "## Hello"
+  };
+
+  handleValueChange = value => this.setState({ value });
+
+  render = () => (
+    <div className="container">
+      <MDEditor onChange={this.handleValueChange} value={this.state.value}>
+        <ReactMarkdown skipHtml className="mde-preview-content">
+          {this.state.value}
+        </ReactMarkdown>
+      </MDEditor>
+    </div>
+  );
+}
+```
+
+## Customizing Commands and Icons
+
+You can rearrange, remove and adjust commands (and their icons). The `commands` property of react-smde expects an array of array groups that contains commands (which are simple objects). For example, import the existing `commands` as displayed below.
+
+Commands are simple objects where `name` must match a name that is predefined [list](blob/master/src/commands/index.js),however, everything else is editable:
+
+```
+{
+  name: "bold",
+  tooltip: "Add bold text (ctrl+b)",
+  buttonProps: { "aria-label": "Add bold text" },
+  icon: <SvgIcon icon="bold" />
+}
+```
+
+For example:
+
+```jsx
+import MDEditor, {commands} from "react-smde";
 
 <ReactMde
-    commands={listCommands}
+    commands={[
+        [commands.orderedList, commands.unorderedList, commands.checkedList],
+        [
+          {
+            name: "bold",
+            tooltip: "Add bold text (ctrl+b)",
+            buttonProps: { "aria-label": "Add bold text" },
+            icon: <p>Bold</p>
+          }
+        ]
+      ]
+    }
     ...
 />
 ```
 
-Please refer to the [commands source code](https://github.com/andrerpena/react-mde/tree/master/src/commands) to understand how they
+Please refer to the [commands source code](https://github.com/mattcarlotta/react-smde/tree/master/src/commands) to understand how they
 should be implemented.
 
-## Change log / Migrating from older versions
+## License
 
-[Instructions here](https://github.com/andrerpena/react-mde/blob/master/docs-md/ChangeLogMigrating.md).
-
-## Licence
-
-React-mde is [MIT licensed](https://github.com/andrerpena/react-mde/blob/master/LICENSE).
+react-smde is [MIT licensed](blob/master/LICENSE).
 
 ## Third party
 
-In order to make React-mde zero deps, I've embedded two small libraries:
-- https://github.com/grassator/insert-text-at-cursor by https://twitter.com/d_kubyshkin
-- https://github.com/JedWatson/classnames by https://twitter.com/JedWatson
+In order to make react-smde, the following packages are referenced/used within this package:
 
-## About the author
-
-Made with :heart: by André Pena and [other awesome contributors](https://github.com/andrerpena/react-mde/graphs/contributors).
-
-[![twitter](https://img.shields.io/twitter/follow/andrerpena?style=social)](https://twitter.com/andrerpena)
+- https://github.com/grassator/insert-text-at-cursor
+- https://github.com/JedWatson/classnames
+- https://github.com/andrerpena/react-mde
+- https://github.com/ant-design/ant-design
+- https://github.com/react-component/tooltip
