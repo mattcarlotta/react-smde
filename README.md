@@ -119,7 +119,7 @@ import MDEditor, {commands} from "react-smde";
             name: "bold",
             tooltip: "Add bold text (ctrl+b)",
             buttonProps: { "aria-label": "Add bold text" },
-            icon: <p>Bold</p>
+            icon: <>Bold</>
           }
         ]
       ]
