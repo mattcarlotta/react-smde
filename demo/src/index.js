@@ -14,27 +14,23 @@ class App extends Component {
 
   handleValueChange = value => this.setState({ value });
 
-  loadSuggestions = async text => {
+  loadSuggestions = text => {
     return new Promise(resolve => {
       setTimeout(() => {
         const suggestions = [
           {
-            preview: "Andre",
-            value: "@andre"
+            value: "andre"
           },
           {
-            preview: "Angela",
-            value: "@angela"
+            value: "angela"
           },
           {
-            preview: "David",
-            value: "@david"
+            value: "david"
           },
           {
-            preview: "Louise",
-            value: "@louise"
+            value: "louise"
           }
-        ].filter(i => i.preview.toLowerCase().includes(text.toLowerCase()));
+        ].filter(i => i.value.toLowerCase().includes(text.toLowerCase()));
         resolve(suggestions);
       }, 250);
     });

@@ -1,46 +1,30 @@
 import React from "react";
 import { classNames } from "~utils";
 
-const { useCallback } = React;
+export class SuggestionsDropdown extends React.PureComponent {
+  handleSuggestionClick = ({ currentTarget }) => {
+    this.props.onSuggestionSelected(
+      parseInt(currentTarget.attributes["data-index"].value)
+    );
+  };
 
-export const SuggestionsDropdown = ({
-  classes,
-  suggestions,
-  caret,
-  onSuggestionSelected,
-  focusIndex
-}) => {
-  const handleSuggestionClick = useCallback(
-    event => {
-      event.preventDefault();
-      const index = parseInt(
-        event.currentTarget.attributes["data-index"].value
-      );
-      onSuggestionSelected(index);
-    },
-    [suggestions]
-  );
-  // onMouseDown should be cancelled because onClick will handle it propertly. This way, the textarea does not lose
-  // focus
-  const handleMouseDown = useCallback(event => event.preventDefault(), []);
-  return (
+  render = () => (
     <ul
-      className={classNames("mde-suggestions", classes)}
-      style={{ left: caret.left, top: caret.top }}
+      className={classNames("mde-suggestions", this.props.classes)}
+      style={{ left: this.props.caret.left, top: this.props.caret.top }}
     >
-      {suggestions.map((s, i) => (
+      {this.props.suggestions.map(({ value }, i) => (
         <li
-          onClick={handleSuggestionClick}
-          onMouseDown={handleMouseDown}
+          onMouseDown={this.handleSuggestionClick}
           key={i}
-          aria-selected={focusIndex === i ? "true" : "false"}
-          data-index={`${i}`}
+          aria-selected={Boolean(this.props.focusIndex === i).toString()}
+          data-index={i}
         >
-          {s.preview}
+          {value}
         </li>
       ))}
     </ul>
   );
-};
+}
 
 export default SuggestionsDropdown;

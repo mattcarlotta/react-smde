@@ -1,23 +1,27 @@
 import React from "react";
-// import Preview from "~components/Preview";
 import SuggestionsDropdown from "~components/SuggestionsDropdown";
 import { classNames, getCaretCoordinates, insertText, mod } from "~utils";
 
-export class TextArea extends React.Component {
-  /**
-   * suggestionsPromiseIndex exists as a means to cancel what happens when the suggestions promise finishes loading.
-   *
-   * When the user is searching for suggestions, there is a promise that, when resolved, causes a re-render.
-   * However, in case there is another promise to be resolved after the current one, it does not make sense to re-render
-   * only to re-render again after the next one is complete.
-   *
-   * When there is a promise loading and the user cancels the suggestion, you don't want the status to go back to "active"
-   * when the promise resolves.
-   *
-   * suggestionsPromiseIndex increments every time the mentions query
-   */
+const initialState = {
+  mention: {
+    status: "inactive",
+    suggestions: [],
+    focusIndex: null,
+    startPosition: null
+  }
+};
 
-  state = { mention: { status: "inactive", suggestions: [] } };
+export class TextArea extends React.Component {
+  state = initialState;
+
+  componentDidMount() {
+    document.addEventListener("keydown", this.handleKeyDown);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener("keydown", this.handleKeyDown);
+    clearTimeout(this.timer);
+  }
 
   handleTextAreaRef = element => {
     this.textAreaElement = element;
@@ -26,156 +30,104 @@ export class TextArea extends React.Component {
 
   handleOnChange = ({ target: { value } }) => this.props.onChange(value);
 
-  handleBlur = () => {
-    const { mention } = this.state;
-    if (mention) {
-      this.setState({ mention: { status: "inactive", suggestions: [] } });
+  handleBlur = () => this.setState(initialState);
+
+  loadSuggestions = async (text = "") => {
+    const suggestions = await this.props.loadSuggestions(text);
+    const { status } = this.state.mention;
+
+    if (status !== "inactive") {
+      this.setState(prevState => ({
+        ...prevState,
+        mention: {
+          ...prevState.mention,
+          status: "active",
+          suggestions,
+          focusIndex: 0
+        }
+      }));
     }
   };
 
-  startLoadingSuggestions = text => {
-    const promiseIndex = ++this.suggestionsPromiseIndex;
-    const { loadSuggestions } = this.props;
-    this.currentLoadSuggestionsPromise = this.currentLoadSuggestionsPromise
-      .then(() => loadSuggestions(text, this.state.mention.triggeredBy))
-      .then(suggestions => {
-        if (this.state.mention.status === "inactive") {
-          // This means this promise resolved too late when the status has already been set to inactice
-          return;
-        } else if (this.suggestionsPromiseIndex === promiseIndex) {
-          if (!suggestions || !suggestions.length) {
-            this.setState({
-              mention: {
-                status: "inactive",
-                suggestions: []
-              }
-            });
-          } else {
-            this.setState({
-              mention: {
-                ...this.state.mention,
-                status: "active",
-                suggestions,
-                focusIndex: 0
-              }
-            });
-          }
-          this.suggestionsPromiseIndex = 0;
-        }
-        return Promise.resolve();
-      });
-  };
-
   handleSuggestionSelected = index => {
-    const { mention } = this.state;
-    this.textAreaElement.selectionStart = mention.startPosition - 1;
-    insertText(this.textAreaElement, mention.suggestions[index].value + " ");
-    this.setState({
-      mention: {
-        status: "inactive",
-        suggestions: []
-      }
-    });
+    const {
+      mention: { startPosition, suggestions }
+    } = this.state;
+
+    this.textAreaElement.selectionStart = startPosition;
+
+    insertText(this.textAreaElement, `${suggestions[index].value} `);
+
+    this.handleBlur();
   };
 
   handleKeyDown = event => {
     const { key } = event;
-    const { selectionStart } = event.currentTarget;
     const { mention } = this.state;
+    const { selectionStart } = this.textAreaElement;
+    const suggestionsActive = mention.status === "active";
 
-    switch (mention.status) {
-      case "loading":
-      case "active":
-        if (
-          key === "Escape" ||
-          (key === "Backspace" &&
-            selectionStart <= this.state.mention.startPosition)
-        ) {
-          // resetting suggestionsPromiseIndex will cause any promise that is yet to be resolved to have no effect
-          // when they finish loading.
-          this.suggestionsPromiseIndex = 0;
-          this.setState({
-            mention: {
-              status: "inactive",
-              suggestions: []
-            }
-          });
-        } else if (key === "Backspace") {
-          const searchText = this.props.value.substr(mention.startPosition + 1);
-          this.startLoadingSuggestions(searchText);
-          if (mention.status !== "loading") {
-            this.setState({
-              mention: {
-                ...this.state.mention,
-                status: "loading"
-              }
-            });
-          }
-        } else if (
-          mention.status === "active" &&
-          (key === "ArrowUp" || key === "ArrowDown")
-        ) {
-          event.preventDefault();
-          const focusDelta = key === "ArrowUp" ? -1 : 1;
-          this.setState({
-            mention: {
-              ...mention,
-              focusIndex: mod(
-                mention.focusIndex + focusDelta,
-                mention.suggestions.length
-              )
-            }
-          });
-        } else if (
-          key === "Enter" &&
-          mention.status === "active" &&
-          mention.suggestions.length
-        ) {
-          event.preventDefault();
-          this.handleSuggestionSelected(mention.focusIndex);
-        }
-        break;
-      default:
-      // Ignore
-    }
-  };
-
-  handleKeyPress = event => {
-    const { suggestionTriggerCharacters } = this.props;
-    const { mention } = this.state;
-    const { key } = event;
-
-    switch (mention.status) {
-      case "loading":
-      case "active":
-        // In this case, the mentions box was open but the user typed something else
-        const searchText = this.props.value.substr(mention.startPosition) + key;
-        this.startLoadingSuggestions(searchText);
-        if (mention.status !== "loading") {
-          this.setState({
-            mention: {
-              ...this.state.mention,
-              status: "loading"
-            }
-          });
-        }
-        break;
-      case "inactive":
-        if (suggestionTriggerCharacters.indexOf(event.key) === -1) {
-          return;
-        }
-        const caret = getCaretCoordinates(event.currentTarget, "@");
-        this.startLoadingSuggestions("");
-        this.setState({
+    // if suggestions are active and the following keys were pressed...
+    if (
+      suggestionsActive &&
+      (key === "ArrowUp" ||
+        key === "ArrowDown" ||
+        key === "Tab" ||
+        key === "Enter")
+    ) {
+      // prevent default key presses within textarea
+      event.preventDefault();
+    } else if (!suggestionsActive && key === "@") {
+      //  else if key pressed is @ and suggestions are inactive, update state and load suggestions
+      this.setState(
+        {
           mention: {
             status: "loading",
-            startPosition: event.currentTarget.selectionStart + 1,
-            caret: caret,
-            suggestions: [],
-            triggeredBy: event.key
+            startPosition: selectionStart + 1,
+            caret: getCaretCoordinates(this.textAreaElement, "@")
           }
-        });
-        break;
+        },
+        () => this.loadSuggestions()
+      );
+    } else if (
+      key === "Escape" ||
+      (key === "Backspace" && selectionStart <= mention.startPosition)
+    ) {
+      // else if key pressed is esc or backspace and cursor position is less than initial,
+      // then reset back to initial state
+      this.setState(initialState);
+    }
+
+    // check if suggestions are active
+    // since updating top level state is async, we need to set a timeout to allow
+    // this component to update before executing the following statements
+    if (suggestionsActive) {
+      // store the timer to clear it if the component is unmounted while still loading
+      this.timer = setTimeout(() => {
+        const { focusIndex, startPosition, suggestions } = mention;
+
+        // if arrow up/down keys or tab were pressed
+        if (key === "ArrowUp" || key === "ArrowDown" || key === "Tab") {
+          // move the focus of the suggestion up/down accordingly
+          const focusDelta = key === "ArrowUp" ? -1 : 1;
+          this.setState(prevState => ({
+            ...prevState,
+            mention: {
+              ...prevState.mention,
+              focusIndex: mod(
+                prevState.mention.focusIndex + focusDelta,
+                prevState.mention.suggestions.length
+              )
+            }
+          }));
+        } else if (key === "Enter" && suggestions.length) {
+          // else if enter was pressed, pass back the index that was focused upon
+          this.handleSuggestionSelected(focusIndex);
+        } else {
+          // otherwise, load suggestions based upon current search string
+          this.loadSuggestions(this.props.value.substr(startPosition));
+        }
+      }, 100);
     }
   };
 
@@ -199,6 +151,7 @@ export class TextArea extends React.Component {
       loadSuggestions;
 
     const { mention } = this.state;
+
     return (
       <div className="mde-textarea-wrapper">
         <textarea
@@ -213,8 +166,6 @@ export class TextArea extends React.Component {
           value={value}
           data-testid="text-area"
           onBlur={suggestionsEnabled ? this.handleBlur : undefined}
-          onKeyDown={suggestionsEnabled ? this.handleKeyDown : undefined}
-          onKeyPress={suggestionsEnabled ? this.handleKeyPress : undefined}
           {...textAreaProps}
         />
         {selectedTab && (
@@ -225,7 +176,7 @@ export class TextArea extends React.Component {
             {children}
           </div>
         )}
-        {mention.status === "active" && mention.suggestions.length && (
+        {mention.status === "active" && mention.suggestions.length ? (
           <SuggestionsDropdown
             classes={suggestionsDropdownClasses}
             caret={mention.caret}
@@ -233,7 +184,7 @@ export class TextArea extends React.Component {
             onSuggestionSelected={this.handleSuggestionSelected}
             focusIndex={mention.focusIndex}
           />
-        )}
+        ) : null}
       </div>
     );
   }

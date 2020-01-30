@@ -22,6 +22,11 @@ export class MDEditor extends React.Component {
     document.addEventListener("mouseup", this.handleGripMouseUp);
   }
 
+  componentWillUnmount() {
+    document.removeEventListener("mousemove", this.handleGripMouseMove);
+    document.removeEventListener("mouseup", this.handleGripMouseUp);
+  }
+
   handleTextChange = value => this.props.onChange(value);
 
   handleGripMouseDown = event => {
@@ -125,14 +130,7 @@ export class MDEditor extends React.Component {
           suggestionsDropdownClasses={classes.suggestionsDropdown}
           editorRef={this.setTextAreaRef}
           onChange={this.handleTextChange}
-          textAreaProps={{
-            ...textAreaProps,
-            onKeyDown: e => {
-              this.adjustEditorSize();
-              if (textAreaProps && textAreaProps.onKeyDown)
-                textAreaProps.onKeyDown(e);
-            }
-          }}
+          textAreaProps={textAreaProps}
           height={this.state.editorHeight}
           selectedTab={selectedTab === "preview" || tab === "preview"}
         />
@@ -160,7 +158,8 @@ MDEditor.defaultProps = {
   selectedTab: "",
   disablePreview: false,
   suggestionTriggerCharacters: ["@"],
-  markdownProps: {}
+  markdownProps: {},
+  value: ""
 };
 
 export default MDEditor;
