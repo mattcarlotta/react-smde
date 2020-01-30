@@ -117,7 +117,7 @@ For example:
 ```jsx
 import MDEditor, {commands} from "react-smde";
 
-<ReactMde
+<MDEditor
     commands={[
         [commands.orderedList, commands.unorderedList, commands.checkedList],
         [
