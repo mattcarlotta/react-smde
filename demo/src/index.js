@@ -30,7 +30,9 @@ class App extends Component {
           {
             value: "louise"
           }
-        ].filter(i => i.value.toLowerCase().includes(text.toLowerCase()));
+        ].filter(({ value }) =>
+          value.toLowerCase().includes(text.toLowerCase())
+        );
         resolve(suggestions);
       }, 250);
     });

@@ -12,6 +12,69 @@ ul.mde-suggestions {
   border-radius: 3px;
   box-shadow: 0 1px 5px rgba(27, 31, 35, 0.15);
 
+  .circle-loader {
+    position: relative;
+    width: 5px;
+    height: 5px;
+    margin: 20px auto;
+  }
+
+  .circle-loader div {
+    height: 5px;
+    width: 5px;
+    background-color: #188fff;
+    border-radius: 50%;
+    position: absolute;
+    animation: 0.8s loading ease-in-out infinite both;
+  }
+
+  .circle-loader > div:nth-child(1) {
+    top: -15px;
+    left: 0;
+  }
+  .circle-loader > div:nth-child(2) {
+    top: -10px;
+    left: 10px;
+    -webkit-animation-delay: 0.1s;
+    animation-delay: 0.1s;
+  }
+  .circle-loader > div:nth-child(3) {
+    top: 0;
+    left: 15px;
+    -webkit-animation-delay: 0.2s;
+    animation-delay: 0.2s;
+  }
+  .circle-loader > div:nth-child(4) {
+    top: 10px;
+    left: 10px;
+    -webkit-animation-delay: 0.3s;
+    animation-delay: 0.3s;
+  }
+  .circle-loader > div:nth-child(5) {
+    top: 15px;
+    left: 0;
+    -webkit-animation-delay: 0.4s;
+    animation-delay: 0.4s;
+  }
+  .circle-loader > div:nth-child(6) {
+    top: 10px;
+    left: -10px;
+    -webkit-animation-delay: 0.5s;
+    animation-delay: 0.5s;
+  }
+  .circle-loader > div:nth-child(7) {
+    top: 0;
+    left: -15px;
+    -webkit-animation-delay: 0.6s;
+    animation-delay: 0.6s;
+  }
+  .circle-loader > div:nth-child(8) {
+    top: -10px;
+    left: -10px;
+    -webkit-animation-delay: 0.7s;
+    animation-delay: 0.7s;
+  }
+
   li {
     padding: 4px 8px;
     border-bottom: 1px solid #e1e4e8;

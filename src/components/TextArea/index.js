@@ -3,12 +3,11 @@ import SuggestionsDropdown from "~components/SuggestionsDropdown";
 import { classNames, getCaretCoordinates, insertText, mod } from "~utils";
 
 const initialState = {
-  mention: {
-    status: "inactive",
-    suggestions: [],
-    focusIndex: null,
-    startPosition: null
-  }
+  status: "inactive",
+  suggestions: [],
+  focusIndex: null,
+  startPosition: null,
+  caret: {}
 };
 
 export class TextArea extends React.Component {
@@ -34,25 +33,20 @@ export class TextArea extends React.Component {
 
   loadSuggestions = async (text = "") => {
     const suggestions = await this.props.loadSuggestions(text);
-    const { status } = this.state.mention;
+    const { status } = this.state;
 
     if (status !== "inactive") {
       this.setState(prevState => ({
         ...prevState,
-        mention: {
-          ...prevState.mention,
-          status: "active",
-          suggestions,
-          focusIndex: 0
-        }
+        status: "active",
+        suggestions,
+        focusIndex: 0
       }));
     }
   };
 
   handleSuggestionSelected = index => {
-    const {
-      mention: { startPosition, suggestions }
-    } = this.state;
+    const { startPosition, suggestions } = this.state;
 
     this.textAreaElement.selectionStart = startPosition;
 
@@ -63,9 +57,9 @@ export class TextArea extends React.Component {
 
   handleKeyDown = event => {
     const { key } = event;
-    const { mention } = this.state;
+    const { status, startPosition } = this.state;
     const { selectionStart } = this.textAreaElement;
-    const suggestionsActive = mention.status === "active";
+    const suggestionsActive = status === "active";
 
     // if suggestions are active and the following keys were pressed...
     if (
@@ -81,17 +75,15 @@ export class TextArea extends React.Component {
       //  else if key pressed is @ and suggestions are inactive, update state and load suggestions
       this.setState(
         {
-          mention: {
-            status: "loading",
-            startPosition: selectionStart + 1,
-            caret: getCaretCoordinates(this.textAreaElement, "@")
-          }
+          status: "loading",
+          startPosition: selectionStart + 1,
+          caret: getCaretCoordinates(this.textAreaElement, "@")
         },
         () => this.loadSuggestions()
       );
     } else if (
       key === "Escape" ||
-      (key === "Backspace" && selectionStart <= mention.startPosition)
+      (key === "Backspace" && selectionStart <= startPosition)
     ) {
       // else if key pressed is esc or backspace and cursor position is less than initial,
       // then reset back to initial state
@@ -104,7 +96,7 @@ export class TextArea extends React.Component {
     if (suggestionsActive) {
       // store the timer to clear it if the component is unmounted while still loading
       this.timer = setTimeout(() => {
-        const { focusIndex, startPosition, suggestions } = mention;
+        const { focusIndex, suggestions } = this.state;
 
         // if arrow up/down keys or tab were pressed
         if (key === "ArrowUp" || key === "ArrowDown" || key === "Tab") {
@@ -112,13 +104,10 @@ export class TextArea extends React.Component {
           const focusDelta = key === "ArrowUp" ? -1 : 1;
           this.setState(prevState => ({
             ...prevState,
-            mention: {
-              ...prevState.mention,
-              focusIndex: mod(
-                prevState.mention.focusIndex + focusDelta,
-                prevState.mention.suggestions.length
-              )
-            }
+            focusIndex: mod(
+              prevState.focusIndex + focusDelta,
+              prevState.suggestions.length
+            )
           }));
         } else if (key === "Enter" && suggestions.length) {
           // else if enter was pressed, pass back the index that was focused upon
@@ -145,12 +134,12 @@ export class TextArea extends React.Component {
       suggestionsDropdownClasses
     } = this.props;
 
+    const { caret, focusIndex, suggestions, status } = this.state;
+
     const suggestionsEnabled =
       suggestionTriggerCharacters &&
       suggestionTriggerCharacters.length &&
       loadSuggestions;
-
-    const { mention } = this.state;
 
     return (
       <div className="mde-textarea-wrapper">
@@ -176,13 +165,13 @@ export class TextArea extends React.Component {
             {children}
           </div>
         )}
-        {mention.status === "active" && mention.suggestions.length ? (
+        {status === "active" && suggestions.length > 0 ? (
           <SuggestionsDropdown
             classes={suggestionsDropdownClasses}
-            caret={mention.caret}
-            suggestions={mention.suggestions}
+            caret={caret}
+            suggestions={suggestions}
             onSuggestionSelected={this.handleSuggestionSelected}
-            focusIndex={mention.focusIndex}
+            focusIndex={focusIndex}
           />
         ) : null}
       </div>
