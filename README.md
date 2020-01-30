@@ -95,7 +95,7 @@ class App extends Component {
 
 You can rearrange, remove and adjust commands (and their icons). The `commands` property of react-smde expects an array of array groups that contains commands (which are simple objects). For example, import the existing `commands` as displayed below.
 
-Commands are simple objects where `name` must match a name that is predefined [list](src/commands/index.js), however, everything else is editable:
+Commands are simple objects where `name` must match a name that is predefined [list](src/commands/index.js#L18-L27), however, everything else is editable:
 
 ```
 {
