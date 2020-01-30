@@ -1,5 +1,7 @@
 import React from "react";
-import { ClickHandler, Tooltip, ToolbarButton } from "~components";
+import ClickHandler from "~components/ClickHandler";
+import Tooltip from "~components/Tooltip";
+import ToolbarButton from "~components/ToolbarButton";
 
 const { Fragment } = React;
 
@@ -7,12 +9,11 @@ export const ToolbarDropdown = ({
   buttonContent,
   buttonProps,
   commands,
-  getIcon,
   disabled,
   onCommand,
   tooltip
 }) => {
-  const finalButtonProps = {
+  const additionalButtonProps = {
     ...{ tabIndex: 0 },
     ...(buttonProps || {})
   };
@@ -29,7 +30,7 @@ export const ToolbarDropdown = ({
             >
               <button
                 type="button"
-                {...finalButtonProps}
+                {...additionalButtonProps}
                 className={disabled ? "disabled" : undefined}
                 onClick={handleClick}
                 disabled={disabled}
@@ -44,11 +45,7 @@ export const ToolbarDropdown = ({
                     key={`header-item${index}`}
                     name={command.name}
                     buttonProps={command.buttonProps}
-                    buttonContent={
-                      command.icon
-                        ? command.icon(getIcon)
-                        : getIcon(command.name)
-                    }
+                    buttonContent={command.icon}
                     onClick={() => {
                       onCommand(command);
                       closeDropdown();
@@ -64,3 +61,5 @@ export const ToolbarDropdown = ({
     </li>
   );
 };
+
+export default ToolbarDropdown;

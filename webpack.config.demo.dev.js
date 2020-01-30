@@ -1,9 +1,7 @@
-const webpack = require("webpack");
-
 module.exports = {
   mode: "development",
 
-  entry: ["./demo/client.js"],
+  entry: ["./demo/src/index.js"],
 
   output: {
     filename: "bundle.js",

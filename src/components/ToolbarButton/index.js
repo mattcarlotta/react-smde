@@ -1,5 +1,5 @@
 import React from "react";
-import { Tooltip } from "~components";
+import Tooltip from "~components/Tooltip";
 
 export const ToolbarButton = ({
   buttonContent,
@@ -12,12 +12,12 @@ export const ToolbarButton = ({
   const button = (
     <button
       type="button"
-      {...buttonProps}
+      tabIndex="0"
       className={disabled ? "disabled" : undefined}
       data-name={name}
-      tabIndex="0"
       disabled={disabled}
       onClick={onClick}
+      {...buttonProps}
     >
       {buttonContent}
     </button>
@@ -39,3 +39,5 @@ export const ToolbarButton = ({
     </li>
   );
 };
+
+export default ToolbarButton;

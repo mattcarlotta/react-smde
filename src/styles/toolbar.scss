@@ -5,7 +5,7 @@
   display: flex;
   flex-wrap: wrap;
   align-items: stretch;
-  border-bottom: 1px solid $border-color;
+  border-top: 1px solid $border-color;
   border-radius: $border-radius $border-radius 0 0;
   background: $toolbar-color;
 
@@ -16,7 +16,6 @@
     border-right: 1px solid #fff;
     color: transparent;
     text-indent: -10px;
-    margin: 0 6px;
   }
 
   .mde-tabs {
@@ -110,15 +109,21 @@
               border: 0;
               text-align: left;
               &.header-1 {
-                font-size: 20px;
+                font-size: 36px;
               }
               &.header-2 {
-                font-size: 18px;
+                font-size: 30px;
               }
               &.header-3 {
-                font-size: 14px;
+                font-size: 24px;
               }
               &.header-4 {
+                font-size: 18px;
+              }
+              &.header-5 {
+                font-size: 14px;
+              }
+              &.header-6 {
                 font-size: 12px;
               }
             }

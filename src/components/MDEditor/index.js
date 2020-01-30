@@ -1,5 +1,6 @@
 import React from "react";
-import { Toolbar, TextArea } from "~components";
+import Toolbar from "~components/Toolbar";
+import TextArea from "~components/TextArea";
 import { getDefaultCommands } from "~commands";
 import { SvgIcon } from "~icons";
 import { classNames, extractCommandMap } from "~utils";
@@ -9,25 +10,12 @@ export class MDEditor extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      editorHeight: props.minEditorHeight
+      editorHeight: props.minEditorHeight,
+      tab: props.selectedTab
     };
     this.gripDrag = null;
     this.keyCommandMap = extractCommandMap(props.commands);
   }
-
-  static defaultProps = {
-    commands: getDefaultCommands(),
-    getIcon: name => <SvgIcon icon={name} />,
-    emptyPreviewHtml: "<p>&nbsp;</p>",
-    readOnly: false,
-    autoGrow: false,
-    minEditorHeight: 200,
-    maxEditorHeight: 500,
-    minPreviewHeight: 200,
-    selectedTab: "write",
-    disablePreview: false,
-    suggestionTriggerCharacters: ["@"]
-  };
 
   componentDidMount() {
     document.addEventListener("mousemove", this.handleGripMouseMove);
@@ -66,7 +54,9 @@ export class MDEditor extends React.Component {
   };
 
   handleTabChange = newTab => {
-    this.props.onTabChange(newTab);
+    const { onTabChange } = this.props;
+    if (onTabChange) onTabChange(newTab);
+    else this.setState({ tab: newTab });
   };
 
   adjustEditorSize = () => {
@@ -108,10 +98,11 @@ export class MDEditor extends React.Component {
   };
 
   render() {
+    const { tab } = this.state;
+
     const {
       classes,
       className,
-      readOnly,
       maxEditorWidth,
       textAreaProps,
       selectedTab
@@ -119,31 +110,21 @@ export class MDEditor extends React.Component {
 
     return (
       <div
-        className={classNames(
-          "react-mde",
-          "react-mde-tabbed-layout",
-          classes.reactMde,
-          /**
-           * "className" is OBSOLETE and will soon be removed
-           */
-          className
-        )}
-        style={{ width: maxEditorWidth || "100%" }}
+        className={classNames("mde", classes.mde, className)}
+        style={{ width: maxEditorWidth }}
       >
         <Toolbar
           {...this.props}
           classes={classes.toolbar}
           onCommand={this.handleCommand}
           onTabChange={this.handleTabChange}
-          tab={selectedTab}
-          readOnly={readOnly}
+          tab={selectedTab || tab}
         />
         <TextArea
           {...this.props}
           suggestionsDropdownClasses={classes.suggestionsDropdown}
           editorRef={this.setTextAreaRef}
           onChange={this.handleTextChange}
-          readOnly={readOnly}
           textAreaProps={{
             ...textAreaProps,
             onKeyDown: e => {
@@ -153,7 +134,7 @@ export class MDEditor extends React.Component {
             }
           }}
           height={this.state.editorHeight}
-          selectedTab={selectedTab === "preview"}
+          selectedTab={selectedTab === "preview" || tab === "preview"}
         />
         <div
           className={classNames("grip", classes.grip)}
@@ -165,3 +146,21 @@ export class MDEditor extends React.Component {
     );
   }
 }
+
+MDEditor.defaultProps = {
+  classes: {},
+  commands: getDefaultCommands(),
+  emptyPreviewHtml: "<p>&nbsp;</p>",
+  readOnly: false,
+  autoGrow: false,
+  minEditorHeight: 250,
+  maxEditorHeight: 500,
+  minPreviewHeight: 200,
+  maxEditorWidth: "100%",
+  selectedTab: "",
+  disablePreview: false,
+  suggestionTriggerCharacters: ["@"],
+  markdownProps: {}
+};
+
+export default MDEditor;

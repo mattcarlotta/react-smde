@@ -1,7 +1,7 @@
 import React from "react";
-import { Preview } from "~components";
+// import Preview from "~components/Preview";
+import SuggestionsDropdown from "~components/SuggestionsDropdown";
 import { classNames, getCaretCoordinates, insertText, mod } from "~utils";
-import { SuggestionsDropdown } from "../SuggestionsDropdown";
 
 export class TextArea extends React.Component {
   /**
@@ -182,14 +182,11 @@ export class TextArea extends React.Component {
   render() {
     const {
       classes,
+      children,
       readOnly,
       textAreaProps,
       height,
       value,
-      minPreviewHeight,
-      generateMarkdownPreview,
-      emptyPreviewHtml,
-      loadingPreview,
       suggestionTriggerCharacters,
       loadSuggestions,
       selectedTab,
@@ -221,14 +218,12 @@ export class TextArea extends React.Component {
           {...textAreaProps}
         />
         {selectedTab && (
-          <Preview
+          <div
+            className={classNames("mde-preview", classes)}
             style={{ height }}
-            classes={classes.preview}
-            loadingPreview={loadingPreview || emptyPreviewHtml}
-            minHeight={minPreviewHeight}
-            generateMarkdownPreview={generateMarkdownPreview}
-            markdown={value}
-          />
+          >
+            {children}
+          </div>
         )}
         {mention.status === "active" && mention.suggestions.length && (
           <SuggestionsDropdown
@@ -243,3 +238,5 @@ export class TextArea extends React.Component {
     );
   }
 }
+
+export default TextArea;

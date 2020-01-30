@@ -1,39 +1,47 @@
 const { resolve } = require("path");
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
   mode: "production",
-
-  entry: ["./demo/client.js"],
-
+  entry: ["./demo/src/index.js"],
   output: {
-    filename: "bundle-prod.js",
-    path: resolve(__dirname, "docs"),
-    publicPath: "/react-mde/"
+    filename: "bundle.js",
+    path: resolve(__dirname, "livedemo"),
+    publicPath: resolve(__dirname)
   },
-
   resolve: {
     extensions: [".js", ".jsx", ".css", ".scss", ".json"]
   },
-
   module: {
     rules: [
       { test: /\.(js|jsx)$/, use: ["babel-loader"], exclude: /node_modules/ },
-      { test: /\.css/, use: ExtractTextPlugin.extract({ use: "css-loader" }) },
+      {
+        test: /\.css/,
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader
+          },
+          "css-loader"
+        ]
+      },
       {
         test: /\.scss/,
-        use: ExtractTextPlugin.extract({ use: ["css-loader", "sass-loader"] })
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader
+          },
+          "css-loader"
+        ]
       },
       {
-        test: /\.jpe?g$|\.gif$|\.png$|\.ico$/,
-        use: "file-loader?name=[name].[ext]"
-      },
-      {
-        test: /\.eot|\.ttf|\.svg|\.woff2?/,
+        test: /\.eot|\.ttf|\.svg|\.woff2\.jpe?g$|\.gif$|\.png$|\.ico$/,
         use: "file-loader?name=[name].[ext]"
       }
     ]
   },
-
-  plugins: [new ExtractTextPlugin("bundle.css")]
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: "bundle.css"
+    })
+  ]
 };
