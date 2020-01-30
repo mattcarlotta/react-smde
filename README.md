@@ -1,6 +1,6 @@
 # react-smde
 
-An unopinationed simple **Markdown Editor** for React.
+An unopinationed, simple, **Markdown Editor** for React.
 
 ## Demo
 
@@ -9,11 +9,17 @@ An unopinationed simple **Markdown Editor** for React.
 
 ## Installing
 
-    npm i react-smde
+```
+npm i react-smde
+```
+
+or
+
+```
+yarn install react-smde
+```
 
 ## Usage
-
-react-smde is a controlled component.
 
 ```jsx
 import MDEditor from "react-smde";
@@ -66,7 +72,7 @@ The types are described below
 
 ## Markdown Previewing
 
-react-smde is unopinated when it comes to previewing markdown content. Therefore, you **must** supply your own Markdown previewer as `children` to the `MDEditor`. The demo provided in the source and the example below utilizes [react-markdown](https://github.com/rexxars/react-markdown)
+react-smde is unopinated when it comes to previewing markdown content. Therefore, you **must** supply your own Markdown previewer as `children` to the `MDEditor`. The demo provided in the source and the example below utilizes [react-markdown](https://github.com/rexxars/react-markdown).
 
 ```jsx
 import MDEditor from "react-smde";
@@ -130,11 +136,11 @@ import MDEditor, {commands} from "react-smde";
 
 ## License
 
-react-smde is [MIT licensed](blob/master/LICENSE).
+react-smde is [MIT licensed](LICENSE).
 
 ## Third party
 
-In order to make react-smde, the following packages are referenced/used within this package:
+In order to make react-smde, the following packages are referenced and used within this package:
 
 - https://github.com/grassator/insert-text-at-cursor
 - https://github.com/JedWatson/classnames
