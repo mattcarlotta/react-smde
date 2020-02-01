@@ -14,8 +14,8 @@ class App extends Component {
 
   handleValueChange = value => this.setState({ value });
 
-  loadSuggestions = text => {
-    return new Promise(resolve => {
+  loadSuggestions = async text => {
+    const suggestions = await new Promise(resolve => {
       setTimeout(() => {
         const suggestions = [
           {
@@ -36,6 +36,8 @@ class App extends Component {
         resolve(suggestions);
       }, 250);
     });
+
+    return suggestions;
   };
 
   render = () => (
@@ -44,7 +46,6 @@ class App extends Component {
         onChange={this.handleValueChange}
         value={this.state.value}
         loadSuggestions={this.loadSuggestions}
-        suggestionTriggerCharacters={["@"]}
       >
         <ReactMarkdown skipHtml className="mde-preview-content">
           {this.state.value}

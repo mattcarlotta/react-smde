@@ -76,12 +76,10 @@ export class MDEditor extends React.Component {
     }
   };
 
-  setPreviewRef = node => (this.previewAreaRef = node);
-
   setTextAreaRef = element => {
     this.textAreaRef = element;
 
-    if (this.props.autoGrow && element) {
+    if (this.props.autoGrow && element && window) {
       const computed = window.getComputedStyle(element);
       let lineHeight = parseInt(computed.getPropertyValue("line-height"), 10);
 
@@ -108,9 +106,11 @@ export class MDEditor extends React.Component {
     const {
       classes,
       className,
+      loadSuggestions,
       maxEditorWidth,
       textAreaProps,
-      selectedTab
+      selectedTab,
+      suggestionTriggerCharacter
     } = this.props;
 
     return (
@@ -133,6 +133,7 @@ export class MDEditor extends React.Component {
           textAreaProps={textAreaProps}
           height={this.state.editorHeight}
           selectedTab={selectedTab === "preview" || tab === "preview"}
+          suggestionsEnabled={suggestionTriggerCharacter && loadSuggestions}
         />
         <div
           className={classNames("grip", classes.grip)}
@@ -146,19 +147,19 @@ export class MDEditor extends React.Component {
 }
 
 MDEditor.defaultProps = {
+  autoGrow: false,
   classes: {},
   commands: getDefaultCommands(),
-  emptyPreviewHtml: "<p>&nbsp;</p>",
-  readOnly: false,
-  autoGrow: false,
-  minEditorHeight: 250,
-  maxEditorHeight: 500,
-  minPreviewHeight: 200,
-  maxEditorWidth: "100%",
-  selectedTab: "",
+  debounceSuggestions: 750,
   disablePreview: false,
-  suggestionTriggerCharacters: ["@"],
+  readOnly: false,
   markdownProps: {},
+  maxEditorHeight: 500,
+  maxEditorWidth: "100%",
+  minEditorHeight: 250,
+  minPreviewHeight: 200,
+  selectedTab: "",
+  suggestionTriggerCharacter: "@",
   value: ""
 };
 
