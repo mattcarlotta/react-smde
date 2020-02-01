@@ -148,7 +148,7 @@ MDEditor.defaultProps = {
   autoGrow: false,
   classes: {},
   commands: getDefaultCommands(),
-  debounceSuggestions: 500,
+  debounceSuggestions: 750,
   disablePreview: false,
   readOnly: false,
   markdownProps: {},

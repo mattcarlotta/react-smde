@@ -36,7 +36,7 @@ export class TextArea extends React.Component {
     const suggestions = await this.props.loadSuggestions(text);
     const { status } = this.state;
 
-    if (status !== "inactive") {
+    if (!this.searchTimer && status !== "inactive") {
       this.setState({
         status: "active",
         suggestions: suggestions || [],
@@ -61,7 +61,9 @@ export class TextArea extends React.Component {
     // store the timer to clear it if the component is unmounted while still loading
     this.clearSearchTimer();
     this.searchTimer = setTimeout(() => {
-      // otherwise, load suggestions based upon current search string
+      // clear timeout
+      this.clearSearchTimer();
+      // load suggestions based upon current search string
       this.handleSuggestions(this.props.value.substr(this.state.startPosition));
     }, this.props.debounceSuggestions);
   };
@@ -138,7 +140,7 @@ export class TextArea extends React.Component {
         // check if suggestions aren't inactive
         // set status to loading, reset suggestions and call handleSuggesitons
         // debounced handleSuggestionSearch sets status to active when resolved
-        const showLoading = debounceSuggestions >= 500;
+        const showLoading = debounceSuggestions >= 750;
         this.setState(
           prevState => ({
             status: showLoading ? "loading" : prevState.status,
