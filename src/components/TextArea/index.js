@@ -1,5 +1,5 @@
 import React from "react";
-import Loader from "~components/Loader";
+import Spinner from "~components/Spinner";
 import SuggestionsDropdown from "~components/SuggestionsDropdown";
 import { classNames, getCaretCoordinates, insertText, mod } from "~utils";
 
@@ -44,6 +44,8 @@ export class TextArea extends React.Component {
       });
     }
   };
+
+  handleSuggestionFocus = index => this.setState({ focusIndex: index });
 
   handleSuggestionSelected = index => {
     const { startPosition, suggestions } = this.state;
@@ -201,10 +203,11 @@ export class TextArea extends React.Component {
             caret={caret}
             suggestions={suggestions}
             onSuggestionSelected={this.handleSuggestionSelected}
+            onSuggestionFocus={this.handleSuggestionFocus}
             focusIndex={focusIndex}
           />
         ) : null}
-        {status === "loading" && <Loader caret={caret} />}
+        {status === "loading" && <Spinner caret={caret} />}
       </div>
     );
   }

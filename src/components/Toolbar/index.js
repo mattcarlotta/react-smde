@@ -28,38 +28,37 @@ export const Toolbar = ({
       style={!hasCommands && disablePreview ? { display: "none" } : {}}
       className={classNames("mde-header", classes)}
     >
-      {hasCommands
-        ? commands.map((commandGroup, i) => (
-            <Fragment key={i}>
-              <ToolbarButtonGroup>
-                {commandGroup.map(props =>
-                  props.children ? (
-                    <ToolbarDropdown
-                      {...props}
-                      key={props.name}
-                      buttonContent={props.icon}
-                      commands={props.children}
-                      onCommand={cmd => onCommand(cmd)}
-                      disabled={disabled}
-                      tooltipPlacement={tooltipPlacement}
-                    />
-                  ) : (
-                    <ToolbarButton
-                      {...props}
-                      key={props.name}
-                      buttonContent={props.icon}
-                      onClick={() => onCommand(props)}
-                      disabled={disabled}
-                      tooltipPlacement={tooltipPlacement}
-                    />
-                  )
-                )}
-              </ToolbarButtonGroup>
-              <Separator />
-            </Fragment>
-          ))
-        : null}
-      {!disablePreview ? (
+      {hasCommands &&
+        commands.map((commandGroup, i) => (
+          <Fragment key={i}>
+            <ToolbarButtonGroup>
+              {commandGroup.map(props =>
+                props.children ? (
+                  <ToolbarDropdown
+                    {...props}
+                    key={props.name}
+                    buttonContent={props.icon}
+                    commands={props.children}
+                    onCommand={cmd => onCommand(cmd)}
+                    disabled={disabled}
+                    tooltipPlacement={tooltipPlacement}
+                  />
+                ) : (
+                  <ToolbarButton
+                    {...props}
+                    key={props.name}
+                    buttonContent={props.icon}
+                    onClick={() => onCommand(props)}
+                    disabled={disabled}
+                    tooltipPlacement={tooltipPlacement}
+                  />
+                )
+              )}
+            </ToolbarButtonGroup>
+            <Separator />
+          </Fragment>
+        ))}
+      {!disablePreview && (
         <Fragment>
           <div className="mde-tabs">
             <Tooltip
@@ -77,7 +76,7 @@ export const Toolbar = ({
           </div>
           <Separator />
         </Fragment>
-      ) : null}
+      )}
     </div>
   );
 };

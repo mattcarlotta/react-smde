@@ -2,6 +2,12 @@ import React from "react";
 import { classNames } from "~utils";
 
 export class SuggestionsDropdown extends React.PureComponent {
+  handleSuggestionFocus = ({ currentTarget }) => {
+    this.props.onSuggestionFocus(
+      parseInt(currentTarget.attributes["data-index"].value)
+    );
+  };
+
   handleSuggestionClick = ({ currentTarget }) => {
     this.props.onSuggestionSelected(
       parseInt(currentTarget.attributes["data-index"].value)
@@ -19,6 +25,7 @@ export class SuggestionsDropdown extends React.PureComponent {
           suggestions.map(({ value }, i) => (
             <li
               onMouseDown={this.handleSuggestionClick}
+              onMouseOver={this.handleSuggestionFocus}
               key={i}
               aria-selected={Boolean(focusIndex === i).toString()}
               data-index={i}

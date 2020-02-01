@@ -1,33 +1,28 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const Loader = ({ caret }) => (
+const Spinner = ({ caret }) => (
   <ul className="mde-suggestions" style={{ left: caret.left, top: caret.top }}>
-    <div className="circle-loader">
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
+    <div className="loading">
+      {[0, 1, 2].map(key => (
+        <span key={key} />
+      ))}
     </div>
   </ul>
 );
 
-Loader.propTypes = {
+Spinner.propTypes = {
   caret: PropTypes.shape({
     top: PropTypes.number,
     left: PropTypes.number
   })
 };
 
-Loader.defaultProps = {
+Spinner.defaultProps = {
   caret: {
     top: 0,
     left: 0
   }
 };
 
-export default Loader;
+export default Spinner;
