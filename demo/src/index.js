@@ -4,7 +4,7 @@ import MDEditor from "../../src/index.js";
 import ReactMarkdown from "react-markdown";
 // import MDEditor from "../../dist/index.js";
 import "../../src/styles/all.scss";
-import "../../dist/index.css";
+// import "../../dist/index.css";
 import "./styles/demo.scss";
 
 class App extends Component {

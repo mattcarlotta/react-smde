@@ -69,7 +69,11 @@ export class TextArea extends React.Component {
   handleKeyDown = event => {
     const { key } = event;
     const { focusIndex, suggestions, status, startPosition } = this.state;
-    const { suggestionsEnabled, suggestionTriggerCharacter } = this.props;
+    const {
+      debounceSuggestions,
+      suggestionsEnabled,
+      suggestionTriggerCharacter
+    } = this.props;
     const { selectionStart } = this.textAreaElement;
     const suggestionsActive = status === "active";
     const suggestionsLoading = status === "loading";
@@ -134,8 +138,13 @@ export class TextArea extends React.Component {
         // check if suggestions aren't inactive
         // set status to loading, reset suggestions and call handleSuggesitons
         // debounced handleSuggestionSearch sets status to active when resolved
-        this.setState({ status: "loading", suggestions: [] }, () =>
-          this.handleSuggestionSearch()
+        const showLoading = debounceSuggestions >= 500;
+        this.setState(
+          prevState => ({
+            status: showLoading ? "loading" : prevState.status,
+            suggestions: showLoading ? [] : prevState.suggestions
+          }),
+          () => this.handleSuggestionSearch()
         );
       }
     }

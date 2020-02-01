@@ -1,9 +1,9 @@
 import React from "react";
 import Toolbar from "~components/Toolbar";
 import TextArea from "~components/TextArea";
+import SvgIcon from "~icons";
 import { getDefaultCommands } from "~commands";
-import { SvgIcon } from "~icons";
-import { classNames, extractCommandMap } from "~utils";
+import { classNames } from "~utils";
 import Commander from "../Commander";
 
 export class MDEditor extends React.Component {
@@ -14,7 +14,6 @@ export class MDEditor extends React.Component {
       tab: props.selectedTab
     };
     this.gripDrag = null;
-    this.keyCommandMap = extractCommandMap(props.commands);
   }
 
   componentDidMount() {
@@ -150,7 +149,7 @@ MDEditor.defaultProps = {
   autoGrow: false,
   classes: {},
   commands: getDefaultCommands(),
-  debounceSuggestions: 750,
+  debounceSuggestions: 500,
   disablePreview: false,
   readOnly: false,
   markdownProps: {},
