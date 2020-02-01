@@ -46,7 +46,6 @@ class App extends Component {
         onChange={this.handleValueChange}
         value={this.state.value}
         loadSuggestions={this.loadSuggestions}
-        debounceSuggestions={0}
       >
         <ReactMarkdown skipHtml className="mde-preview-content">
           {this.state.value}
