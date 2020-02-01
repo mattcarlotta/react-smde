@@ -11,7 +11,8 @@ export const ToolbarDropdown = ({
   commands,
   disabled,
   onCommand,
-  tooltip
+  tooltip,
+  tooltipPlacement
 }) => {
   const additionalButtonProps = {
     ...{ tabIndex: 0 },
@@ -24,7 +25,7 @@ export const ToolbarDropdown = ({
         {({ isVisible, closeDropdown, handleClick }) => (
           <Fragment>
             <Tooltip
-              placement="top"
+              placement={tooltipPlacement}
               trigger={["hover"]}
               overlay={<span>{tooltip}</span>}
             >

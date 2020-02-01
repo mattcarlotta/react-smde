@@ -16,7 +16,8 @@ export const Toolbar = ({
   readOnly,
   disablePreview,
   onTabChange,
-  tab
+  tab,
+  tooltipPlacement
 }) => {
   const isPreviewing = tab === "preview";
   const disabled = isPreviewing ? true : readOnly;
@@ -40,6 +41,7 @@ export const Toolbar = ({
                       commands={props.children}
                       onCommand={cmd => onCommand(cmd)}
                       disabled={disabled}
+                      tooltipPlacement={tooltipPlacement}
                     />
                   ) : (
                     <ToolbarButton
@@ -48,6 +50,7 @@ export const Toolbar = ({
                       buttonContent={props.icon}
                       onClick={() => onCommand(props)}
                       disabled={disabled}
+                      tooltipPlacement={tooltipPlacement}
                     />
                   )
                 )}
@@ -60,7 +63,7 @@ export const Toolbar = ({
         <Fragment>
           <div className="mde-tabs">
             <Tooltip
-              placement="top"
+              placement={tooltipPlacement}
               trigger={["hover"]}
               overlay={<span>{isPreviewing ? "Hide Preview" : "Preview"}</span>}
             >

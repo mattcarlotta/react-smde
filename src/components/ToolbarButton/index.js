@@ -7,7 +7,8 @@ export const ToolbarButton = ({
   onClick,
   disabled,
   name,
-  tooltip
+  tooltip,
+  tooltipPlacement
 }) => {
   const button = (
     <button
@@ -27,7 +28,7 @@ export const ToolbarButton = ({
     <li className="mde-header-item">
       {tooltip ? (
         <Tooltip
-          placement="top"
+          placement={tooltipPlacement}
           trigger={["hover"]}
           overlay={<span>{tooltip}</span>}
         >

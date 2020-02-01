@@ -160,6 +160,7 @@ MDEditor.defaultProps = {
   minPreviewHeight: 200,
   selectedTab: "",
   suggestionTriggerCharacter: "@",
+  tooltipPlacement: "top",
   value: ""
 };
 
