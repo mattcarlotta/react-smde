@@ -108,7 +108,6 @@ export class MDEditor extends React.Component {
       loadSuggestions,
       maxEditorWidth,
       textAreaProps,
-      selectedTab,
       suggestionTriggerCharacter
     } = this.props;
 
@@ -122,7 +121,7 @@ export class MDEditor extends React.Component {
           classes={classes.toolbar}
           onCommand={this.handleCommand}
           onTabChange={this.handleTabChange}
-          tab={selectedTab || tab}
+          tab={tab}
         />
         <TextArea
           {...this.props}
@@ -131,7 +130,7 @@ export class MDEditor extends React.Component {
           onChange={this.handleTextChange}
           textAreaProps={textAreaProps}
           height={this.state.editorHeight}
-          selectedTab={selectedTab === "preview" || tab === "preview"}
+          selectedTab={tab === "preview"}
           suggestionsEnabled={suggestionTriggerCharacter && loadSuggestions}
         />
         <div
@@ -157,7 +156,6 @@ MDEditor.defaultProps = {
   maxEditorWidth: "100%",
   minEditorHeight: 250,
   minPreviewHeight: 200,
-  selectedTab: "",
   suggestionTriggerCharacter: "@",
   tooltipPlacement: "top",
   value: ""
