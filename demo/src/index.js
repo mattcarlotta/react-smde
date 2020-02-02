@@ -14,7 +14,7 @@ class App extends Component {
 
   handleValueChange = value => this.setState({ value });
 
-  loadSuggestions = async text => {
+  loadSuggestions = async searchText => {
     const suggestions = await new Promise(resolve => {
       setTimeout(() => {
         const suggestions = [
@@ -31,7 +31,7 @@ class App extends Component {
             value: "louise"
           }
         ].filter(({ value }) =>
-          value.toLowerCase().includes(text.toLowerCase())
+          value.toLowerCase().includes(searchText.toLowerCase())
         );
         resolve(suggestions);
       }, 250);
@@ -43,18 +43,6 @@ class App extends Component {
   render = () => (
     <div className="container">
       <MDEditor
-        classes={{
-          mde: "cool",
-          mdeheader: "wow",
-          mdeheadergroup: "no-way-man",
-          mdeheaderitem: "coolbeans",
-          mdepreview: "okaythisis",
-          mdepreviewcontent: "wowsuchcontent",
-          mdeseparator: "stylish",
-          mdetextarea: "nottooshabby",
-          mdetextareawrapper: "sickwheels",
-          mdetooltip: "wowowowowow"
-        }}
         onChange={this.handleValueChange}
         value={this.state.value}
         loadSuggestions={this.loadSuggestions}

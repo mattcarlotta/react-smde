@@ -143,7 +143,7 @@ export class TextArea extends React.Component {
         // check if suggestions aren't inactive
         // set status to loading, reset suggestions and call handleSuggesitons
         // debounced handleSuggestionSearch sets status to active when resolved
-        const showLoading = debounceSuggestions >= 750;
+        const showLoading = debounceSuggestions >= 300;
         this.setState(
           prevState => ({
             status: showLoading ? "loading" : prevState.status,

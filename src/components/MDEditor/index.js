@@ -34,7 +34,10 @@ export class MDEditor extends React.Component {
     document.removeEventListener("mouseup", this.handleGripMouseUp);
   }
 
-  handleTextChange = value => this.props.onChange(value);
+  handleTextChange = value => {
+    this.props.onChange(value);
+    this.adjustEditorSize();
+  };
 
   handleGripMouseDown = event => {
     this.gripDrag = {
@@ -77,9 +80,13 @@ export class MDEditor extends React.Component {
       this.textAreaRef &&
       this.textAreaRef.scrollHeight > this.textAreaRef.offsetHeight
     ) {
-      this.setState({
-        editorHeight: this.textAreaRef.scrollHeight + this.textAreaLineHeight
-      });
+      this.setState(prevState => ({
+        editorHeight:
+          prevState.editorHeight >= this.props.minEditorHeight &&
+          prevState.editorHeight <= this.props.maxEditorHeight
+            ? this.textAreaRef.scrollHeight + this.textAreaLineHeight
+            : prevState.editorHeight
+      }));
     }
   };
 
@@ -151,14 +158,13 @@ MDEditor.defaultProps = {
   autoGrow: false,
   classes: {},
   commands: getDefaultCommands(),
-  debounceSuggestions: 750,
+  debounceSuggestions: 300,
   disablePreview: false,
-  readOnly: false,
-  markdownProps: {},
   maxEditorHeight: 500,
   maxEditorWidth: "100%",
   minEditorHeight: 250,
   minPreviewHeight: 200,
+  readOnly: false,
   suggestionTriggerCharacter: "@",
   textAreaProps: { placeholder: "What's on your mind?" },
   tooltipPlacement: "top"

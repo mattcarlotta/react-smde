@@ -3,7 +3,11 @@ import PropTypes from "prop-types";
 import { classNames } from "~utils";
 
 export const Separator = ({ classes }) => (
-  <i className={classNames("mde-separator", classes.mdeseparator)}>|</i>
+  <i
+    className={classNames("mde-toolbar-separator", classes.mdetoolbarseparator)}
+  >
+    |
+  </i>
 );
 
 Separator.propTypes = {

@@ -27,7 +27,7 @@ export const Toolbar = ({
   return (
     <div
       style={!hasCommands && disablePreview ? { display: "none" } : {}}
-      className={classNames("mde-header", classes.mdeheader)}
+      className={classNames("mde-toolbar", classes.mdetoolbar)}
     >
       {hasCommands &&
         commands.map((commandGroup, i) => (

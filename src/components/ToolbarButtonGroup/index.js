@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { classNames } from "~utils";
 
 export const ToolbarButtonGroup = ({ children, classes }) => (
-  <ul className={classNames("mde-header-group", classes.mdeheadergroup)}>
+  <ul className={classNames("mde-toolbar-group", classes.mdetoolbargroup)}>
     {children}
   </ul>
 );

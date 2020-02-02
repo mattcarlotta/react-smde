@@ -27,7 +27,7 @@ export const ToolbarButton = ({
   );
 
   return (
-    <li className={classNames("mde-header-item", classes.mdeheaderitem)}>
+    <li className={classNames("mde-toolbar-item", classes.mdetoolbaritem)}>
       {tooltip ? (
         <Tooltip
           overlayClassName={classNames("mde-tooltip", classes.mdetooltip)}
