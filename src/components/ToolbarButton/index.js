@@ -1,9 +1,11 @@
 import React from "react";
 import Tooltip from "~components/Tooltip";
+import { classNames } from "~utils";
 
 export const ToolbarButton = ({
   buttonContent,
   buttonProps,
+  classes,
   onClick,
   disabled,
   name,
@@ -25,9 +27,10 @@ export const ToolbarButton = ({
   );
 
   return (
-    <li className="mde-header-item">
+    <li className={classNames("mde-header-item", classes.mdeheaderitem)}>
       {tooltip ? (
         <Tooltip
+          overlayClassName={classNames("mde-tooltip", classes.mdetooltip)}
           placement={tooltipPlacement}
           trigger={["hover"]}
           overlay={<span>{tooltip}</span>}

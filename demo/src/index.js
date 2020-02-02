@@ -2,14 +2,14 @@ import React, { Component } from "react";
 import { render } from "react-dom";
 import MDEditor from "../../src/index.js";
 import ReactMarkdown from "react-markdown";
-// import MDEditor from "../../dist/index.js";
+// import MDEditor from "../../dist";
 import "../../src/styles/all.scss";
-// import "../../dist/index.css";
+// import "../../dist/styles/react-smde.css";
 import "./styles/demo.scss";
 
 class App extends Component {
   state = {
-    value: "## Hello"
+    value: ""
   };
 
   handleValueChange = value => this.setState({ value });
@@ -43,13 +43,23 @@ class App extends Component {
   render = () => (
     <div className="container">
       <MDEditor
+        classes={{
+          mde: "cool",
+          mdeheader: "wow",
+          mdeheadergroup: "no-way-man",
+          mdeheaderitem: "coolbeans",
+          mdepreview: "okaythisis",
+          mdepreviewcontent: "wowsuchcontent",
+          mdeseparator: "stylish",
+          mdetextarea: "nottooshabby",
+          mdetextareawrapper: "sickwheels",
+          mdetooltip: "wowowowowow"
+        }}
         onChange={this.handleValueChange}
         value={this.state.value}
         loadSuggestions={this.loadSuggestions}
       >
-        <ReactMarkdown skipHtml className="mde-preview-content">
-          {this.state.value}
-        </ReactMarkdown>
+        <ReactMarkdown skipHtml>{this.state.value}</ReactMarkdown>
       </MDEditor>
     </div>
   );

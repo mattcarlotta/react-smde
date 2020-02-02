@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Spinner from "~components/Spinner";
 import SuggestionsDropdown from "~components/SuggestionsDropdown";
 import { classNames, getCaretCoordinates, insertText, mod } from "~utils";
@@ -156,24 +157,27 @@ export class TextArea extends React.Component {
 
   render() {
     const {
-      classes,
       children,
-      readOnly,
-      textAreaProps,
+      classes,
       height,
-      value,
+      readOnly,
       suggestionsEnabled,
       selectedTab,
-      suggestionsDropdownClasses
+      textAreaProps,
+      value
     } = this.props;
 
     const { caret, focusIndex, suggestions, status } = this.state;
 
     return (
-      <div className="mde-textarea-wrapper">
+      <div
+        className={classNames(
+          "mde-textarea-wrapper",
+          classes.mdetextareawrapper
+        )}
+      >
         <textarea
-          className={classNames("mde-text", {
-            ...classes.textArea,
+          className={classNames("mde-textarea", classes.mdetextarea, {
             hidden: selectedTab
           })}
           style={{ height }}
@@ -191,15 +195,22 @@ export class TextArea extends React.Component {
         />
         {selectedTab && (
           <div
-            className={classNames("mde-preview", classes)}
+            className={classNames("mde-preview", classes.mdepreview)}
             style={{ height }}
           >
-            {children}
+            <div
+              className={classNames(
+                "mde-preview-content",
+                classes.mdepreviewcontent
+              )}
+            >
+              {children}
+            </div>
           </div>
         )}
         {status === "active" ? (
           <SuggestionsDropdown
-            classes={suggestionsDropdownClasses}
+            classes={classes}
             caret={caret}
             suggestions={suggestions}
             onSuggestionSelected={this.handleSuggestionSelected}
@@ -207,10 +218,23 @@ export class TextArea extends React.Component {
             focusIndex={focusIndex}
           />
         ) : null}
-        {status === "loading" && <Spinner caret={caret} />}
+        {status === "loading" && <Spinner caret={caret} classes={classes} />}
       </div>
     );
   }
 }
+
+TextArea.propTypes = {
+  children: PropTypes.node.isRequired,
+  classes: PropTypes.objectOf(PropTypes.shape),
+  height: PropTypes.number,
+  readOnly: PropTypes.bool,
+  suggestionsEnabled: PropTypes.func,
+  selectedTab: PropTypes.bool,
+  textAreaProps: PropTypes.objectOf(
+    PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.func])
+  ),
+  value: PropTypes.string
+};
 
 export default TextArea;

@@ -1,14 +1,13 @@
 import fs from "fs";
 import babel from "rollup-plugin-babel";
 import commonjs from "@rollup/plugin-commonjs";
-// import { eslint } from 'rollup-plugin-eslint';
+import copy from "rollup-plugin-copy";
 import license from "rollup-plugin-license";
 import filesize from "rollup-plugin-filesize";
 import resolve from "@rollup/plugin-node-resolve";
 import sass from "node-sass";
 import autoprefixer from "autoprefixer";
 import postcss from "rollup-plugin-postcss";
-// import stylelint from 'rollup-plugin-stylelint';
 import { terser } from "rollup-plugin-terser";
 import { localResolver } from "./utils/resolver";
 import pkg from "./package.json";
@@ -27,7 +26,7 @@ const plugins = [
     plugins: [autoprefixer],
     minimize: true,
     sourceMap: false,
-    extract: true,
+    extract: pkg.style,
     extensions: [".sass", ".scss", ".css"]
   }),
   babel({
@@ -42,6 +41,9 @@ const plugins = [
     output: {
       comments: "false"
     }
+  }),
+  copy({
+    targets: [{ src: "src/styles/**/*", dest: "dist/styles" }]
   }),
   license({
     banner

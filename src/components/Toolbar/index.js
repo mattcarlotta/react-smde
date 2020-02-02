@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Separator from "~components/Separator";
 import ToolbarButtonGroup from "~components/ToolbarButtonGroup";
 import ToolbarDropdown from "~components/ToolbarDropdown";
@@ -12,10 +13,10 @@ const { Fragment } = React;
 export const Toolbar = ({
   classes,
   commands,
-  onCommand,
-  readOnly,
   disablePreview,
+  onCommand,
   onTabChange,
+  readOnly,
   tab,
   tooltipPlacement
 }) => {
@@ -26,18 +27,19 @@ export const Toolbar = ({
   return (
     <div
       style={!hasCommands && disablePreview ? { display: "none" } : {}}
-      className={classNames("mde-header", classes)}
+      className={classNames("mde-header", classes.mdeheader)}
     >
       {hasCommands &&
         commands.map((commandGroup, i) => (
           <Fragment key={i}>
-            <ToolbarButtonGroup>
+            <ToolbarButtonGroup classes={classes}>
               {commandGroup.map(props =>
                 props.children ? (
                   <ToolbarDropdown
                     {...props}
                     key={props.name}
                     buttonContent={props.icon}
+                    classes={classes}
                     commands={props.children}
                     onCommand={cmd => onCommand(cmd)}
                     disabled={disabled}
@@ -48,6 +50,7 @@ export const Toolbar = ({
                     {...props}
                     key={props.name}
                     buttonContent={props.icon}
+                    classes={classes}
                     onClick={() => onCommand(props)}
                     disabled={disabled}
                     tooltipPlacement={tooltipPlacement}
@@ -55,13 +58,14 @@ export const Toolbar = ({
                 )
               )}
             </ToolbarButtonGroup>
-            <Separator />
+            <Separator classes={classes} />
           </Fragment>
         ))}
       {!disablePreview && (
         <Fragment>
-          <div className="mde-tabs">
+          <div className={classNames("mde-tabs", classes.mdetabs)}>
             <Tooltip
+              overlayClassName={classNames("mde-tooltip", classes.mdetooltip)}
               placement={tooltipPlacement}
               trigger={["hover"]}
               overlay={<span>{isPreviewing ? "Hide Preview" : "Preview"}</span>}
@@ -74,11 +78,35 @@ export const Toolbar = ({
               </button>
             </Tooltip>
           </div>
-          <Separator />
+          <Separator classes={classes} />
         </Fragment>
       )}
     </div>
   );
+};
+
+Tooltip.propTypes = {
+  classes: PropTypes.objectOf(PropTypes.shape),
+  commands: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+      tooltip: PropTypes.string,
+      buttonProps: PropTypes.objectOf(
+        PropTypes.oneOfType([
+          PropTypes.string,
+          PropTypes.number,
+          PropTypes.func
+        ])
+      ),
+      icon: PropTypes.node
+    })
+  ),
+  disablePreview: PropTypes.bool,
+  onCommand: PropTypes.func,
+  onTabChange: PropTypes.func,
+  readOnly: PropTypes.bool,
+  tab: PropTypes.string,
+  tooltipPlacement: PropTypes.string
 };
 
 export default Toolbar;

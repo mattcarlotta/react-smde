@@ -14,6 +14,14 @@ export class MDEditor extends React.Component {
       tab: props.selectedTab
     };
     this.gripDrag = null;
+
+    const { children, onChange, value } = props;
+    if (!children)
+      throw Error("The MDEditor must include a Markdown previewer as a child!");
+    if (typeof value !== "string")
+      throw Error("The MDEditor must include a string value property!");
+    if (typeof onChange !== "function")
+      throw Error("The MDEditor must include an onChange function property!");
   }
 
   componentDidMount() {
@@ -100,11 +108,8 @@ export class MDEditor extends React.Component {
   };
 
   render() {
-    const { tab } = this.state;
-
     const {
       classes,
-      className,
       loadSuggestions,
       maxEditorWidth,
       textAreaProps,
@@ -113,28 +118,26 @@ export class MDEditor extends React.Component {
 
     return (
       <div
-        className={classNames("mde", classes.mde, className)}
+        className={classNames("mde", classes.mde)}
         style={{ width: maxEditorWidth }}
       >
         <Toolbar
           {...this.props}
-          classes={classes.toolbar}
+          {...this.state}
           onCommand={this.handleCommand}
           onTabChange={this.handleTabChange}
-          tab={tab}
         />
         <TextArea
           {...this.props}
-          suggestionsDropdownClasses={classes.suggestionsDropdown}
           editorRef={this.setTextAreaRef}
           onChange={this.handleTextChange}
           textAreaProps={textAreaProps}
           height={this.state.editorHeight}
-          selectedTab={tab === "preview"}
+          selectedTab={this.state.tab === "preview"}
           suggestionsEnabled={suggestionTriggerCharacter && loadSuggestions}
         />
         <div
-          className={classNames("grip", classes.grip)}
+          className={classNames("mde-grip", classes.grip)}
           onMouseDown={this.handleGripMouseDown}
         >
           <SvgIcon icon="grip" />
@@ -157,8 +160,8 @@ MDEditor.defaultProps = {
   minEditorHeight: 250,
   minPreviewHeight: 200,
   suggestionTriggerCharacter: "@",
-  tooltipPlacement: "top",
-  value: ""
+  textAreaProps: { placeholder: "What's on your mind?" },
+  tooltipPlacement: "top"
 };
 
 export default MDEditor;
