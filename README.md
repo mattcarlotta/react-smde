@@ -87,7 +87,7 @@ The following props are accepted by `MDEditor`:
 | `minPreviewHeight`(num)           | A minimum preview height `number` that is set in `px`. (default: `200`)                       |
 | `readOnly`(bool)                  | A `boolean` to disable editing the text within the textarea. (default: `false`)               |
 | `textAreaProps`(obj)              | An optional `object` of properties to apply to the textarea.                                  |
-| `loadSuggestions`(func)           | A an `array` of suggestions triggered by the `suggestionTriggerCharacter`.                    |
+| `loadSuggestions`(func)           | An `array` of suggestions triggered by the `suggestionTriggerCharacter`.                      |
 | `debounceSuggestions`(num)        | A `number` set in `ms` to debounce calling the `loadSuggestions` function. (default: `300`)†† |
 | `suggestionTriggerCharacter`(str) | A `string` character to trigger suggestions. (default: `@`)                                   |
 | `tooltipPlacement`(str)           | The tooltip postion relative to the target. (default: `top` -- see Tooltip API for more info) |
