@@ -1,4 +1,4 @@
-export function checkPropTypesForErrors({
+export function checkPropTypes({
   autoGrow,
   children,
   classes,
@@ -43,7 +43,7 @@ export function checkPropTypesForErrors({
     );
   if (!Array.isArray(commands))
     throw Error(
-      "The MDEditor was initialized with an invalid 'commands' property. It must be a single array one or many arrays of grouped object commands!"
+      "The MDEditor was initialized with an invalid 'commands' property. It must be a single array of one or many arrays of grouped object commands!"
     );
   if (typeof debounceSuggestions !== "number")
     throw Error(

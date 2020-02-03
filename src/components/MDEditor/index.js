@@ -4,7 +4,7 @@ import Toolbar from "~components/Toolbar";
 import TextArea from "~components/TextArea";
 import SvgIcon from "~icons";
 import { getDefaultCommands } from "~commands";
-import { checkPropTypesForErrors, classNames } from "~utils";
+import { checkPropTypes, classNames } from "~utils";
 import Commander from "../Commander";
 
 export class MDEditor extends React.Component {
@@ -16,7 +16,7 @@ export class MDEditor extends React.Component {
     };
     this.gripDrag = null;
 
-    checkPropTypesForErrors(props);
+    checkPropTypes(props);
   }
 
   componentDidMount() {

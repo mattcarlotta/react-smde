@@ -62,9 +62,7 @@ class App extends Component {
   render = () => (
     <div className="container">
       <MDEditor onChange={this.handleValueChange} value={this.state.value}>
-        <ReactMarkdown skipHtml className="mde-preview-content">
-          {this.state.value}
-        </ReactMarkdown>
+        <ReactMarkdown skipHtml>{this.state.value}</ReactMarkdown>
       </MDEditor>
     </div>
   );
@@ -75,34 +73,34 @@ class App extends Component {
 
 The following props are accepted by `MDEditor`:
 
-| `prop`                            | Description                                                                                                                      |
-| --------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| `autoGrow`(bool)                  | A `boolean` to autogrow the textarea until the `maxEditorHeight` has been reached (default: `false`).                            |
-| `classes`(obj)                    | An optional `object` of `string` classNames that will be appended to the specified className (see Custom Styling for more info). |
-| `commands`(arr)                   | A single `array` with an array of grouped object commands (see Commands for more info).                                          |
-| `debounceSuggestions`(num)        | A `number` set in `ms` to debounce calling the `loadSuggestions` function. (default: `300`)††                                    |
-| `disableGrip`(bool)               | A `boolean` to disable the textarea resizing bottom button. (default: `false`)                                                   |
-| `disableHotKeys`(bool)            | A `boolean` to disable the textarea hot keys. (default: `false`)                                                                 |
-| `disablePreview`(bool)            | A `boolean` to disable the preview button. (default: `false`)                                                                    |
-| `disableToolbar`(bool)            | A `boolean` to disable the toolbar. (default: `false`)                                                                           |
-| `loadSuggestions`(func)           | A `function` that returns an `array` of suggestions triggered by the `suggestionTriggerCharacter`.                               |
-| `maxEditorHeight`(num)            | A maximum editor height `number` that is set in `px`. (default: `500`)                                                           |
-| `maxEditorWidth` (num)            | A maximum editor width `number` that is set in `px`. (default: `100%`)                                                           |
-| `minEditorHeight`(num)            | A minimum editor height `number` that is set in `px`. (default: `250`)                                                           |
-| `minPreviewHeight`(num)           | A minimum preview height `number` that is set in `px`. (default: `200`)                                                          |
-| `onChange`(func)                  | A **required** callback `function` to handle value changes.                                                                      |
-| `readOnly`(bool)                  | A `boolean` to disable editing the text within the textarea. (default: `false`)                                                  |
-| `selectedTab`(str)                | A `string` (`write`/`preview`) to initialize the editor view in. (default: `write`)                                              |
-| `suggestionTriggerCharacter`(str) | A `string` character to trigger suggestions. (default: `@`)                                                                      |
-| `textAreaProps`(obj)              | An optional `object` of properties to apply to the textarea.                                                                     |
-| `tooltipPlacement`(str)           | The tooltip postion relative to the target. (default: `top` -- see Tooltips for more info)                                       |
-| `value`(str)                      | A **required** `string` value.                                                                                                   |
+| `prop`                            | Description                                                                                                                                         |
+| --------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `autoGrow`(bool)                  | A `boolean` to autogrow the textarea until the `maxEditorHeight` has been reached (default: `false`).                                               |
+| `classes`(obj)                    | An optional `object` of `string` classNames that will be appended to the specified className (see [Custom Styling](#custom-styling) for more info). |
+| `commands`(arr)                   | A single `array` with an array of grouped object commands (see Commands for more info).                                                             |
+| `debounceSuggestions`(num)        | A `number` set in `ms` to debounce calling the `loadSuggestions` function. (default: `300`)††                                                       |
+| `disableGrip`(bool)               | A `boolean` to disable the bottom textarea resizing button. (default: `false`)                                                                      |
+| `disableHotKeys`(bool)            | A `boolean` to disable the textarea hot keys. (default: `false`)                                                                                    |
+| `disablePreview`(bool)            | A `boolean` to disable the preview button. (default: `false`)                                                                                       |
+| `disableToolbar`(bool)            | A `boolean` to disable the toolbar. (default: `false`)                                                                                              |
+| `loadSuggestions`(func)           | A `function` that returns an `array` of suggestions triggered by the `suggestionTriggerCharacter`. (see [Suggestions](#suggesitons) for more info)  |
+| `maxEditorHeight`(num)            | A maximum editor height `number` that is set in `px`. (default: `500`)                                                                              |
+| `maxEditorWidth` (num)            | A maximum editor width `number` that is set in `px`. (default: `100%`)                                                                              |
+| `minEditorHeight`(num)            | A minimum editor height `number` that is set in `px`. (default: `250`)                                                                              |
+| `minPreviewHeight`(num)           | A minimum preview height `number` that is set in `px`. (default: `200`)                                                                             |
+| `onChange`(func)                  | A **required** callback `function` to handle value changes.                                                                                         |
+| `readOnly`(bool)                  | A `boolean` to disable editing the text within the textarea. (default: `false`)                                                                     |
+| `selectedTab`(str)                | A `string` (`write`/`preview`) to initialize the editor view in. (default: `write`)                                                                 |
+| `suggestionTriggerCharacter`(str) | A `string` character to trigger suggestions. (default: `@`)                                                                                         |
+| `textAreaProps`(obj)              | An optional `object` of properties to apply to the textarea.                                                                                        |
+| `tooltipPlacement`(str)           | The tooltip postion relative to the target. (default: `top` -- see [Tooltips](#tooltips) for more info)                                             |
+| `value`(str)                      | A **required** `string` value.                                                                                                                      |
 
 † Setting `debounceSuggestions` lower than 300ms, will disable the suggestions loading indictor. In testing, a number lower than 300ms caused unavoidable UI flashes when the returned data is static. As such, this allows you to utilize an array of static data and avoid seeing a loading indicator for each key input.
 
 ## Markdown Previewing
 
-react-smde is unopinated when it comes to previewing markdown content. Therefore, you **must** supply your own Markdown previewer as `children` to the `MDEditor`. The demo provided in the source and the example below utilizes [react-markdown](https://github.com/rexxars/react-markdown).
+The `MDEditor` is unopinated when it comes to previewing markdown content. Therefore, you **must** supply your own Markdown previewer as `children` to the `MDEditor`. The demo provided in the source and the example below utilizes [react-markdown](https://github.com/rexxars/react-markdown).
 
 ```jsx
 import React, { Component } from "react";
@@ -129,7 +127,7 @@ class App extends Component {
 
 ## Custom Styling
 
-The MDEditor was designed to be as flexible as possible when it comes to customizing the appearance of the editor. As such, you have several options:
+The `MDEditor` was designed to be as flexible as possible when it comes to customizing the appearance of the editor. As such, you have several options:
 
 **Option 1**: Pass a `classes` object property to the `MEDitor` with a custom class name targeting the specified property.
 
@@ -183,7 +181,7 @@ mde-tooltip (applied to root tooltip)
 
 ## Commands
 
-You can rearrange, remove and adjust command properties (and their icons). The `commands` property of `MDEditor` expects a single array one or many arrays of grouped object commands.
+You can rearrange, remove and adjust command properties (and their icons). The `commands` property of `MDEditor` expects a single array of one or many arrays of grouped object commands.
 
 Commands are simple objects where `name` must match a name from the predefined [list](src/commands/index.js#L18-L27), however, everything else is customizable:
 
@@ -196,10 +194,12 @@ Commands are simple objects where `name` must match a name from the predefined [
 }
 ```
 
+The `icon` property must be a React node. You can either pass your own node or you can import the `SvgIcon` from this package and pass it an `icon` string property as shown above. For predefined icons, please see this <a href="https://github.com/mattcarlotta/react-smde/blob/master/src/icons/index.js#L225-L258">function</a>, which returns a predefined React SVG node based upon a string.
+
 For example:
 
 ```jsx
-import MDEditor, { commands } from "react-smde";
+import MDEditor, { commands, SvgIcon } from "react-smde";
 import "react-smde/styles/react-smde.css";
 
 const { checkedList, orderedList, unorderedList } = commands;
@@ -212,7 +212,7 @@ const { checkedList, orderedList, unorderedList } = commands;
             name: "bold",
             tooltip: "Add bold text (ctrl+b)",
             buttonProps: { "aria-label": "Add bold text" },
-            icon: <>Bold</>
+            icon: <SvgIcon icon="bold" />
           }
         ]
       ]
@@ -236,11 +236,13 @@ In order to use suggestions, you must supply a callback function to the `MDEdito
 ]
 ```
 
-By default, the `MDEditor` expects the data to be filtered server-side or by the `loadSuggestions` callback function. The suggestions overlay will only be triggered by the `suggestionTriggerCharacter` and will only execute the `loadSuggestions` function as determined by the `debounceSuggestions` property.
+By default, the `MDEditor` expects the data to be filtered server-side or by the `loadSuggestions` callback function.
+
+The suggestions overlay will only be triggered by the `suggestionTriggerCharacter` and will only execute the `loadSuggestions` function as determined by the `debounceSuggestions` property.
 
 Please note that setting a `debounceSuggestions` lower than `300`ms will disable the loading indicator -- this is useful if the returned data remains static.
 
-For example, static data is returned:
+For example a dynamic data set, see the [Demo](#demo) example above, otherwise here's a static data example:
 
 ```jsx
 import React, { Component } from "react";
@@ -260,11 +262,10 @@ class App extends Component {
 
   handleValueChange = value => this.setState({ value });
 
-  loadSuggestions = searchText => {
-    return this.state.suggestions.filter(({ value }) =>
+  loadSuggestions = searchText =>
+    this.state.suggestions.filter(({ value }) =>
       value.toLowerCase().includes(searchText.toLowerCase())
     );
-  };
 
   render = () => (
     <div className="container">
@@ -319,3 +320,4 @@ In order to make react-smde, the following packages are referenced and used with
 - https://github.com/andrerpena/react-mde
 - https://github.com/ant-design/ant-design
 - https://github.com/react-component/tooltip
+- https://github.com/lakebeach/rollup-plugin-local-resolving
