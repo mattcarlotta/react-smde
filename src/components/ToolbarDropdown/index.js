@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import ClickHandler from "~components/ClickHandler";
 import Tooltip from "~components/Tooltip";
 import ToolbarButton from "~components/ToolbarButton";
@@ -39,18 +40,19 @@ export const ToolbarDropdown = ({
           </Tooltip>
           {isVisible ? (
             <ul className={classNames("mde-dropdown", classes.mdedrop)}>
-              {commands.map((command, index) => (
+              {commands.map(({ name, buttonProps, icon }, index) => (
                 <ToolbarButton
                   key={`header-item${index}`}
-                  name={command.name}
-                  buttonProps={command.buttonProps}
-                  buttonContent={command.icon}
+                  name={name}
+                  buttonProps={buttonProps}
+                  buttonContent={icon}
                   classes={classes}
                   onClick={() => {
-                    onCommand(command);
+                    onCommand(name);
                     closeDropdown();
                   }}
                   readOnly={disabled}
+                  tooltipPlacement={tooltipPlacement}
                 />
               ))}
             </ul>
@@ -63,6 +65,32 @@ export const ToolbarDropdown = ({
 
 ToolbarDropdown.defaultProps = {
   buttonProps: {}
+};
+
+ToolbarDropdown.propTypes = {
+  buttonContent: PropTypes.node.isRequired,
+  buttonProps: PropTypes.objectOf(
+    PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.func])
+  ),
+  classes: PropTypes.objectOf(PropTypes.string),
+  commands: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+      tooltip: PropTypes.string,
+      buttonProps: PropTypes.objectOf(
+        PropTypes.oneOfType([
+          PropTypes.string,
+          PropTypes.number,
+          PropTypes.func
+        ])
+      ),
+      icon: PropTypes.node
+    })
+  ),
+  disabled: PropTypes.bool,
+  onCommand: PropTypes.func.isRequired,
+  tooltip: PropTypes.string,
+  tooltipPlacement: PropTypes.string.isRequired
 };
 
 export default ToolbarDropdown;

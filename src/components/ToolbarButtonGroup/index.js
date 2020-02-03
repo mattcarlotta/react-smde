@@ -10,7 +10,7 @@ export const ToolbarButtonGroup = ({ children, classes }) => (
 
 ToolbarButtonGroup.propTypes = {
   children: PropTypes.arrayOf(PropTypes.node).isRequired,
-  classes: PropTypes.object
+  classes: PropTypes.objectOf(PropTypes.string)
 };
 
 export default ToolbarButtonGroup;

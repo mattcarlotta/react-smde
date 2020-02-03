@@ -1,9 +1,10 @@
 import React from "react";
+import PropTypes, { checkPropTypes } from "prop-types";
 import Toolbar from "~components/Toolbar";
 import TextArea from "~components/TextArea";
 import SvgIcon from "~icons";
 import { getDefaultCommands } from "~commands";
-import { classNames } from "~utils";
+import { checkPropTypesForErrors, classNames } from "~utils";
 import Commander from "../Commander";
 
 export class MDEditor extends React.Component {
@@ -15,23 +16,21 @@ export class MDEditor extends React.Component {
     };
     this.gripDrag = null;
 
-    const { children, onChange, value } = props;
-    if (!children)
-      throw Error("The MDEditor must include a Markdown previewer as a child!");
-    if (typeof value !== "string")
-      throw Error("The MDEditor must include a string value property!");
-    if (typeof onChange !== "function")
-      throw Error("The MDEditor must include an onChange function property!");
+    checkPropTypesForErrors(props);
   }
 
   componentDidMount() {
-    document.addEventListener("mousemove", this.handleGripMouseMove);
-    document.addEventListener("mouseup", this.handleGripMouseUp);
+    if (document) {
+      document.addEventListener("mousemove", this.handleGripMouseMove);
+      document.addEventListener("mouseup", this.handleGripMouseUp);
+    }
   }
 
   componentWillUnmount() {
-    document.removeEventListener("mousemove", this.handleGripMouseMove);
-    document.removeEventListener("mouseup", this.handleGripMouseUp);
+    if (document) {
+      document.removeEventListener("mousemove", this.handleGripMouseMove);
+      document.removeEventListener("mouseup", this.handleGripMouseUp);
+    }
   }
 
   handleTextChange = value => {
@@ -108,7 +107,7 @@ export class MDEditor extends React.Component {
   };
 
   handleCommand = command => {
-    const { start, end } = Commander(this.textAreaRef, command.name);
+    const { start, end } = Commander(this.textAreaRef, command);
     this.textAreaRef.focus();
     this.textAreaRef.selectionStart = start;
     this.textAreaRef.selectionEnd = end;
@@ -117,6 +116,9 @@ export class MDEditor extends React.Component {
   render() {
     const {
       classes,
+      disableGrip,
+      disableHotKeys,
+      disableToolbar,
       loadSuggestions,
       maxEditorWidth,
       textAreaProps,
@@ -128,27 +130,34 @@ export class MDEditor extends React.Component {
         className={classNames("mde", classes.mde)}
         style={{ width: maxEditorWidth }}
       >
-        <Toolbar
-          {...this.props}
-          {...this.state}
-          onCommand={this.handleCommand}
-          onTabChange={this.handleTabChange}
-        />
+        {!disableToolbar && (
+          <Toolbar
+            {...this.props}
+            {...this.state}
+            onCommand={this.handleCommand}
+            onTabChange={this.handleTabChange}
+          />
+        )}
         <TextArea
           {...this.props}
+          {...this.state}
           editorRef={this.setTextAreaRef}
-          onChange={this.handleTextChange}
-          textAreaProps={textAreaProps}
+          disableHotKeys={disableHotKeys}
           height={this.state.editorHeight}
-          selectedTab={this.state.tab === "preview"}
+          onCommand={this.handleCommand}
+          onChange={this.handleTextChange}
+          onTabChange={this.handleTabChange}
           suggestionsEnabled={suggestionTriggerCharacter && loadSuggestions}
+          textAreaProps={textAreaProps}
         />
-        <div
-          className={classNames("mde-grip", classes.grip)}
-          onMouseDown={this.handleGripMouseDown}
-        >
-          <SvgIcon icon="grip" />
-        </div>
+        {!disableGrip && (
+          <div
+            className={classNames("mde-grip", classes.grip)}
+            onMouseDown={this.handleGripMouseDown}
+          >
+            <SvgIcon icon="grip" />
+          </div>
+        )}
       </div>
     );
   }
@@ -159,15 +168,64 @@ MDEditor.defaultProps = {
   classes: {},
   commands: getDefaultCommands(),
   debounceSuggestions: 300,
+  disableGrip: false,
+  disableHotKeys: false,
   disablePreview: false,
+  disableToolbar: false,
   maxEditorHeight: 500,
   maxEditorWidth: "100%",
   minEditorHeight: 250,
   minPreviewHeight: 200,
   readOnly: false,
+  selectedTab: "write",
   suggestionTriggerCharacter: "@",
   textAreaProps: { placeholder: "What's on your mind?" },
   tooltipPlacement: "top"
+};
+
+MDEditor.propTypes = {
+  autoGrow: PropTypes.bool,
+  classes: PropTypes.objectOf(PropTypes.string),
+  commands: PropTypes.arrayOf(
+    PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string,
+        tooltip: PropTypes.string,
+        buttonProps: PropTypes.objectOf(
+          PropTypes.oneOfType([
+            PropTypes.string,
+            PropTypes.number,
+            PropTypes.func
+          ])
+        ),
+        icon: PropTypes.node
+      })
+    )
+  ),
+  debounceSuggestions: PropTypes.number,
+  disableGrip: PropTypes.bool.isRequired,
+  disableHotKeys: PropTypes.bool.isRequired,
+  disablePreview: PropTypes.bool.isRequired,
+  disableToolbar: PropTypes.bool.isRequired,
+  maxEditorHeight: PropTypes.number.isRequired,
+  maxEditorWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+    .isRequired,
+  minEditorHeight: PropTypes.number.isRequired,
+  minPreviewHeight: PropTypes.number.isRequired,
+  onChange: PropTypes.func.isRequired,
+  readOnly: PropTypes.bool,
+  selectedTab: PropTypes.string,
+  suggestionTriggerCharacter: PropTypes.string,
+  textAreaProps: PropTypes.objectOf(
+    PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.string,
+      PropTypes.func,
+      PropTypes.bool
+    ])
+  ),
+  tooltipPlacement: PropTypes.string,
+  value: PropTypes.string
 };
 
 export default MDEditor;

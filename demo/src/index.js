@@ -34,7 +34,7 @@ class App extends Component {
           value.toLowerCase().includes(searchText.toLowerCase())
         );
         resolve(suggestions);
-      }, 250);
+      }, 1000);
     });
 
     return suggestions;

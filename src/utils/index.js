@@ -1,3 +1,4 @@
+export * from "./CheckPropTypes";
 export * from "./ClassNames";
 export * from "./CommandUtils";
 export * from "./GetStateFromTextArea";

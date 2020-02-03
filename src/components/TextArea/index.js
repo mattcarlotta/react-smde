@@ -72,32 +72,40 @@ export class TextArea extends React.Component {
   };
 
   handleKeyDown = event => {
-    const { key } = event;
+    const { key, ctrlKey } = event;
     const { focusIndex, suggestions, status, startPosition } = this.state;
     const {
       debounceSuggestions,
+      disableHotKeys,
+      onCommand,
+      onTabChange,
       suggestionsEnabled,
-      suggestionTriggerCharacter
+      suggestionTriggerCharacter,
+      tab
     } = this.props;
     const { selectionStart } = this.textAreaElement;
-    const suggestionsActive = status === "active";
-    const suggestionsLoading = status === "loading";
+    const [suggestionsActive, suggestionsLoading, suggestionsInactive] = [
+      "active",
+      "loading",
+      "inactive"
+    ].map(s => status === s);
+    const isNavKey = ["ArrowUp", "ArrowDown", "Tab", "Enter"].some(
+      k => k === key
+    );
+    const isSpecialKey = ["Shift", "Alt", "CapsLock"].some(k => k === key);
 
     // if suggestions are enabled
     if (suggestionsEnabled) {
       // and active/loading and the following keys were pressed...
       if (
         (suggestionsActive || suggestionsLoading) &&
-        (key === "ArrowUp" ||
-          key === "ArrowDown" ||
-          key === "Tab" ||
-          key === "Enter")
+        (isNavKey || (ctrlKey && key === "k"))
       ) {
         // prevent default key presses within textarea when suggestions are active
         event.preventDefault();
       }
 
-      if (!suggestionsActive && key === suggestionTriggerCharacter) {
+      if (suggestionsInactive && key === suggestionTriggerCharacter) {
         //  else if key pressed is suggestionTriggerCharacter and suggestions are inactive, update state and load suggestions
         this.setState(
           {
@@ -114,14 +122,19 @@ export class TextArea extends React.Component {
       } else if (
         (suggestionsActive || suggestionsLoading) &&
         (key === "Escape" ||
-          (key === "Backspace" && selectionStart <= startPosition))
+          ((key === "Backspace" || (ctrlKey && key === "z")) &&
+            selectionStart <= startPosition))
       ) {
         // else if key pressed is esc or backspace and cursor position is less than initial,
         // then reset back to initial state and return to prevent the bottom statement from executing
+        this.clearSearchTimer();
         this.setState(initialState);
         return;
-      } else if (key === "ArrowUp" || key === "ArrowDown" || key === "Tab") {
-        // if arrow up/down keys or tab were pressed
+      } else if (key === "Enter" && suggestions.length > 0) {
+        // else if enter was pressed, pass back the index that was focused upon
+        this.handleSuggestionSelected(focusIndex);
+      } else if (isNavKey) {
+        // if arrow up/down or tab keys were pressed
         // move the focus of the suggestion up/down accordingly
         const focusDelta = key === "ArrowUp" ? -1 : 1;
         this.setState(prevState => ({
@@ -131,15 +144,7 @@ export class TextArea extends React.Component {
             prevState.suggestions.length
           )
         }));
-      } else if (key === "Enter" && suggestions.length > 0) {
-        // else if enter was pressed, pass back the index that was focused upon
-        this.handleSuggestionSelected(focusIndex);
-      } else if (
-        status !== "inactive" &&
-        key !== "ArrowDown" &&
-        key !== "Tab" &&
-        key !== "Enter"
-      ) {
+      } else if (!suggestionsInactive && !isSpecialKey && !ctrlKey) {
         // check if suggestions aren't inactive
         // set status to loading, reset suggestions and call handleSuggesitons
         // debounced handleSuggestionSearch sets status to active when resolved
@@ -153,6 +158,34 @@ export class TextArea extends React.Component {
         );
       }
     }
+
+    // hot key commands (ctrl + key)
+    if (
+      !disableHotKeys &&
+      ctrlKey &&
+      (!suggestionsEnabled || suggestionsInactive)
+    ) {
+      switch (key) {
+        case "b": {
+          onCommand("bold");
+          break;
+        }
+        case "k": {
+          event.preventDefault();
+          onCommand("link");
+          break;
+        }
+        case "i": {
+          onCommand("italic");
+          break;
+        }
+        case "0": {
+          onTabChange(tab === "write" ? "preview" : "write");
+        }
+        default:
+          break;
+      }
+    }
   };
 
   render() {
@@ -162,12 +195,13 @@ export class TextArea extends React.Component {
       height,
       readOnly,
       suggestionsEnabled,
-      selectedTab,
+      tab,
       textAreaProps,
       value
     } = this.props;
-
     const { caret, focusIndex, suggestions, status } = this.state;
+
+    const selectedTab = tab === "preview";
 
     return (
       <div
@@ -182,15 +216,14 @@ export class TextArea extends React.Component {
           })}
           style={{ height }}
           ref={this.handleTextAreaRef}
-          onChange={this.handleOnChange}
-          readOnly={readOnly}
-          value={value}
-          data-testid="text-area"
           onBlur={
             suggestionsEnabled && suggestions.length > 0
               ? this.handleBlur
               : undefined
           }
+          onChange={this.handleOnChange}
+          readOnly={readOnly}
+          value={value}
           {...textAreaProps}
         />
         {selectedTab && (
@@ -226,11 +259,16 @@ export class TextArea extends React.Component {
 
 TextArea.propTypes = {
   children: PropTypes.node.isRequired,
-  classes: PropTypes.objectOf(PropTypes.shape),
+  classes: PropTypes.objectOf(PropTypes.string),
+  disableHotKeys: PropTypes.bool.isRequired,
+  editorRef: PropTypes.func.isRequired,
   height: PropTypes.number,
+  onChange: PropTypes.func.isRequired,
+  onCommand: PropTypes.func.isRequired,
+  onTabChange: PropTypes.func.isRequired,
   readOnly: PropTypes.bool,
   suggestionsEnabled: PropTypes.func,
-  selectedTab: PropTypes.bool,
+  tab: PropTypes.string.isRequired,
   textAreaProps: PropTypes.objectOf(
     PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.func])
   ),

@@ -51,7 +51,7 @@ export const Toolbar = ({
                     key={props.name}
                     buttonContent={props.icon}
                     classes={classes}
-                    onClick={() => onCommand(props)}
+                    onClick={() => onCommand(props.name)}
                     disabled={disabled}
                     tooltipPlacement={tooltipPlacement}
                   />
@@ -68,7 +68,11 @@ export const Toolbar = ({
               overlayClassName={classNames("mde-tooltip", classes.mdetooltip)}
               placement={tooltipPlacement}
               trigger={["hover"]}
-              overlay={<span>{isPreviewing ? "Hide Preview" : "Preview"}</span>}
+              overlay={
+                <span>
+                  {isPreviewing ? "Hide Preview (ctrl+0)" : "Preview (ctrl+0)"}
+                </span>
+              }
             >
               <button
                 type="button"
@@ -85,23 +89,25 @@ export const Toolbar = ({
   );
 };
 
-Tooltip.propTypes = {
-  classes: PropTypes.objectOf(PropTypes.shape),
+Toolbar.propTypes = {
+  classes: PropTypes.objectOf(PropTypes.string),
   commands: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string,
-      tooltip: PropTypes.string,
-      buttonProps: PropTypes.objectOf(
-        PropTypes.oneOfType([
-          PropTypes.string,
-          PropTypes.number,
-          PropTypes.func
-        ])
-      ),
-      icon: PropTypes.node
-    })
+    PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string,
+        tooltip: PropTypes.string,
+        buttonProps: PropTypes.objectOf(
+          PropTypes.oneOfType([
+            PropTypes.string,
+            PropTypes.number,
+            PropTypes.func
+          ])
+        ),
+        icon: PropTypes.node
+      })
+    )
   ),
-  disablePreview: PropTypes.bool,
+  disablePreview: PropTypes.bool.isRequired,
   onCommand: PropTypes.func,
   onTabChange: PropTypes.func,
   readOnly: PropTypes.bool,

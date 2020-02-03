@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Tooltip from "~components/Tooltip";
 import { classNames } from "~utils";
 
@@ -6,8 +7,8 @@ export const ToolbarButton = ({
   buttonContent,
   buttonProps,
   classes,
-  onClick,
   disabled,
+  onClick,
   name,
   tooltip,
   tooltipPlacement
@@ -42,6 +43,23 @@ export const ToolbarButton = ({
       )}
     </li>
   );
+};
+
+ToolbarButton.defaultProps = {
+  buttonProps: {}
+};
+
+ToolbarButton.propTypes = {
+  buttonContent: PropTypes.node.isRequired,
+  buttonProps: PropTypes.objectOf(
+    PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.func])
+  ),
+  classes: PropTypes.objectOf(PropTypes.string),
+  disabled: PropTypes.bool,
+  onClick: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
+  tooltip: PropTypes.string,
+  tooltipPlacement: PropTypes.string.isRequired
 };
 
 export default ToolbarButton;
