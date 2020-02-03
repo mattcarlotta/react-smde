@@ -1,5 +1,5 @@
 import React from "react";
-import PropTypes, { checkPropTypes } from "prop-types";
+import PropTypes from "prop-types";
 import Toolbar from "~components/Toolbar";
 import TextArea from "~components/TextArea";
 import SvgIcon from "~icons";
