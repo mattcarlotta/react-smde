@@ -82,14 +82,14 @@ The following props are accepted by `MDEditor`:
 | `selectedTab`(str)                | A `string` (`write`/`preview`) to initialize the editor view in. (default: `write`)                                                                 |
 | `suggestionTriggerCharacter`(str) | A `string` character to trigger suggestions. (default: `@`)                                                                                         |
 | `textAreaProps`(obj)              | An optional `object` of properties to apply to the textarea.                                                                                        |
-| `tooltipPlacement`(str)           | The tooltip postion relative to the target. (default: `top` -- see [Tooltips](#tooltips) for more info)                                             |
+| `tooltipPlacement`(str)           | The tooltip position relative to the target. (default: `top` -- see [Tooltips](#tooltips) for more info)                                            |
 | `value`(str)                      | A **required** `string` value.                                                                                                                      |
 
-† Setting `debounceSuggestions` lower than 300ms, will disable the suggestions loading indictor. In testing, a number lower than 300ms caused unavoidable UI flashes when the returned data is static. As such, this allows you to utilize an array of static data and avoid seeing a loading indicator for each key input.
+† Setting `debounceSuggestions` lower than 300ms, will disable the suggestions loading indicator. In testing, a number lower than 300ms caused unavoidable UI flashes when the returned data is static. As such, this allows you to utilize an array of static data and avoid seeing a loading indicator for each key input.
 
 ## Markdown Previewing
 
-The `MDEditor` is unopinated when it comes to previewing markdown content. Therefore, you **must** supply your own Markdown previewer as `children` to the `MDEditor`. The demo provided in the source and the example below utilizes [react-markdown](https://github.com/rexxars/react-markdown).
+The `MDEditor` is unopinionated when it comes to previewing markdown content. Therefore, you **must** supply your own Markdown previewer as `children` to the `MDEditor`. The demo provided in the source and the example below utilizes [react-markdown](https://github.com/rexxars/react-markdown).
 
 ```jsx
 import React, { Component } from "react";
@@ -118,7 +118,7 @@ class App extends Component {
 
 The `MDEditor` was designed to be as flexible as possible when it comes to customizing the appearance of the editor. As such, you have several options:
 
-**Option 1**: Pass a `classes` object property to the `MEDitor` with a custom class name targeting the specified property.
+**Option 1**: Pass a `classes` object property to the `MDEditor` with a custom class name targeting the specified property.
 
 <details>
 <summary>Click to view a summary of available "mde" property overrides...</summary>
