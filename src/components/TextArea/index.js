@@ -28,6 +28,7 @@ export class TextArea extends React.Component {
   componentWillUnmount() {
     document.removeEventListener("keydown", this.handleKeyDown);
     this.clearSearchTimer();
+    this.clearVoidSuggestionTimer();
   }
 
   handleTextAreaRef = element => {
@@ -39,7 +40,7 @@ export class TextArea extends React.Component {
 
   handleBlur = () => {
     this.clearSearchTimer();
-    clearInterval(this.voidSuggestionTimer);
+    this.clearVoidSuggestionTimer();
     this.setState(initialState, () => (this.promiseCount = 0));
   };
 
@@ -73,6 +74,11 @@ export class TextArea extends React.Component {
   clearSearchTimer = () => {
     if (this.searchTimer) clearTimeout(this.searchTimer);
     this.searchTimer = null;
+  };
+
+  clearVoidSuggestionTimer = () => {
+    clearInterval(this.voidSuggestionTimer);
+    this.voidSuggestionTimer = null;
   };
 
   handleSuggestionSearch = () => {
@@ -189,6 +195,7 @@ export class TextArea extends React.Component {
 
     // if the input is too fast/limited to two characters and immediately followed
     // by ctrl+z, then this will handle empty values
+    if (this.voidSuggestionTimer) this.clearVoidSuggestionTimer();
     this.voidSuggestionTimer = setTimeout(() => {
       const { value } = this.props;
       if (
