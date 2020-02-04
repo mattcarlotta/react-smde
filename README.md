@@ -5,16 +5,27 @@ A lightweight **Simple Markdown Editor** for React.
 <img src="https://img.shields.io/github/package-json/v/mattcarlotta/react-smde?style=for-the-badge"></img> [![Codecov](https://img.shields.io/codecov/c/github/mattcarlotta/react-smde?style=for-the-badge)](https://codecov.io/gh/mattcarlotta/react-smde) [![Open Issues](https://img.shields.io/github/issues-raw/mattcarlotta/react-smde?style=for-the-badge)](https://github.com/mattcarlotta/react-smde/issues) [![Dependencies](https://img.shields.io/david/mattcarlotta/react-smde.svg?style=for-the-badge)](https://david-dm.org/mattcarlotta/react-smde) [![License](https://img.shields.io/github/license/mattcarlotta/react-smde?style=for-the-badge)](https://github.com/mattcarlotta/react-smde/blob/master/LICENSE)
 
 [Installation](#installation)
+
 [Demo](#demo)
+
 [Basic Usage](#basic-usage)
+
 [Props](#props)
+
 [Markdown Previewing](#markdown-previewing)
+
 [Custom Styling](#custom-styling)
+
 [Commands](#commands)
+
 [Suggestions](#suggestions)
+
 [Tooltips](#tooltips)
+
 [Report Bugs](#report-bugs)
+
 [License](#license)
+
 [Third Party Resources](#third-party-resources)
 
 ## Installation
@@ -43,19 +54,19 @@ import ReactMarkdown from "react-markdown";
 import "react-smde/styles/react-smde.css";
 
 class App extends Component {
-  state = {
-    value: "## Hello"
-  };
+	state = {
+		value: "## Hello",
+	};
 
-  handleValueChange = value => this.setState({ value });
+	handleValueChange = value => this.setState({ value });
 
-  render = () => (
-    <div className="container">
-      <MDEditor onChange={this.handleValueChange} value={this.state.value}>
-        <ReactMarkdown skipHtml>{this.state.value}</ReactMarkdown>
-      </MDEditor>
-    </div>
-  );
+	render = () => (
+		<div className="container">
+			<MDEditor onChange={this.handleValueChange} value={this.state.value}>
+				<ReactMarkdown skipHtml>{this.state.value}</ReactMarkdown>
+			</MDEditor>
+		</div>
+	);
 }
 ```
 
@@ -98,19 +109,19 @@ import ReactMarkdown from "react-markdown";
 import "react-smde/styles/react-smde.css";
 
 class App extends Component {
-  state = {
-    value: "## Hello"
-  };
+	state = {
+		value: "## Hello",
+	};
 
-  handleValueChange = value => this.setState({ value });
+	handleValueChange = value => this.setState({ value });
 
-  render = () => (
-    <div className="container">
-      <MDEditor onChange={this.handleValueChange} value={this.state.value}>
-        <ReactMarkdown skipHtml>{this.state.value}</ReactMarkdown>
-      </MDEditor>
-    </div>
-  );
+	render = () => (
+		<div className="container">
+			<MDEditor onChange={this.handleValueChange} value={this.state.value}>
+				<ReactMarkdown skipHtml>{this.state.value}</ReactMarkdown>
+			</MDEditor>
+		</div>
+	);
 }
 ```
 
