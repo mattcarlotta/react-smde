@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { render } from "react-dom";
 import MDEditor from "../../src/index.js";
 import ReactMarkdown from "react-markdown";
-// import MDEditor from "../../dist";
+// import MDEditor from "../../dist/index.js";
 import "../../src/styles/all.scss";
 // import "../../dist/styles/react-smde.css";
 import "./styles/demo.scss";
