@@ -1,10 +1,14 @@
 {
   "files": {
-    "main.js": "/js/main.7f6680d7201894529592.js",
-    "runtime.js": "/js/runtime.b80779f21b59543b7f69.js",
+    "main.css": "/css/0.54c68898.css",
+    "main.js": "/js/main.25c2bc477f50585ee73f.js",
+    "runtime.js": "/js/runtime.ec37d83cc87f4ec01fd7.js",
+    "vendors~main.js": "/js/vendors~main.4ec17493306849c8aeb2.js",
+    "css/0.54c68898.css.map": "/css/0.54c68898.css.map",
     "favicon.ico": "/favicon.ico",
     "index.html": "/index.html",
-    "js/main.7f6680d7201894529592.js.LICENSE.txt": "/js/main.7f6680d7201894529592.js.LICENSE.txt",
+    "js/main.25c2bc477f50585ee73f.js.LICENSE.txt": "/js/main.25c2bc477f50585ee73f.js.LICENSE.txt",
+    "js/vendors~main.4ec17493306849c8aeb2.js.LICENSE.txt": "/js/vendors~main.4ec17493306849c8aeb2.js.LICENSE.txt",
     "logo_192.png": "/logo_192.png",
     "logo_512.png": "/logo_512.png",
     "manifest.json": "/manifest.json",

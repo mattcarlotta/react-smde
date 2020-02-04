@@ -34,19 +34,6 @@
 	"bugs": {
 		"url": "https://github.com/mattcarlotta/react-mde.git/issues"
 	},
-	"lint-staged": {
-		"*.{js,jsx}": [
-			"npm run builddemo"
-		],
-		"*.{json,md}": [
-			"prettier --write"
-		]
-	},
-	"husky": {
-		"hooks": {
-			"pre-commit": "lint-staged"
-		}
-	},
 	"devDependencies": {
 		"@babel/core": "^7.8.4",
 		"@babel/plugin-proposal-class-properties": "^7.8.3",
@@ -74,12 +61,10 @@
 		"file-loader": "^5.0.2",
 		"friendly-errors-webpack-plugin": "^1.7.0",
 		"html-webpack-plugin": "^4.0.0-beta.11",
-		"husky": "^4.2.1",
 		"identity-obj-proxy": "^3.0.0",
 		"jest": "^25.1.0",
 		"jest-css-modules-transform": "^4.0.0",
 		"jsdom": "^16.1.0",
-		"lint-staged": "^10.0.7",
 		"mini-css-extract-plugin": "^0.9.0",
 		"morgan": "^1.9.1",
 		"node-sass": "^4.13.1",
