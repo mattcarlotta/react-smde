@@ -26,10 +26,10 @@ export class SuggestionsDropdown extends React.PureComponent {
       {this.props.suggestions.length > 0 ? (
         this.props.suggestions.map(({ value }, i) => (
           <li
+            key={i}
             onMouseDown={this.handleSuggestionClick}
             onMouseOver={this.handleSuggestionFocus}
-            key={i}
-            aria-selected={Boolean(this.props.focusIndex === i).toString()}
+            aria-selected={this.props.focusIndex === i}
             data-index={i}
           >
             {value}

@@ -31,6 +31,19 @@ module.exports = function(api) {
           alias
         }
       ]
-    ]
+    ],
+    env: {
+      production: {
+        plugins: [
+          [
+            "transform-react-remove-prop-types",
+            {
+              mode: "remove",
+              removeImport: true
+            }
+          ]
+        ]
+      }
+    }
   };
 };

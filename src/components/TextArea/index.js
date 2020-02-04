@@ -9,11 +9,17 @@ const initialState = {
   suggestions: [],
   focusIndex: null,
   startPosition: null,
-  caret: {}
+  caret: {},
+  currentPromise: 0
 };
 
 export class TextArea extends React.Component {
-  state = initialState;
+  constructor(props) {
+    super(props);
+    this.state = initialState;
+    this.promiseCount = 0;
+    this.showLoading = props.debounceSuggestions >= 300;
+  }
 
   componentDidMount() {
     document.addEventListener("keydown", this.handleKeyDown);
@@ -31,18 +37,27 @@ export class TextArea extends React.Component {
 
   handleOnChange = ({ target: { value } }) => this.props.onChange(value);
 
-  handleBlur = () => this.setState(initialState);
+  handleBlur = () => {
+    this.clearSearchTimer();
+    clearInterval(this.voidSuggestionTimer);
+    this.setState(initialState, () => (this.promiseCount = 0));
+  };
 
-  handleSuggestions = async (text = "") => {
+  handleSuggestions = async (text = "", promise) => {
     const suggestions = await this.props.loadSuggestions(text);
-    const { status } = this.state;
+    const { status, currentPromise } = this.state;
 
-    if (!this.searchTimer && status !== "inactive") {
-      this.setState({
-        status: "active",
-        suggestions: suggestions || [],
-        focusIndex: 0
-      });
+    // check that the current promise matches the incoming promise to avoid UI flashing
+    if (currentPromise === promise && status !== "inactive") {
+      this.setState(
+        {
+          status: "active",
+          suggestions: suggestions || [],
+          focusIndex: 0,
+          currentPromise: 0
+        },
+        () => (this.promiseCount = 0)
+      );
     }
   };
 
@@ -61,13 +76,21 @@ export class TextArea extends React.Component {
   };
 
   handleSuggestionSearch = () => {
-    // store the timer to clear it if the component is unmounted while still loading
+    // clear timeout
     this.clearSearchTimer();
+
+    // update the promise count
+    this.promiseCount = this.showLoading ? this.promiseCount + 1 : 0;
+
+    // store the timeout
     this.searchTimer = setTimeout(() => {
+      // load suggestions based upon current search string
+      this.handleSuggestions(
+        this.props.value.substr(this.state.startPosition),
+        this.promiseCount
+      );
       // clear timeout
       this.clearSearchTimer();
-      // load suggestions based upon current search string
-      this.handleSuggestions(this.props.value.substr(this.state.startPosition));
     }, this.props.debounceSuggestions);
   };
 
@@ -75,7 +98,6 @@ export class TextArea extends React.Component {
     const { key, ctrlKey } = event;
     const { focusIndex, suggestions, status, startPosition } = this.state;
     const {
-      debounceSuggestions,
       disableHotKeys,
       onCommand,
       onTabChange,
@@ -106,29 +128,32 @@ export class TextArea extends React.Component {
       }
 
       if (suggestionsInactive && key === suggestionTriggerCharacter) {
-        //  else if key pressed is suggestionTriggerCharacter and suggestions are inactive, update state and load suggestions
+        // else if key pressed is suggestionTriggerCharacter and suggestions are inactive,
+        // update state and load suggestions
+        this.textAreaElement.focus();
         this.setState(
-          {
+          prevState => ({
+            ...prevState,
             isSearching: true,
             status: "loading",
             startPosition: selectionStart + 1,
             caret: getCaretCoordinates(
               this.textAreaElement,
               suggestionTriggerCharacter
-            )
-          },
-          () => this.handleSuggestions()
+            ),
+            currentPromise: this.showLoading ? 1 : 0
+          }),
+          () => this.handleSuggestionSearch()
         );
       } else if (
-        (suggestionsActive || suggestionsLoading) &&
-        (key === "Escape" ||
-          ((key === "Backspace" || (ctrlKey && key === "z")) &&
-            selectionStart <= startPosition))
+        ((suggestionsActive || suggestionsLoading) && key === "Escape") ||
+        ((key === "Backspace" || (ctrlKey && key === "z")) &&
+          selectionStart <= startPosition &&
+          this.props.value.substr(startPosition - 1) !== "@")
       ) {
         // else if key pressed is esc or backspace and cursor position is less than initial,
         // then reset back to initial state and return to prevent the bottom statement from executing
-        this.clearSearchTimer();
-        this.setState(initialState);
+        this.handleBlur();
         return;
       } else if (key === "Enter" && suggestions.length > 0) {
         // else if enter was pressed, pass back the index that was focused upon
@@ -144,20 +169,40 @@ export class TextArea extends React.Component {
             prevState.suggestions.length
           )
         }));
-      } else if (!suggestionsInactive && !isSpecialKey && !ctrlKey) {
+      } else if (!suggestionsInactive && !isSpecialKey) {
         // check if suggestions aren't inactive
         // set status to loading, reset suggestions and call handleSuggesitons
         // debounced handleSuggestionSearch sets status to active when resolved
-        const showLoading = debounceSuggestions >= 300;
         this.setState(
           prevState => ({
-            status: showLoading ? "loading" : prevState.status,
-            suggestions: showLoading ? [] : prevState.suggestions
+            status: this.showLoading ? "loading" : prevState.status,
+            suggestions: this.showLoading ? [] : prevState.suggestions,
+            currentPromise: this.showLoading ? prevState.currentPromise + 1 : 0
           }),
           () => this.handleSuggestionSearch()
         );
       }
     }
+
+    // if the input is too fast/limited to two characters and immediately followed
+    // by ctrl+z, then this will handle empty values
+    this.voidSuggestionTimer = setTimeout(() => {
+      const { value } = this.props;
+      if (
+        suggestionsEnabled &&
+        value.substr(startPosition - 1) !== "@" &&
+        !value.substr(startPosition) &&
+        ctrlKey &&
+        key === "z"
+      ) {
+        this.handleBlur();
+        return;
+      }
+    }, 50);
+
+    // if in preview and ctrl+z was pressed, revert back to write tab.
+    // not doing this, appears to lose history
+    if (ctrlKey && key === "z" && tab === "preview") onTabChange();
 
     // hot key commands (ctrl + key)
     if (
@@ -165,6 +210,7 @@ export class TextArea extends React.Component {
       ctrlKey &&
       (!suggestionsEnabled || suggestionsInactive)
     ) {
+      this.textAreaElement.focus();
       switch (key) {
         case "b": {
           onCommand("bold");
@@ -180,7 +226,7 @@ export class TextArea extends React.Component {
           break;
         }
         case "0": {
-          onTabChange(tab === "write" ? "preview" : "write");
+          onTabChange();
         }
         default:
           break;
@@ -192,7 +238,7 @@ export class TextArea extends React.Component {
     const {
       children,
       classes,
-      height,
+      editorHeight,
       readOnly,
       suggestionsEnabled,
       tab,
@@ -200,7 +246,9 @@ export class TextArea extends React.Component {
       value
     } = this.props;
     const { caret, focusIndex, suggestions, status } = this.state;
-
+    const [suggestionsActive, suggestionsLoading] = ["active", "loading"].map(
+      s => status === s
+    );
     const selectedTab = tab === "preview";
 
     return (
@@ -214,12 +262,12 @@ export class TextArea extends React.Component {
           className={classNames("mde-textarea", classes.mdetextarea, {
             hidden: selectedTab
           })}
-          style={{ height }}
+          style={{ height: editorHeight }}
           ref={this.handleTextAreaRef}
           onBlur={
             suggestionsEnabled && suggestions.length > 0
               ? this.handleBlur
-              : undefined
+              : null
           }
           onChange={this.handleOnChange}
           readOnly={readOnly}
@@ -229,7 +277,7 @@ export class TextArea extends React.Component {
         {selectedTab && (
           <div
             className={classNames("mde-preview", classes.mdepreview)}
-            style={{ height }}
+            style={{ height: editorHeight }}
           >
             <div
               className={classNames(
@@ -241,7 +289,7 @@ export class TextArea extends React.Component {
             </div>
           </div>
         )}
-        {status === "active" ? (
+        {suggestionsActive ? (
           <SuggestionsDropdown
             classes={classes}
             caret={caret}
@@ -251,7 +299,7 @@ export class TextArea extends React.Component {
             focusIndex={focusIndex}
           />
         ) : null}
-        {status === "loading" && <Spinner caret={caret} classes={classes} />}
+        {suggestionsLoading && <Spinner caret={caret} classes={classes} />}
       </div>
     );
   }

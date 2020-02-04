@@ -15,22 +15,17 @@ export class MDEditor extends React.Component {
       tab: props.selectedTab
     };
     this.gripDrag = null;
-
     checkPropTypes(props);
   }
 
   componentDidMount() {
-    if (document) {
-      document.addEventListener("mousemove", this.handleGripMouseMove);
-      document.addEventListener("mouseup", this.handleGripMouseUp);
-    }
+    document.addEventListener("mousemove", this.handleGripMouseMove);
+    document.addEventListener("mouseup", this.handleGripMouseUp);
   }
 
   componentWillUnmount() {
-    if (document) {
-      document.removeEventListener("mousemove", this.handleGripMouseMove);
-      document.removeEventListener("mouseup", this.handleGripMouseUp);
-    }
+    document.removeEventListener("mousemove", this.handleGripMouseMove);
+    document.removeEventListener("mouseup", this.handleGripMouseUp);
   }
 
   handleTextChange = value => {
@@ -47,12 +42,10 @@ export class MDEditor extends React.Component {
 
   handleGripMouseUp = () => (this.gripDrag = null);
 
-  handleGripMouseMove = event => {
+  handleGripMouseMove = ({ clientY }) => {
     if (this.gripDrag !== null) {
       const newHeight =
-        this.gripDrag.originalHeight +
-        event.clientY -
-        this.gripDrag.originalDragY;
+        this.gripDrag.originalHeight + clientY - this.gripDrag.originalDragY;
       if (
         newHeight >= this.props.minEditorHeight &&
         newHeight <= this.props.maxEditorHeight
@@ -61,17 +54,19 @@ export class MDEditor extends React.Component {
           ...prevState,
           editorHeight:
             this.gripDrag.originalHeight +
-            (event.clientY - this.gripDrag.originalDragY)
+            (clientY - this.gripDrag.originalDragY)
         }));
       }
     }
   };
 
-  handleTabChange = newTab => {
-    const { onTabChange } = this.props;
-    if (onTabChange) onTabChange(newTab);
-    else this.setState({ tab: newTab });
-  };
+  handleTabChange = () =>
+    this.setState(
+      prevState => ({
+        tab: prevState.tab === "write" ? "preview" : "write"
+      }),
+      () => this.textAreaRef.focus()
+    );
 
   adjustEditorSize = () => {
     if (
@@ -128,7 +123,7 @@ export class MDEditor extends React.Component {
     return (
       <div
         className={classNames("mde", classes.mde)}
-        style={{ width: maxEditorWidth }}
+        style={{ maxWidth: maxEditorWidth }}
       >
         {!disableToolbar && (
           <Toolbar
@@ -143,7 +138,6 @@ export class MDEditor extends React.Component {
           {...this.state}
           editorRef={this.setTextAreaRef}
           disableHotKeys={disableHotKeys}
-          height={this.state.editorHeight}
           onCommand={this.handleCommand}
           onChange={this.handleTextChange}
           onTabChange={this.handleTabChange}
@@ -175,7 +169,6 @@ MDEditor.defaultProps = {
   maxEditorHeight: 500,
   maxEditorWidth: "100%",
   minEditorHeight: 250,
-  minPreviewHeight: 200,
   readOnly: false,
   selectedTab: "write",
   suggestionTriggerCharacter: "@",
@@ -211,7 +204,6 @@ MDEditor.propTypes = {
   maxEditorWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
     .isRequired,
   minEditorHeight: PropTypes.number.isRequired,
-  minPreviewHeight: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired,
   readOnly: PropTypes.bool,
   selectedTab: PropTypes.string,

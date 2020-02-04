@@ -1,6 +1,6 @@
 # react-smde
 
-A **Simple Markdown Editor** for React.
+A lightweight **Simple Markdown Editor** for React.
 
 ## Table of contents
 
@@ -87,7 +87,6 @@ The following props are accepted by `MDEditor`:
 | `maxEditorHeight`(num)            | A maximum editor height `number` that is set in `px`. (default: `500`)                                                                              |
 | `maxEditorWidth` (num)            | A maximum editor width `number` that is set in `px`. (default: `100%`)                                                                              |
 | `minEditorHeight`(num)            | A minimum editor height `number` that is set in `px`. (default: `250`)                                                                              |
-| `minPreviewHeight`(num)           | A minimum preview height `number` that is set in `px`. (default: `200`)                                                                             |
 | `onChange`(func)                  | A **required** callback `function` to handle value changes.                                                                                         |
 | `readOnly`(bool)                  | A `boolean` to disable editing the text within the textarea. (default: `false`)                                                                     |
 | `selectedTab`(str)                | A `string` (`write`/`preview`) to initialize the editor view in. (default: `write`)                                                                 |
@@ -141,6 +140,8 @@ mdetoolbaritem (applied to toolbar items)
 mdetoolbarseparator (applied to toolbar separators)
 mdepreview (applied to preview wrapper)
 mdepreviewcontent (applied to previewed content)
+mdenosuggestions (applied to no suggestions result item)
+mdesuggestions (applied to suggestions overlay)
 mdetextarea (applied to textarea input)
 mdetextareawrapper (applied to textarea wrapper)
 mdetooltip (applied to root tooltip)
@@ -172,6 +173,8 @@ mde-toolbar-item (applied to toolbar items)
 mde-toolbar-separator (applied to toolbar separators)
 mde-preview (applied to preview wrapper)
 mde-preview-content (applied to previewed content)
+mde-no-suggestions (applied to no suggestions result item)
+mde-suggestions (applied to suggestions overlay)
 mde-textarea (applied to textarea input)
 mde-textarea-wrapper (applied to textarea wrapper)
 mde-tooltip (applied to root tooltip)

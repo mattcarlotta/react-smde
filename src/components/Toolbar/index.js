@@ -25,10 +25,7 @@ export const Toolbar = ({
   const hasCommands = commands && commands.length > 0;
 
   return (
-    <div
-      style={!hasCommands && disablePreview ? { display: "none" } : {}}
-      className={classNames("mde-toolbar", classes.mdetoolbar)}
-    >
+    <div className={classNames("mde-toolbar", classes.mdetoolbar)}>
       {hasCommands &&
         commands.map((commandGroup, i) => (
           <Fragment key={i}>
