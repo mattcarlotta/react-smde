@@ -50,12 +50,11 @@ export class MDEditor extends React.Component {
         newHeight >= this.props.minEditorHeight &&
         newHeight <= this.props.maxEditorHeight
       ) {
-        this.setState(prevState => ({
-          ...prevState,
+        this.setState({
           editorHeight:
             this.gripDrag.originalHeight +
             (clientY - this.gripDrag.originalDragY)
-        }));
+        });
       }
     }
   };
