@@ -5,13 +5,13 @@ import { classNames } from "~utils";
 export class SuggestionsDropdown extends React.PureComponent {
   handleSuggestionFocus = ({ currentTarget }) => {
     this.props.onSuggestionFocus(
-      parseInt(currentTarget.attributes["data-index"].value)
+      parseInt(currentTarget.attributes["data-index"].value, 10)
     );
   };
 
   handleSuggestionClick = ({ currentTarget }) => {
     this.props.onSuggestionSelected(
-      parseInt(currentTarget.attributes["data-index"].value)
+      parseInt(currentTarget.attributes["data-index"].value, 10)
     );
   };
 

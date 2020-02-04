@@ -19,7 +19,10 @@ module.exports = function(api) {
   api.cache(true);
 
   return {
-    presets: ["@babel/preset-react"],
+    presets: [
+      ["@babel/preset-env", { modules: false, loose: true }],
+      "@babel/preset-react"
+    ],
     plugins: [
       "@babel/plugin-transform-runtime",
       "@babel/plugin-proposal-export-namespace-from",
@@ -33,24 +36,7 @@ module.exports = function(api) {
       ]
     ],
     env: {
-      development: {
-        presets: [["@babel/preset-env"]],
-        plugins: [["@babel/plugin-transform-modules-commonjs"]]
-      },
-      buildemo: {
-        presets: [["@babel/preset-env"]],
-        plugins: [
-          [
-            "transform-react-remove-prop-types",
-            {
-              mode: "remove",
-              removeImport: true
-            }
-          ]
-        ]
-      },
       production: {
-        presets: [["@babel/preset-env", { modules: false }]],
         plugins: [
           [
             "transform-react-remove-prop-types",

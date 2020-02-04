@@ -31,7 +31,6 @@ const plugins = [
   localResolver(),
   commonjs(),
   terser({
-    sourcemap: true,
     output: {
       comments: "false"
     }

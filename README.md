@@ -44,7 +44,7 @@ yarn install react-smde
 
 - [Live Demo]()
 - [Demo on CodeSandbox]()
-- Local demo (cloned repo) `npm i && npm run builddemo && npm run demo` || `yarn install && yarn builddemo && yarn demo`
+- Local demo (cloned repo) `npm i && npm run builddemo && npm run demo` or `yarn install && yarn builddemo && yarn demo`
 
 ## Basic Usage
 
@@ -76,18 +76,18 @@ The following props are accepted by `MDEditor`:
 
 | `prop`                            | Description                                                                                                                                         |
 | --------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `autoGrow`(bool)                  | A `boolean` to autogrow the textarea until the `maxEditorHeight` has been reached (default: `false`).                                               |
-| `classes`(obj)                    | An optional `object` of `string` classNames that will be appended to the specified className (see [Custom Styling](#custom-styling) for more info). |
-| `commands`(arr)                   | A single `array` with an array of grouped object commands (see Commands for more info).                                                             |
-| `debounceSuggestions`(num)        | A `number` set in `ms` to debounce calling the `loadSuggestions` function. (default: `300`)††                                                       |
+| `autoGrow`(bool)                  | A `boolean` to autogrow the textarea until the `maxEditorHeight` has been reached. (default: `false`)                                               |
+| `classes`(obj)                    | An optional `object` of `string` classNames that will be appended to the specified className. (see [Custom Styling](#custom-styling) for more info) |
+| `commands`(arr)                   | A single `array` with an array of grouped object commands. (see [Commands](#commands) for more info)                                                |
+| `debounceSuggestions`(num)        | A `number` set in `ms` to debounce calling the `loadSuggestions` function. (default: `300`)†                                                        |
 | `disableGrip`(bool)               | A `boolean` to disable the bottom textarea resizing button. (default: `false`)                                                                      |
 | `disableHotKeys`(bool)            | A `boolean` to disable the textarea hot keys. (default: `false`)                                                                                    |
 | `disablePreview`(bool)            | A `boolean` to disable the preview button. (default: `false`)                                                                                       |
 | `disableToolbar`(bool)            | A `boolean` to disable the toolbar. (default: `false`)                                                                                              |
 | `loadSuggestions`(func)           | A `function` that returns an `array` of suggestions triggered by the `suggestionTriggerCharacter`. (see [Suggestions](#suggesitons) for more info)  |
-| `maxEditorHeight`(num)            | A maximum editor height `number` that is set in `px`. (default: `500`)                                                                              |
-| `maxEditorWidth` (num)            | A maximum editor width `number` that is set in `px`. (default: `100%`)                                                                              |
-| `minEditorHeight`(num)            | A minimum editor height `number` that is set in `px`. (default: `250`)                                                                              |
+| `maxEditorHeight`(num/str)        | A maximum editor height `number` that is set in `px` or `string`. (default: `500`)                                                                  |
+| `maxEditorWidth` (num/str)        | A maximum editor width `number` or `string`. (default: `100%`)                                                                                      |
+| `minEditorHeight`(num/str)        | A minimum editor height `number` that is set in `px` or `string`. (default: `250`)                                                                  |
 | `onChange`(func)                  | A **required** callback `function` to handle value changes.                                                                                         |
 | `readOnly`(bool)                  | A `boolean` to disable editing the text within the textarea. (default: `false`)                                                                     |
 | `selectedTab`(str)                | A `string` (`write`/`preview`) to initialize the editor view in. (default: `write`)                                                                 |
@@ -132,7 +132,7 @@ The `MDEditor` was designed to be as flexible as possible when it comes to custo
 **Option 1**: Pass a `classes` object property to the `MEDitor` with a custom class name targeting the specified property.
 
 <details>
-<summary>† Click to view a summary of available "mde" property overrides...</summary>
+<summary>Click to view a summary of available "mde" property overrides...</summary>
 <pre><code>
 mde (applied to root)
 mdetoolbar (applied to toolbar)
@@ -165,7 +165,7 @@ classes={{ mde: "custom-mde", mdetoolbar: "custom-toolbar" }}
 **Option 3**: Create your own stylesheets that target the available `classNames`.
 
 <details>
-<summary>† Click to view a summary of available "mde" classNames...</summary>
+<summary>Click to view a summary of available "mde" classNames...</summary>
 <pre><code>
 mde (applied to root)
 mde-toolbar (applied to toolbar)
@@ -174,7 +174,7 @@ mde-toolbar-item (applied to toolbar items)
 mde-toolbar-separator (applied to toolbar separators)
 mde-preview (applied to preview wrapper)
 mde-preview-content (applied to previewed content)
-mde-no-suggestions (applied to no suggestions result item)
+mde-no-suggestions (applied to no suggestion results item)
 mde-suggestions (applied to suggestions overlay)
 mde-textarea (applied to textarea input)
 mde-textarea-wrapper (applied to textarea wrapper)

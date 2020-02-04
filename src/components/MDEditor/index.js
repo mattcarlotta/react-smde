@@ -11,7 +11,7 @@ export class MDEditor extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      editorHeight: props.minEditorHeight,
+      editorHeight: parseInt(props.minEditorHeight, 10),
       tab: props.selectedTab
     };
     this.gripDrag = null;
@@ -47,8 +47,8 @@ export class MDEditor extends React.Component {
       const newHeight =
         this.gripDrag.originalHeight + clientY - this.gripDrag.originalDragY;
       if (
-        newHeight >= this.props.minEditorHeight &&
-        newHeight <= this.props.maxEditorHeight
+        newHeight >= parseInt(this.props.minEditorHeight, 10) &&
+        newHeight <= parseInt(this.props.maxEditorHeight, 10)
       ) {
         this.setState({
           editorHeight:
@@ -75,8 +75,8 @@ export class MDEditor extends React.Component {
     ) {
       this.setState(prevState => ({
         editorHeight:
-          prevState.editorHeight >= this.props.minEditorHeight &&
-          prevState.editorHeight <= this.props.maxEditorHeight
+          prevState.editorHeight >= parseInt(this.props.minEditorHeight, 10) &&
+          prevState.editorHeight <= parseInt(this.props.maxEditorHeight, 10)
             ? this.textAreaRef.scrollHeight + this.textAreaLineHeight
             : prevState.editorHeight
       }));
@@ -199,10 +199,12 @@ MDEditor.propTypes = {
   disableHotKeys: PropTypes.bool.isRequired,
   disablePreview: PropTypes.bool.isRequired,
   disableToolbar: PropTypes.bool.isRequired,
-  maxEditorHeight: PropTypes.number.isRequired,
+  maxEditorHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+    .isRequired,
   maxEditorWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
     .isRequired,
-  minEditorHeight: PropTypes.number.isRequired,
+  minEditorHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+    .isRequired,
   onChange: PropTypes.func.isRequired,
   readOnly: PropTypes.bool,
   selectedTab: PropTypes.string,

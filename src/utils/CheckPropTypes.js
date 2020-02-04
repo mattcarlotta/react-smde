@@ -64,17 +64,23 @@ export function checkPropTypes({
     throw Error(
       "The MDEditor was initialized with an invalid 'disablePreview' property. It must be a boolean!"
     );
-  if (typeof maxEditorHeight !== "number" || maxEditorHeight < minEditorHeight)
+  if (
+    typeof maxEditorHeight !== "number" &&
+    typeof maxEditorHeight !== "string"
+  )
     throw Error(
-      "The MDEditor was initialized with an invalid 'maxEditorHeight' property. It must be a number and be greater than the 'minEditorHeight'!"
+      "The MDEditor was initialized with an invalid 'maxEditorHeight' property. It must be a number or string!"
     );
   if (typeof maxEditorWidth !== "number" && typeof maxEditorWidth !== "string")
     throw Error(
       "The MDEditor was initialized with an invalid 'maxEditorWidth' property. It must be a number or string!"
     );
-  if (typeof minEditorHeight !== "number" || minEditorHeight > maxEditorHeight)
+  if (
+    typeof minEditorHeight !== "number" &&
+    typeof minEditorHeight !== "string"
+  )
     throw Error(
-      "The MDEditor was initialized with an invalid 'minEditorHeight' property. It must be a number and be less than the 'maxEditorHeight'!"
+      "The MDEditor was initialized with an invalid 'minEditorHeight' property. It must be a number or string!"
     );
   if (typeof readOnly !== "boolean")
     throw Error(
