@@ -114,7 +114,10 @@ export class TextArea extends React.Component {
     const isNavKey = ["ArrowUp", "ArrowDown", "Tab", "Enter"].some(
       k => k === key
     );
-    const isSpecialKey = ["Shift", "Alt", "CapsLock"].some(k => k === key);
+    const isSpecialKey = ["Shift", "Alt", "CapsLock", "Control"].some(
+      k => k === key
+    );
+    const undoKey = ctrlKey && key === "z";
 
     // if suggestions are enabled
     if (suggestionsEnabled) {
@@ -147,7 +150,7 @@ export class TextArea extends React.Component {
         );
       } else if (
         ((suggestionsActive || suggestionsLoading) && key === "Escape") ||
-        ((key === "Backspace" || (ctrlKey && key === "z")) &&
+        ((key === "Backspace" || undoKey) &&
           selectionStart <= startPosition &&
           this.props.value.substr(startPosition - 1) !== "@")
       ) {
@@ -192,8 +195,7 @@ export class TextArea extends React.Component {
         suggestionsEnabled &&
         value.substr(startPosition - 1) !== "@" &&
         !value.substr(startPosition) &&
-        ctrlKey &&
-        key === "z"
+        undoKey
       ) {
         this.handleBlur();
         return;
@@ -202,7 +204,7 @@ export class TextArea extends React.Component {
 
     // if in preview and ctrl+z was pressed, revert back to write tab.
     // not doing this, appears to lose history
-    if (ctrlKey && key === "z" && tab === "preview") onTabChange();
+    if (undoKey && tab === "preview") onTabChange();
 
     // hot key commands (ctrl + key)
     if (
