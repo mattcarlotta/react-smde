@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 export * from "./CheckPropTypes";
 export * from "./ClassNames";
 export * from "./CommandUtils";

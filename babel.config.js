@@ -2,51 +2,55 @@ const { readdirSync, statSync } = require("fs");
 const { resolve } = require("path");
 
 const readDirectory = path =>
-  readdirSync(path).reduce((acc, folder) => {
-    const dirPath = `${path}${folder}`;
-    if (statSync(resolve(dirPath)).isDirectory()) {
-      acc[`~${folder.replace(/[^\w\s]/gi, "")}`] = dirPath;
-    }
+	readdirSync(path).reduce((acc, folder) => {
+		const dirPath = `${path}${folder}`;
+		if (statSync(resolve(dirPath)).isDirectory()) {
+			acc[`~${folder.replace(/[^\w\s]/gi, "")}`] = dirPath;
+		}
 
-    return acc;
-  }, {});
+		return acc;
+	}, {});
 
 const alias = {
-  ...readDirectory("./src/")
+	...readDirectory("./src/"),
 };
 
 module.exports = function(api) {
-  api.cache(true);
+	api.cache(true);
 
-  return {
-    presets: [
-      ["@babel/preset-env", { modules: false, loose: true }],
-      "@babel/preset-react"
-    ],
-    plugins: [
-      "@babel/plugin-transform-runtime",
-      "@babel/plugin-proposal-export-namespace-from",
-      "@babel/plugin-proposal-export-default-from",
-      ["@babel/plugin-proposal-class-properties", { loose: true }],
-      [
-        "module-resolver",
-        {
-          alias
-        }
-      ]
-    ],
-    env: {
-      production: {
-        plugins: [
-          [
-            "transform-react-remove-prop-types",
-            {
-              mode: "remove",
-              removeImport: true
-            }
-          ]
-        ]
-      }
-    }
-  };
+	return {
+		presets: ["@babel/preset-react"],
+		plugins: [
+			"@babel/plugin-transform-runtime",
+			"@babel/plugin-proposal-export-namespace-from",
+			"@babel/plugin-proposal-export-default-from",
+			["@babel/plugin-proposal-class-properties", { loose: true }],
+			[
+				"module-resolver",
+				{
+					alias,
+				},
+			],
+		],
+		env: {
+			production: {
+				presets: [["@babel/preset-env", { modules: false, loose: true }]],
+				plugins: [
+					[
+						"transform-react-remove-prop-types",
+						{
+							mode: "remove",
+							removeImport: true,
+						},
+					],
+				],
+			},
+			development: {
+				presets: [["@babel/preset-env", { modules: false, loose: true }]],
+			},
+			testing: {
+				presets: ["@babel/preset-env"],
+			},
+		},
+	};
 };
