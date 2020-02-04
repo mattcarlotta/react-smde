@@ -1,232 +1,268 @@
 import {
-  getBreaksNeededForEmptyLineAfter,
-  getBreaksNeededForEmptyLineBefore,
-  getStateFromTextArea,
-  insertBeforeEachLine,
-  insertText,
-  selectWord
+	getBreaksNeededForEmptyLineAfter,
+	getBreaksNeededForEmptyLineBefore,
+	getStateFromTextArea,
+	getPrevStateFromTextArea,
+	insertBeforeEachLine,
+	insertText,
+	selectWord,
 } from "~utils";
 
 const Commander = (currentTextArea, command) => {
-  const textAreaState = getStateFromTextArea(currentTextArea);
+	const textAreaState = getStateFromTextArea(currentTextArea);
 
-  const initialState = init(
-    selectWord({
-      text: textAreaState.text,
-      selection: textAreaState.selection
-    })
-  );
+	const initialState = init(
+		selectWord({
+			text: textAreaState.text,
+			selection: textAreaState.selection,
+		}),
+	);
 
-  function init({ start, end }) {
-    currentTextArea.selectionStart = start;
-    currentTextArea.selectionEnd = end;
-    return getStateFromTextArea(currentTextArea);
-  }
+	function init({ start, end }) {
+		currentTextArea.selectionStart = start;
+		currentTextArea.selectionEnd = end;
+		return getStateFromTextArea(currentTextArea);
+	}
 
-  function replaceSelection(text) {
-    insertText(currentTextArea, text);
-    return getStateFromTextArea(currentTextArea);
-  }
+	function replaceSelection(text) {
+		insertText(currentTextArea, text);
+		return getStateFromTextArea(currentTextArea);
+	}
 
-  function setHeader(prefix) {
-    // Add the prefix to the selection
-    const nextState = replaceSelection(`${prefix}${initialState.selectedText}`);
-    // Adjust the selection to not contain the prefix
-    return {
-      start: nextState.selection.end - initialState.selectedText.length,
-      end: nextState.selection.end
-    };
-  }
+	function setHeader(prefix) {
+		const nextState = replaceSelection(`${prefix}${initialState.selectedText}`);
 
-  function makeList(insertBefore) {
-    const breaksBeforeCount = getBreaksNeededForEmptyLineBefore(
-      initialState.text,
-      initialState.selection.start
-    );
-    const breaksBefore = Array(breaksBeforeCount + 1).join("\n");
+		return {
+			start: nextState.selection.end - initialState.selectedText.length,
+			end: nextState.selection.end,
+		};
+	}
 
-    const breaksAfterCount = getBreaksNeededForEmptyLineAfter(
-      initialState.text,
-      initialState.selection.end
-    );
-    const breaksAfter = Array(breaksAfterCount + 1).join("\n");
+	function makeList(insertBefore) {
+		const breaksBeforeCount = getBreaksNeededForEmptyLineBefore(
+			initialState.text,
+			initialState.selection.start,
+		);
+		const breaksBefore = Array(breaksBeforeCount + 1).join("\n");
 
-    const modifiedText = insertBeforeEachLine(
-      initialState.selectedText,
-      insertBefore
-    );
+		const breaksAfterCount = getBreaksNeededForEmptyLineAfter(
+			initialState.text,
+			initialState.selection.end,
+		);
+		const breaksAfter = Array(breaksAfterCount + 1).join("\n");
 
-    replaceSelection(
-      `${breaksBefore}${modifiedText.modifiedText}${breaksAfter}`
-    );
+		const modifiedText = insertBeforeEachLine(
+			initialState.selectedText,
+			insertBefore,
+		);
 
-    // Specifically when the text has only one line, we can exclude the "- ", for example, from the selection
-    const oneLinerOffset =
-      initialState.selectedText.indexOf("\n") === -1
-        ? modifiedText.insertionLength
-        : 0;
+		replaceSelection(
+			`${breaksBefore}${modifiedText.modifiedText}${breaksAfter}`,
+		);
 
-    const selectionStart =
-      initialState.selection.start + breaksBeforeCount + oneLinerOffset;
-    const selectionEnd =
-      selectionStart + modifiedText.modifiedText.length - oneLinerOffset;
+		const oneLinerOffset =
+			initialState.selectedText.indexOf("\n") === -1
+				? modifiedText.insertionLength
+				: 0;
 
-    // Adjust the selection to not contain the **
-    return {
-      start: selectionStart,
-      end: selectionEnd
-    };
-  }
+		const selectionStart =
+			initialState.selection.start + breaksBeforeCount + oneLinerOffset;
+		const selectionEnd =
+			selectionStart + modifiedText.modifiedText.length - oneLinerOffset;
 
-  switch (command) {
-    case "bold": {
-      // Replaces the current selection with the bold mark up
-      const nextState = replaceSelection(`**${initialState.selectedText}**`);
-      // Adjust the selection to not contain the **
-      return {
-        start: nextState.selection.end - 2 - initialState.selectedText.length,
-        end: nextState.selection.end - 2
-      };
-    }
-    case "code": {
-      // if there's no breaking line
-      if (initialState.selectedText.indexOf("\n") === -1) {
-        replaceSelection(`\`${initialState.selectedText}\``);
-        // Adjust the selection to not contain the **
+		return {
+			start: selectionStart,
+			end: selectionEnd,
+		};
+	}
 
-        const selectionStart = initialState.selection.start + 1;
-        const selectionEnd = selectionStart + initialState.selectedText.length;
+	switch (command) {
+		case "bold": {
+			const prevSelectedState = getPrevStateFromTextArea(currentTextArea, 2);
 
-        return {
-          start: selectionStart,
-          end: selectionEnd
-        };
-      }
+			if (prevSelectedState.indexOf("**") > -1) {
+				currentTextArea.selectionStart = currentTextArea.selectionStart - 2;
+				currentTextArea.selectionEnd = currentTextArea.selectionEnd + 2;
+				const nextState = replaceSelection(
+					`${prevSelectedState.replace(/[*]/gi, "")}`,
+				);
 
-      const breaksBeforeCount = getBreaksNeededForEmptyLineBefore(
-        initialState.text,
-        initialState.selection.start
-      );
-      const breaksBefore = Array(breaksBeforeCount + 1).join("\n");
+				return {
+					start: nextState.selection.end - initialState.selectedText.length,
+					end: nextState.selection.end + 2,
+				};
+			}
 
-      const breaksAfterCount = getBreaksNeededForEmptyLineAfter(
-        initialState.text,
-        initialState.selection.end
-      );
-      const breaksAfter = Array(breaksAfterCount + 1).join("\n");
+			const nextState = replaceSelection(`**${initialState.selectedText}**`);
+			return {
+				start: nextState.selection.end - 2 - initialState.selectedText.length,
+				end: nextState.selection.end - 2,
+			};
+		}
+		case "code": {
+			if (initialState.selectedText.indexOf("\n") === -1) {
+				replaceSelection(`\`${initialState.selectedText}\``);
 
-      replaceSelection(
-        `${breaksBefore}\`\`\`\n${initialState.selectedText}\n\`\`\`${breaksAfter}`
-      );
+				const selectionStart = initialState.selection.start + 1;
+				const selectionEnd = selectionStart + initialState.selectedText.length;
 
-      const selectionStart =
-        initialState.selection.start + breaksBeforeCount + 4;
-      const selectionEnd = selectionStart + initialState.selectedText.length;
+				return {
+					start: selectionStart,
+					end: selectionEnd,
+				};
+			}
 
-      return {
-        start: selectionStart,
-        end: selectionEnd
-      };
-    }
-    case "header-1": {
-      return setHeader("# ");
-    }
-    case "header-2": {
-      return setHeader("## ");
-    }
-    case "header-3": {
-      return setHeader("### ");
-    }
-    case "header-4": {
-      return setHeader("#### ");
-    }
-    case "header-5": {
-      return setHeader("##### ");
-    }
-    case "header-6": {
-      return setHeader("###### ");
-    }
-    case "image": {
-      // Replaces the current selection with the image
-      const imageTemplate =
-        initialState.selectedText || "https://example.com/your-image.png";
+			const breaksBeforeCount = getBreaksNeededForEmptyLineBefore(
+				initialState.text,
+				initialState.selection.start,
+			);
+			const breaksBefore = Array(breaksBeforeCount + 1).join("\n");
 
-      replaceSelection(`![example.png](${imageTemplate})`);
-      // Adjust the selection to not contain the **
-      return {
-        start: 15 + initialState.selection.start,
-        end: 15 + initialState.selection.start + imageTemplate.length
-      };
-    }
-    case "italic": {
-      // Replaces the current selection with the italic mark up
-      const nextState = replaceSelection(`*${initialState.selectedText}*`);
-      // Adjust the selection to not contain the *
-      return {
-        start: nextState.selection.end - 1 - initialState.selectedText.length,
-        end: nextState.selection.end - 1
-      };
-    }
-    case "link": {
-      const nextState = replaceSelection(
-        `[${initialState.selectedText}](https://www.example.com)`
-      );
-      // Adjust the selection to not contain the **
-      return {
-        start: nextState.selection.end - 11 - initialState.selectedText.length,
-        end: nextState.selection.end - 1
-      };
-    }
-    case "unordered-list": {
-      return makeList("- ");
-    }
-    case "ordered-list": {
-      return makeList((_, index) => `${index + 1}. `);
-    }
-    case "checked-list": {
-      return makeList(() => `- [ ] `);
-    }
-    case "quote": {
-      const breaksBeforeCount = getBreaksNeededForEmptyLineBefore(
-        initialState.text,
-        initialState.selection.start
-      );
-      const breaksBefore = Array(breaksBeforeCount + 1).join("\n");
+			const breaksAfterCount = getBreaksNeededForEmptyLineAfter(
+				initialState.text,
+				initialState.selection.end,
+			);
+			const breaksAfter = Array(breaksAfterCount + 1).join("\n");
 
-      const breaksAfterCount = getBreaksNeededForEmptyLineAfter(
-        initialState.text,
-        initialState.selection.end
-      );
-      const breaksAfter = Array(breaksAfterCount + 1).join("\n");
+			replaceSelection(
+				`${breaksBefore}\`\`\`\n${initialState.selectedText}\n\`\`\`${breaksAfter}`,
+			);
 
-      // Replaces the current selection with the quote mark up
-      replaceSelection(
-        `${breaksBefore}> ${initialState.selectedText}${breaksAfter}`
-      );
+			const selectionStart =
+				initialState.selection.start + breaksBeforeCount + 4;
+			const selectionEnd = selectionStart + initialState.selectedText.length;
 
-      const selectionStart =
-        initialState.selection.start + breaksBeforeCount + 2;
-      const selectionEnd = selectionStart + initialState.selectedText.length;
+			return {
+				start: selectionStart,
+				end: selectionEnd,
+			};
+		}
+		case "header-1": {
+			return setHeader("# ");
+		}
+		case "header-2": {
+			return setHeader("## ");
+		}
+		case "header-3": {
+			return setHeader("### ");
+		}
+		case "header-4": {
+			return setHeader("#### ");
+		}
+		case "header-5": {
+			return setHeader("##### ");
+		}
+		case "header-6": {
+			return setHeader("###### ");
+		}
+		case "image": {
+			const imageTemplate =
+				initialState.selectedText || "https://example.com/your-image.png";
 
-      return {
-        start: selectionStart,
-        end: selectionEnd
-      };
-    }
-    case "strike-through": {
-      const nextState = replaceSelection(`~~${initialState.selectedText}~~`);
-      // Adjust the selection to not contain the ~~
-      return {
-        start: nextState.selection.end - 2 - initialState.selectedText.length,
-        end: nextState.selection.end - 2
-      };
-    }
-    default:
-      return {
-        start: 0,
-        end: 0
-      };
-  }
+			replaceSelection(`![example.png](${imageTemplate})`);
+
+			return {
+				start: initialState.selection.start + 15,
+				end: initialState.selection.start + 15 + imageTemplate.length,
+			};
+		}
+		case "italic": {
+			const prevSelectedState = getPrevStateFromTextArea(currentTextArea, 1);
+
+			if (prevSelectedState.indexOf("*") > -1) {
+				currentTextArea.selectionStart = currentTextArea.selectionStart - 1;
+				currentTextArea.selectionEnd = currentTextArea.selectionEnd + 1;
+				const nextState = replaceSelection(
+					`${prevSelectedState.replace(/[*]/gi, "")}`,
+				);
+
+				return {
+					start: nextState.selection.end - initialState.selectedText.length,
+					end: nextState.selection.end + 2,
+				};
+			}
+
+			const nextState = replaceSelection(`*${initialState.selectedText}*`);
+			return {
+				start: nextState.selection.end - 1 - initialState.selectedText.length,
+				end: nextState.selection.end - 1,
+			};
+		}
+		case "link": {
+			const linkTemplate = initialState.selectedText || "link";
+
+			const nextState = replaceSelection(
+				`[${linkTemplate}](https://www.example.com)`,
+			);
+
+			return {
+				start: nextState.selection.end - 24,
+				end: nextState.selection.end - 1,
+			};
+		}
+		case "unordered-list": {
+			return makeList("- ");
+		}
+		case "ordered-list": {
+			return makeList((_, index) => `${index + 1}. `);
+		}
+		case "checked-list": {
+			return makeList(() => `- [ ] `);
+		}
+		case "quote": {
+			const breaksBeforeCount = getBreaksNeededForEmptyLineBefore(
+				initialState.text,
+				initialState.selection.start,
+			);
+			const breaksBefore = Array(breaksBeforeCount + 1).join("\n");
+
+			const breaksAfterCount = getBreaksNeededForEmptyLineAfter(
+				initialState.text,
+				initialState.selection.end,
+			);
+			const breaksAfter = Array(breaksAfterCount + 1).join("\n");
+
+			replaceSelection(
+				`${breaksBefore}> ${initialState.selectedText}${breaksAfter}`,
+			);
+
+			const selectionStart =
+				initialState.selection.start + breaksBeforeCount + 2;
+			const selectionEnd = selectionStart + initialState.selectedText.length;
+
+			return {
+				start: selectionStart,
+				end: selectionEnd,
+			};
+		}
+		case "strike-through": {
+			const prevSelectedState = getPrevStateFromTextArea(currentTextArea, 2);
+
+			if (prevSelectedState.indexOf("~") > -1) {
+				currentTextArea.selectionStart = currentTextArea.selectionStart - 2;
+				currentTextArea.selectionEnd = currentTextArea.selectionEnd + 2;
+				const nextState = replaceSelection(
+					`${prevSelectedState.replace(/[~]/gi, "")}`,
+				);
+
+				return {
+					start: nextState.selection.end - initialState.selectedText.length,
+					end: nextState.selection.end + 2,
+				};
+			}
+
+			const nextState = replaceSelection(`~~${initialState.selectedText}~~`);
+			return {
+				start: nextState.selection.end - 2 - initialState.selectedText.length,
+				end: nextState.selection.end - 2,
+			};
+		}
+		default:
+			return {
+				start: 0,
+				end: 0,
+			};
+	}
 };
 
 export default Commander;
