@@ -40,9 +40,9 @@ export const ToolbarDropdown = ({
           </Tooltip>
           {isVisible ? (
             <ul className={classNames("mde-dropdown", classes.mdedrop)}>
-              {commands.map(({ name, buttonProps, icon }, index) => (
+              {commands.map(({ name, buttonProps, icon }) => (
                 <ToolbarButton
-                  key={`header-item${index}`}
+                  key={name}
                   name={name}
                   buttonProps={buttonProps}
                   buttonContent={icon}

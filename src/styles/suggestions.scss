@@ -1,68 +1,68 @@
 @import "vars.scss";
 
 ul.mde-suggestions {
-  position: absolute;
-  min-width: 180px;
-  padding: 0;
-  margin: 20px 0 0;
-  list-style: none;
-  cursor: pointer;
-  background: #fff;
-  border: 1px solid $border-color;
-  border-radius: 3px;
-  box-shadow: 0 1px 5px rgba(27, 31, 35, 0.15);
+	position: absolute;
+	min-width: 180px;
+	padding: 0;
+	margin: 20px 0 0;
+	list-style: none;
+	cursor: pointer;
+	background: $white-color;
+	border: 1px solid $border-color;
+	border-radius: 3px;
+	box-shadow: 0 1px 5px $mde-suggestions-boxshadow;
 
-  .mde-no-suggestions {
-    color: #a3a3a3;
-    &:hover {
-      color: #a3a3a3;
-      background-color: #fff;
-    }
-  }
+	.mde-no-suggestions {
+		color: $no-suggestions-color;
+		&:hover {
+			color: $no-suggestions-color;
+			background-color: $white-color;
+		}
+	}
 
-  li {
-    padding: 4px 8px;
+	li {
+		padding: 4px 8px;
 
-    &:first-child {
-      border-top-left-radius: $border-radius;
-      border-top-right-radius: $border-radius;
-    }
+		&:first-child {
+			border-top-left-radius: $border-radius;
+			border-top-right-radius: $border-radius;
+		}
 
-    &:last-child {
-      border-bottom-right-radius: $border-radius;
-      border-bottom-left-radius: $border-radius;
-    }
+		&:last-child {
+			border-bottom-right-radius: $border-radius;
+			border-bottom-left-radius: $border-radius;
+		}
 
-    &:hover,
-    &[aria-selected="true"] {
-      color: $white-color;
-      background-color: $selected-color;
-    }
-  }
+		&:hover,
+		&[aria-selected="true"] {
+			color: $white-color;
+			background-color: $selected-color;
+		}
+	}
 }
 
 .mde-loading {
-  display: block;
-  position: relative;
-  top: 7px;
-  height: 30px;
-  width: 42px;
-  margin: 0 auto;
+	display: block;
+	position: relative;
+	top: 7px;
+	height: 30px;
+	width: 42px;
+	margin: 0 auto;
 }
 
 .mde-loading span {
-  display: inline-block;
-  width: 9px;
-  height: 15px;
-  margin-right: 5px;
-  background: rgba(0, 0, 0, 0.25);
-  animation: loading 1.35s infinite ease-in;
+	display: inline-block;
+	width: 9px;
+	height: 15px;
+	margin-right: 5px;
+	background: $mde-loading-bg;
+	animation: loading 1.35s infinite ease-in;
 }
 
 .mde-loading span:nth-child(2) {
-  animation-delay: 0.2s;
+	animation-delay: 0.2s;
 }
 
 .mde-loading span:nth-child(3) {
-  animation-delay: 0.4s;
+	animation-delay: 0.4s;
 }

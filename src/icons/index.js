@@ -247,44 +247,61 @@ export const underlineIcon = (
 		className="svg-icon"
 	>
 		<path
-			xmlns="http://www.w3.org/2000/svg"
+			fill="currentColor"
 			d="M 6 3 L 6 12.875 C 6 13.903 6.165 14.8025 6.5 15.5625 C 6.834 16.3215 7.3235 16.95475 7.9375 17.46875 C 8.5505 17.98275 9.265 18.371 10.125 18.625 C 10.985 18.877 11.948 19 13 19 C 14.052 19 15.015 18.878 15.875 18.625 C 16.736 18.372 17.4495 17.98275 18.0625 17.46875 C 18.6755 16.95475 19.166 16.3215 19.5 15.5625 C 19.834 14.8035 20 13.902 20 12.875 L 20 3 L 17 3 L 17 11.96875 C 17 12.50475 16.9935 13.04275 16.9375 13.59375 C 16.8815 14.14475 16.7005 14.65475 16.4375 15.09375 C 16.1755 15.53275 15.784 15.87425 15.25 16.15625 C 14.716 16.43925 13.972 16.59375 13 16.59375 C 12.028 16.59375 11.284 16.43925 10.75 16.15625 C 10.217 15.87325 9.8245 15.53275 9.5625 15.09375 C 9.2995 14.65475 9.1185 14.14575 9.0625 13.59375 C 9.0065 13.04275 9 12.50575 9 11.96875 L 9 3 L 6 3 z M 6 21 L 6 23 L 20 23 L 20 21 L 6 21 z"
+		/>
+	</svg>
+);
+
+export const trashIcon = (
+	<svg
+		aria-hidden="true"
+		role="img"
+		xmlns="http://www.w3.org/2000/svg"
+		viewBox="2 3 15 15"
+		className="svg-icon"
+	>
+		<path
+			fill="currentColor"
+			d="M12 4h3c.6 0 1 .4 1 1v1H3V5c0-.6.5-1 1-1h3c.2-1.1 1.3-2 2.5-2s2.3.9 2.5 2zM8 4h3c-.2-.6-.9-1-1.5-1S8.2 3.4 8 4zM4 7h11l-.9 10.1c0 .5-.5.9-1 .9H5.9c-.5 0-.9-.4-1-.9L4 7z"
 		/>
 	</svg>
 );
 
 export const SvgIcon = ({ icon }) => {
 	switch (icon) {
-		case "header":
-			return headerIcon;
 		case "bold":
 			return boldIcon;
-		case "italic":
-			return italicIcon;
-		case "strike-through":
-			return strikeThroughIcon;
-		case "link":
-			return linkIcon;
-		case "horizontalrule":
-			return horizontalRule;
-		case "quote":
-			return quoteIcon;
-		case "code":
-			return codeIcon;
-		case "image":
-			return imageIcon;
-		case "unordered-list":
-			return unorderedListIcon;
-		case "ordered-list":
-			return orderedListIcon;
 		case "checked-list":
 			return checkedListIcon;
-		case "eye-open":
-			return eyeOpenIcon;
+		case "code":
+			return codeIcon;
 		case "eye-closed":
 			return eyeClosedIcon;
+		case "eye-open":
+			return eyeOpenIcon;
 		case "grip":
 			return gripIcon;
+		case "header":
+			return headerIcon;
+		case "horizontalrule":
+			return horizontalRule;
+		case "image":
+			return imageIcon;
+		case "italic":
+			return italicIcon;
+		case "link":
+			return linkIcon;
+		case "ordered-list":
+			return orderedListIcon;
+		case "quote":
+			return quoteIcon;
+		case "strike-through":
+			return strikeThroughIcon;
+		case "trash":
+			return trashIcon;
+		case "unordered-list":
+			return unorderedListIcon;
 		default:
 			return null;
 	}

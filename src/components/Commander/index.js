@@ -268,6 +268,17 @@ const Commander = (currentTextArea, command) => {
 				end: nextState.selection.end - 2,
 			};
 		}
+		case "trash": {
+			currentTextArea.selectionStart = 0;
+			currentTextArea.selectionEnd = currentTextArea.value.length;
+
+			replaceSelection("");
+
+			return {
+				start: 0,
+				end: 0,
+			};
+		}
 		// case "underline": {
 		// 	const prevSelectedState = getPrevStateFromTextArea(currentTextArea, 2);
 

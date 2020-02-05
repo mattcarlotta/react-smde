@@ -25,88 +25,88 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 @import "mixins.scss";
 
 .ant-tooltip {
-  @include reset-component;
+	@include reset-component;
 
-  position: absolute;
-  z-index: $zindex-tooltip;
-  display: block;
-  max-width: $tooltip-max-width;
-  visibility: visible;
+	position: absolute;
+	z-index: $zindex-tooltip;
+	display: block;
+	max-width: $tooltip-max-width;
+	visibility: visible;
 }
 
 .ant-tooltip-rtl {
-  direction: rtl;
+	direction: rtl;
 }
 
 .ant-tooltip-hidden {
-  display: none;
+	display: none;
 }
 
 .ant-tooltip-placement-top,
 .ant-tooltip-placement-topLeft,
 .ant-tooltip-placement-topRight {
-  padding-bottom: $tooltip-distance;
+	padding-bottom: $tooltip-distance;
 }
 
 .ant-tooltip-placement-right,
 .ant-tooltip-placement-rightTop,
 .ant-tooltip-placement-rightBottom {
-  padding-left: $tooltip-distance;
+	padding-left: $tooltip-distance;
 }
 
 .ant-tooltip-placement-bottom,
 .ant-tooltip-placement-bottomLeft,
 .ant-tooltip-placement-bottomRight {
-  padding-top: $tooltip-distance;
+	padding-top: $tooltip-distance;
 }
 
 .ant-tooltip-placement-left,
 .ant-tooltip-placement-leftTop,
 .ant-tooltip-placement-leftBottom {
-  padding-right: $tooltip-distance;
+	padding-right: $tooltip-distance;
 }
 
 // Wrapper for the tooltip content
 .ant-tooltip-inner {
-  min-width: 30px;
-  min-height: 32px;
-  padding: 6px 8px;
-  color: $tooltip-color;
-  text-align: left;
-  text-decoration: none;
-  word-wrap: break-word;
-  background-color: $tooltip-bg;
-  border-radius: $border-radius-base;
-  box-shadow: $box-shadow-base;
+	min-width: 30px;
+	min-height: 32px;
+	padding: 6px 8px;
+	color: $tooltip-color;
+	text-align: left;
+	text-decoration: none;
+	word-wrap: break-word;
+	background-color: $tooltip-bg;
+	border-radius: $border-radius-base;
+	box-shadow: $box-shadow-base;
 }
 .ant-tooltip-rtl {
-  text-align: right;
+	text-align: right;
 }
 
 // Arrows
 .ant-tooltip-arrow {
-  position: absolute;
-  display: block;
-  width: $tooltip-arrow-rotate-width;
-  height: $tooltip-arrow-rotate-width;
-  overflow: hidden;
-  background: transparent;
-  pointer-events: none;
+	position: absolute;
+	display: block;
+	width: $tooltip-arrow-rotate-width;
+	height: $tooltip-arrow-rotate-width;
+	overflow: hidden;
+	background: transparent;
+	pointer-events: none;
 
-  &::before {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    display: block;
-    width: $tooltip-arrow-width;
-    height: $tooltip-arrow-width;
-    margin: auto;
-    background-color: $tooltip-bg;
-    content: "";
-    pointer-events: auto;
-  }
+	&::before {
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		display: block;
+		width: $tooltip-arrow-width;
+		height: $tooltip-arrow-width;
+		margin: auto;
+		background-color: $tooltip-bg;
+		content: "";
+		pointer-events: auto;
+	}
 }
 
 // TOP
@@ -114,34 +114,34 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 .ant-tooltip-placement-top,
 .ant-tooltip-placement-topLeft,
 .ant-tooltip-placement-topRight {
-  .ant-tooltip-arrow {
-    bottom: $tooltip-distance - $tooltip-arrow-rotate-width;
+	.ant-tooltip-arrow {
+		bottom: $tooltip-distance - $tooltip-arrow-rotate-width;
 
-    &::before {
-      box-shadow: $tooltip-arrow-shadow-width $tooltip-arrow-shadow-width 7px
-        rgba(0, 0, 0, 0.07);
-      transform: translateY(-$tooltip-arrow-rotate-width / 2) rotate(45deg);
-    }
-  }
+		&::before {
+			box-shadow: $tooltip-arrow-shadow-width $tooltip-arrow-shadow-width 7px
+				$tooltip-box-shadow;
+			transform: translateY(-$tooltip-arrow-rotate-width / 2) rotate(45deg);
+		}
+	}
 }
 
 .ant-tooltip-placement-top {
-  .ant-tooltip-arrow {
-    left: 50%;
-    transform: translateX(-50%);
-  }
+	.ant-tooltip-arrow {
+		left: 50%;
+		transform: translateX(-50%);
+	}
 }
 
 .ant-tooltip-placement-topLeft {
-  .ant-tooltip-arrow {
-    left: $tooltip-arrow-offset-horizontal;
-  }
+	.ant-tooltip-arrow {
+		left: $tooltip-arrow-offset-horizontal;
+	}
 }
 
 .ant-tooltip-placement-topRight {
-  .ant-tooltip-arrow {
-    right: $tooltip-arrow-offset-horizontal;
-  }
+	.ant-tooltip-arrow {
+		right: $tooltip-arrow-offset-horizontal;
+	}
 }
 
 // RIGHT
@@ -149,34 +149,34 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 .ant-tooltip-placement-right,
 .ant-tooltip-placement-rightTop,
 .ant-tooltip-placement-rightBottom {
-  .ant-tooltip-arrow {
-    left: $tooltip-distance - $tooltip-arrow-rotate-width;
+	.ant-tooltip-arrow {
+		left: $tooltip-distance - $tooltip-arrow-rotate-width;
 
-    &::before {
-      box-shadow: -$tooltip-arrow-shadow-width $tooltip-arrow-shadow-width 7px
-        rgba(0, 0, 0, 0.07);
-      transform: translateX($tooltip-arrow-rotate-width / 2) rotate(45deg);
-    }
-  }
+		&::before {
+			box-shadow: -$tooltip-arrow-shadow-width $tooltip-arrow-shadow-width 7px
+				$tooltip-box-shadow;
+			transform: translateX($tooltip-arrow-rotate-width / 2) rotate(45deg);
+		}
+	}
 }
 
 .ant-tooltip-placement-right {
-  .ant-tooltip-arrow {
-    top: 50%;
-    transform: translateY(-50%);
-  }
+	.ant-tooltip-arrow {
+		top: 50%;
+		transform: translateY(-50%);
+	}
 }
 
 .ant-tooltip-placement-rightTop {
-  .ant-tooltip-arrow {
-    top: $tooltip-arrow-offset-vertical;
-  }
+	.ant-tooltip-arrow {
+		top: $tooltip-arrow-offset-vertical;
+	}
 }
 
 .ant-tooltip-placement-rightBottom {
-  .ant-tooltip-arrow {
-    bottom: $tooltip-arrow-offset-vertical;
-  }
+	.ant-tooltip-arrow {
+		bottom: $tooltip-arrow-offset-vertical;
+	}
 }
 
 // LEFT
@@ -184,33 +184,33 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 .ant-tooltip-placement-left,
 .ant-tooltip-placement-leftTop,
 .ant-tooltip-placement-leftBottom {
-  .ant-tooltip-arrow {
-    right: $tooltip-distance - $tooltip-arrow-rotate-width;
+	.ant-tooltip-arrow {
+		right: $tooltip-distance - $tooltip-arrow-rotate-width;
 
-    &::before {
-      box-shadow: $tooltip-arrow-shadow-width -$tooltip-arrow-shadow-width 7px rgba(0, 0, 0, 0.07);
-      transform: translateX(-$tooltip-arrow-rotate-width / 2) rotate(45deg);
-    }
-  }
+		&::before {
+			box-shadow: $tooltip-arrow-shadow-width -$tooltip-arrow-shadow-width 7px $tooltip-box-shadow;
+			transform: translateX(-$tooltip-arrow-rotate-width / 2) rotate(45deg);
+		}
+	}
 }
 
 .ant-tooltip-placement-left {
-  .ant-tooltip-arrow {
-    top: 50%;
-    transform: translateY(-50%);
-  }
+	.ant-tooltip-arrow {
+		top: 50%;
+		transform: translateY(-50%);
+	}
 }
 
 .ant-tooltip-placement-leftTop {
-  .ant-tooltip-arrow {
-    top: $tooltip-arrow-offset-vertical;
-  }
+	.ant-tooltip-arrow {
+		top: $tooltip-arrow-offset-vertical;
+	}
 }
 
 .ant-tooltip-placement-leftBottom {
-  .ant-tooltip-arrow {
-    bottom: $tooltip-arrow-offset-vertical;
-  }
+	.ant-tooltip-arrow {
+		bottom: $tooltip-arrow-offset-vertical;
+	}
 }
 
 // BOTTOM
@@ -218,31 +218,31 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 .ant-tooltip-placement-bottom,
 .ant-tooltip-placement-bottomLeft,
 .ant-tooltip-placement-bottomRight {
-  .ant-tooltip-arrow {
-    top: $tooltip-distance - $tooltip-arrow-rotate-width;
+	.ant-tooltip-arrow {
+		top: $tooltip-distance - $tooltip-arrow-rotate-width;
 
-    &::before {
-      box-shadow: -$tooltip-arrow-shadow-width -$tooltip-arrow-shadow-width rgba(0, 0, 0, 0.07);
-      transform: translateY($tooltip-arrow-rotate-width / 2) rotate(45deg);
-    }
-  }
+		&::before {
+			box-shadow: -$tooltip-arrow-shadow-width -$tooltip-arrow-shadow-width $tooltip-box-shadow;
+			transform: translateY($tooltip-arrow-rotate-width / 2) rotate(45deg);
+		}
+	}
 }
 
 .ant-tooltip-placement-bottom {
-  .ant-tooltip-arrow {
-    left: 50%;
-    transform: translateX(-50%);
-  }
+	.ant-tooltip-arrow {
+		left: 50%;
+		transform: translateX(-50%);
+	}
 }
 
 .ant-tooltip-placement-bottomLeft {
-  .ant-tooltip-arrow {
-    left: $tooltip-arrow-offset-horizontal;
-  }
+	.ant-tooltip-arrow {
+		left: $tooltip-arrow-offset-horizontal;
+	}
 }
 
 .ant-tooltip-placement-bottomRight {
-  .ant-tooltip-arrow {
-    right: $tooltip-arrow-offset-horizontal;
-  }
+	.ant-tooltip-arrow {
+		right: $tooltip-arrow-offset-horizontal;
+	}
 }

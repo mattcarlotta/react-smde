@@ -21,23 +21,46 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH 
 */
 $border-color: #c8ccd0 !default;
-$border-radius: 2px !default;
+$border-radius: 8px !default;
 $border-radius-base: 2px;
 $button-color: #242729 !default;
 $editor-default-min-height: 200px !default;
 $editor-padding: 10px !default;
 $font-size-base: 14px;
+$focus-color: #8f8f8f !default;
+
+$grip-color: #a0a0a0 !default;
 $grip-height: 14px;
 $grip-icon-height: 14px;
+
 $line-height-base: 1.5715;
 $overlay-shadow: 0 0 4px rgba(0, 0, 0, 0.17);
-$preview-horizontal-padding: 10px !default;
-$preview-padding: 10px !default;
+
+$mde-dropdown-border-bottom-color: rgba(0, 0, 0, 0.15) !default;
+$mde-loading-bg: rgba(0, 0, 0, 0.25) !default;
+$mde-suggestions-boxshadow: rgba(27, 31, 35, 0.15) !default;
+$mde-tabs-hover-color: #dcdcdc !default;
+$mde-toolbar-item-hover-bg: #dcdcdc !default;
+$mde-toolbar-item-disabled-color: #ccc !default;
+$mde-toolbar-separator-border-left-color: #d9d9d9 !default;
+
+$preview-block-quote-color: #777 !default;
+$preview-block-quote-border-color: #ddd !default;
+$preview-code-bg-color: rgba(0, 0, 0, 0.04) !default;
 $preview-default-min-height: $editor-default-min-height !default;
 $preview-default-height: auto !default;
+$preview-header-border-color: #eee !default;
+$preview-horizontal-padding: 10px !default;
+$preview-hr-bg: #e1e4e8 !default;
+$preview-link-color: #4078c0 !default;
+$preview-padding: 5px !default;
+$preview-pre-bg-color: #f7f7f7 !default;
+
+$no-suggestions-color: #a3a3a3 !default;
+
 $selected-color: #3c9df8 !default;
-$toolbar-color: #f9f9f9 !default;
-$toolbar-padding: 10px !default;
+$toolbar-color: #ececec !default;
+$toolbar-padding: 5px !default;
 $white-color: white !default;
 
 /*
@@ -63,7 +86,7 @@ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 $box-shadow-base: 0 3px 6px -4px rgba(0, 0, 0, 0.12),
-  0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+	0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
 $tooltip-max-width: 250px;
 $tooltip-color: #fff;
 $tooltip-bg: rgba(0, 0, 0, 0.75);
@@ -74,6 +97,7 @@ $tooltip-arrow-shadow-width: 3px;
 $tooltip-arrow-rotate-width: 13.07106781px;
 $tooltip-arrow-offset-vertical: 5px; // 8 - 3px
 $tooltip-arrow-offset-horizontal: 13px; // 16 - 3px
+$tooltip-box-shadow: rgba(0, 0, 0, 0.07);
 $tooltip-opacity: 1;
 $text-color: rbga(0, 0, 0, 0.65);
 $zindex-tooltip: 1060;

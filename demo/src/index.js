@@ -45,9 +45,11 @@ class App extends Component {
 				onChange={this.handleValueChange}
 				value={this.state.value}
 				loadSuggestions={this.loadSuggestions}
+				maxEditorWidth={800}
+				classes={{ mde: "editor" }}
 			>
-				<ReactMarkdown skipHtml renderers={{ code: CodeBlock }}>
-					{this.state.value}
+				<ReactMarkdown renderers={{ code: CodeBlock }}>
+					{this.state.value || "(empty)"}
 				</ReactMarkdown>
 			</MDEditor>
 		</div>

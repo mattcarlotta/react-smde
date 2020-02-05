@@ -8,6 +8,7 @@ import quote from "./quote";
 import { checkedList, orderedList, unorderedList } from "./lists";
 import strikeThrough from "./strikeThrough";
 import horizontalRule from "./horizontalRule";
+import trash from "./trash";
 // import underline from "./underline"; // not supported
 
 const getDefaultCommands = () => [
@@ -15,6 +16,7 @@ const getDefaultCommands = () => [
 	[horizontalRule],
 	[link, quote, code, image],
 	[unorderedList, orderedList, checkedList],
+	[trash],
 ];
 
 const commands = {
@@ -30,6 +32,7 @@ const commands = {
 	unorderedList,
 	orderedList,
 	checkedList,
+	trash,
 };
 
 export { getDefaultCommands };
