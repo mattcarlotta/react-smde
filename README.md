@@ -187,7 +187,7 @@ mde-tooltip (applied to root tooltip)
 
 You can rearrange, remove and adjust command properties (and their icons). The `commands` property of `MDEditor` expects a single array of one or many arrays of grouped object commands.
 
-Commands are simple objects where `name` must match a name from the predefined [list](src/commands/index.js#L18-L27), however, everything else is customizable:
+Commands are simple objects where `name` must match a name from the predefined [list](src/commands/index.js#L23-L35), however, everything else is customizable:
 
 ```
 {
@@ -198,7 +198,7 @@ Commands are simple objects where `name` must match a name from the predefined [
 }
 ```
 
-The `icon` property must be a React node. You can either pass your own node or you can import the `SvgIcon` from this package and pass it an `icon` string property as shown above. For predefined icons, please see this <a href="https://github.com/mattcarlotta/react-smde/blob/master/src/icons/index.js#L225-L258">function</a>, which returns a predefined React SVG node based upon a string.
+The `icon` property must be a React node. You can either pass your own node or you can import the `SvgIcon` from this package and pass it an `icon` string property as shown above. For predefined icons, please see this [function](src/icons/index.js#L271-L308), which returns a predefined React SVG node based upon a string.
 
 For example:
 
