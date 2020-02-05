@@ -155,6 +155,17 @@ const Commander = (currentTextArea, command) => {
 		case "header-6": {
 			return setHeader("###### ");
 		}
+		case "horizontal-rule": {
+			currentTextArea.selectionStart =
+				currentTextArea.selectionStart + initialState.text.length;
+
+			insertText(currentTextArea, `\n\n---\n`);
+
+			return {
+				start: currentTextArea.selectionStart + initialState.text.length,
+				end: currentTextArea.selectionEnd,
+			};
+		}
 		case "image": {
 			const imageTemplate =
 				initialState.selectedText || "https://example.com/your-image.png";
@@ -257,6 +268,28 @@ const Commander = (currentTextArea, command) => {
 				end: nextState.selection.end - 2,
 			};
 		}
+		// case "underline": {
+		// 	const prevSelectedState = getPrevStateFromTextArea(currentTextArea, 2);
+
+		// 	if (prevSelectedState.indexOf("+") > -1) {
+		// 		currentTextArea.selectionStart = currentTextArea.selectionStart - 2;
+		// 		currentTextArea.selectionEnd = currentTextArea.selectionEnd + 2;
+		// 		const nextState = replaceSelection(
+		// 			`${prevSelectedState.replace(/[+]/gi, "")}`,
+		// 		);
+
+		// 		return {
+		// 			start: nextState.selection.end - initialState.selectedText.length,
+		// 			end: nextState.selection.end + 2,
+		// 		};
+		// 	}
+
+		// 	const nextState = replaceSelection(`++${initialState.selectedText}++`);
+		// 	return {
+		// 		start: nextState.selection.end - 2 - initialState.selectedText.length,
+		// 		end: nextState.selection.end - 2,
+		// 	};
+		// }
 		default:
 			return {
 				start: 0,

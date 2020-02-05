@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { render } from "react-dom";
 import ReactMarkdown from "react-markdown";
-import MDEditor from "../../dist/index.js";
-import "../../dist/styles/react-smde.css";
+import MDEditor from "../../src/index.js";
+import CodeBlock from "./CodeBlock";
+import "../../src/styles/all.scss";
 import "./styles/demo.scss";
 
 class App extends Component {
@@ -45,7 +46,9 @@ class App extends Component {
 				value={this.state.value}
 				loadSuggestions={this.loadSuggestions}
 			>
-				<ReactMarkdown skipHtml>{this.state.value}</ReactMarkdown>
+				<ReactMarkdown skipHtml renderers={{ code: CodeBlock }}>
+					{this.state.value}
+				</ReactMarkdown>
 			</MDEditor>
 		</div>
 	);

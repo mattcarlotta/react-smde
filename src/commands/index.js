@@ -7,24 +7,29 @@ import link from "./link";
 import quote from "./quote";
 import { checkedList, orderedList, unorderedList } from "./lists";
 import strikeThrough from "./strikeThrough";
+import horizontalRule from "./horizontalRule";
+// import underline from "./underline"; // not supported
 
 const getDefaultCommands = () => [
-  [header, bold, italic, strikeThrough],
-  [link, quote, code, image],
-  [unorderedList, orderedList, checkedList]
+	[header, bold, italic, strikeThrough],
+	[horizontalRule],
+	[link, quote, code, image],
+	[unorderedList, orderedList, checkedList],
 ];
 
 const commands = {
-  header,
-  bold,
-  italic,
-  link,
-  quote,
-  code,
-  image,
-  unorderedList,
-  orderedList,
-  checkedList
+	header,
+	bold,
+	italic,
+	strikeThrough,
+	horizontalRule,
+	link,
+	quote,
+	code,
+	image,
+	unorderedList,
+	orderedList,
+	checkedList,
 };
 
 export { getDefaultCommands };

@@ -63,7 +63,7 @@ class App extends Component {
 	render = () => (
 		<div className="container">
 			<MDEditor onChange={this.handleValueChange} value={this.state.value}>
-				<ReactMarkdown skipHtml>{this.state.value}</ReactMarkdown>
+				<ReactMarkdown skipHtml renderers={{"code"",inlineCode"}}>{this.state.value}</ReactMarkdown>
 			</MDEditor>
 		</div>
 	);
