@@ -80,6 +80,7 @@ export const Toolbar = ({
 							>
 								<button
 									type="button"
+									data-name="preview-write"
 									onClick={() =>
 										onTabChange(isPreviewing ? "write" : "preview")
 									}

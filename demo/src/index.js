@@ -42,10 +42,12 @@ class App extends Component {
 	render = () => (
 		<div className="container">
 			<MDEditor
+				autoGrow
 				onChange={this.handleValueChange}
 				value={this.state.value}
 				loadSuggestions={this.loadSuggestions}
 				maxEditorWidth={800}
+				minEditorHeight={100}
 				classes={{ mde: "editor" }}
 			>
 				<ReactMarkdown renderers={{ code: CodeBlock }}>

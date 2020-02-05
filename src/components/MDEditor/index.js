@@ -33,10 +33,10 @@ export class MDEditor extends React.Component {
 		this.adjustEditorSize();
 	};
 
-	handleGripMouseDown = event => {
+	handleGripMouseDown = ({ clientY }) => {
 		this.gripDrag = {
 			originalHeight: this.state.editorHeight,
-			originalDragY: event.clientY,
+			originalDragY: clientY,
 		};
 	};
 
@@ -45,7 +45,7 @@ export class MDEditor extends React.Component {
 	handleGripMouseMove = ({ clientY }) => {
 		if (this.gripDrag !== null) {
 			const newHeight =
-				this.gripDrag.originalHeight + clientY - this.gripDrag.originalDragY;
+				this.gripDrag.originalHeight + (clientY - this.gripDrag.originalDragY);
 			if (
 				newHeight >= parseInt(this.props.minEditorHeight, 10) &&
 				newHeight <= parseInt(this.props.maxEditorHeight, 10)
@@ -97,7 +97,7 @@ export class MDEditor extends React.Component {
 			this.textAreaLineHeight = lineHeight;
 		}
 
-		this.adjustEditorSize();
+		this.adjustEditorSize(element);
 	};
 
 	handleCommand = command => {

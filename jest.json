@@ -9,6 +9,6 @@
 		"^.+\\.(js|jsx)$": "babel-jest",
 		".+\\.(css|styl|less|sass|scss)$": "<rootDir>/node_modules/jest-css-modules-transform"
 	},
-	"setupFilesAfterEnv": ["<rootDir>/src/utils/setupTests.js"],
+	"setupFilesAfterEnv": ["<rootDir>/src/utils/setupTests/index.js"],
 	"moduleFileExtensions": ["css", "scss", "js", "json", "jsx"]
 }
