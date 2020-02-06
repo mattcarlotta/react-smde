@@ -97,7 +97,7 @@ export class MDEditor extends React.Component {
 			this.textAreaLineHeight = lineHeight;
 		}
 
-		this.adjustEditorSize(element);
+		this.adjustEditorSize();
 	};
 
 	handleCommand = command => {

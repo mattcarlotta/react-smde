@@ -25,6 +25,14 @@ jest.mock("~utils", (_, value) => ({
 	}),
 }));
 
+// Object.defineProperty(window, "getComputedStyle", {
+// 	value: () => ({
+// 		getPropertyValue: prop => {
+// 			return prop === "line-height" ? NaN : "13";
+// 		},
+// 	}),
+// });
+
 const nextValue =
 	"Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.";
 
@@ -110,6 +118,42 @@ describe("MDEditor", () => {
 		wrapper.instance().handleGripMouseMove({ clientY: 710 });
 
 		expect(wrapper.state("editorHeight")).toEqual(300);
+	});
+
+	it("handles editor lineheight via 'font-size' property", () => {
+		Object.defineProperty(window, "getComputedStyle", {
+			value: () => ({
+				getPropertyValue: () => {
+					return "13";
+				},
+			}),
+		});
+
+		wrapper = mount(
+			<MDEditor {...initProps} minEditorHeight={100} autoGrow>
+				<ReactMarkdown skipHtml>{value}</ReactMarkdown>
+			</MDEditor>,
+		);
+
+		expect(wrapper.instance().textAreaLineHeight).toEqual(13);
+	});
+
+	it("handles editor lineheight via 'line-height' property", () => {
+		Object.defineProperty(window, "getComputedStyle", {
+			value: () => ({
+				getPropertyValue: prop => {
+					return prop === "line-height" ? NaN : "13";
+				},
+			}),
+		});
+
+		wrapper = mount(
+			<MDEditor {...initProps} minEditorHeight={100} autoGrow>
+				<ReactMarkdown skipHtml>{value}</ReactMarkdown>
+			</MDEditor>,
+		);
+
+		expect(wrapper.instance().textAreaLineHeight).toEqual(19.5);
 	});
 
 	it("handles invalid commands", () => {
