@@ -84,7 +84,7 @@ The following props are accepted by `MDEditor`:
 | `disableHotKeys`(bool)            | A `boolean` to disable the textarea hot keys. (default: `false`)                                                                                    |
 | `disablePreview`(bool)            | A `boolean` to disable the preview button. (default: `false`)                                                                                       |
 | `disableToolbar`(bool)            | A `boolean` to disable the toolbar. (default: `false`)                                                                                              |
-| `loadSuggestions`(func)           | A `function` that returns an `array` of suggestions triggered by the `suggestionTriggerCharacter`. (see [Suggestions](#suggesitons) for more info)  |
+| `loadSuggestions`(func)           | A `function` that returns an `array` of suggestions triggered by the `suggestionTriggerCharacter`. (see [Suggestions](#suggestions) for more info)  |
 | `maxEditorHeight`(num/str)        | A maximum editor height `number` that is set in `px` or `string`. (default: `500`)                                                                  |
 | `maxEditorWidth` (num/str)        | A maximum editor width `number` or `string`. (default: `100%`)                                                                                      |
 | `minEditorHeight`(num/str)        | A minimum editor height `number` that is set in `px` or `string`. (default: `250`)                                                                  |

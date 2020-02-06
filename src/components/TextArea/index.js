@@ -234,6 +234,7 @@ export class TextArea extends React.Component {
 				}
 				case "0": {
 					onTabChange();
+					break;
 				}
 				default:
 					break;

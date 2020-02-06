@@ -3,8 +3,8 @@ import SvgIcon from "~icons";
 
 const trash = {
 	name: "trash",
-	tooltip: "Clear Textarea",
-	buttonProps: { "aria-label": "Clear Textarea" },
+	tooltip: "Clear textarea",
+	buttonProps: { "aria-label": "Clear textarea" },
 	icon: <SvgIcon icon="trash" />,
 };
 
