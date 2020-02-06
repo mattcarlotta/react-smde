@@ -7,4 +7,5 @@ export * from "./InsertBeforeEachLine";
 export * from "./InsertTextAtPosition";
 export * from "./MarkdownUtil";
 export * from "./Math";
+export * from "./ReplaceSelection";
 export * from "./TextAreaCaretPosition";

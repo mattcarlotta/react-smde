@@ -4,40 +4,28 @@
   http://jedwatson.github.io/classnames
 */
 
-function isString(classValue) {
-  return typeof classValue === "string";
-}
-
-function isNonEmptyArray(classValue) {
-  return Array.isArray(classValue) && classValue.length > 0;
-}
-
-function isClassDictionary(classValue) {
-  return typeof classValue === "object";
-}
-
 export function classNames(...classValues) {
-  const classes = [];
+	const classes = [];
 
-  for (let i = 0; i < classValues.length; i++) {
-    const classValue = classValues[i];
-    if (!classValue) continue;
+	for (let i = 0; i < classValues.length; i++) {
+		const classValue = classValues[i];
+		if (!classValue) continue;
 
-    if (isString(classValue)) {
-      classes.push(classValue);
-    } else if (isNonEmptyArray(classValue)) {
-      const inner = classNames.apply(null, classValue);
-      if (inner) {
-        classes.push(inner);
-      }
-    } else if (isClassDictionary(classValue)) {
-      for (let key in classValue) {
-        if (classValue.hasOwnProperty(key) && classValue[key]) {
-          classes.push(key);
-        }
-      }
-    }
-  }
+		if (typeof classValue === "string") {
+			classes.push(classValue);
+		} else if (Array.isArray(classValue) && classValue.length > 0) {
+			const inner = classNames.apply(null, classValue);
+			if (inner) {
+				classes.push(inner);
+			}
+		} else if (typeof classValue === "object") {
+			for (let key in classValue) {
+				if (classValue.hasOwnProperty(key) && classValue[key]) {
+					classes.push(key);
+				}
+			}
+		}
+	}
 
-  return classes.join(" ");
+	return classes.join(" ");
 }

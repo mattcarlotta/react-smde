@@ -2,9 +2,8 @@ import {
 	getBreaksNeededForEmptyLineAfter,
 	getBreaksNeededForEmptyLineBefore,
 	getStateFromTextArea,
-	getPrevStateFromTextArea,
 	insertBeforeEachLine,
-	insertText,
+	replaceSelection,
 	selectWord,
 } from "~utils";
 
@@ -24,13 +23,11 @@ const Commander = (currentTextArea, command) => {
 		return getStateFromTextArea(currentTextArea);
 	}
 
-	function replaceSelection(text) {
-		insertText(currentTextArea, text);
-		return getStateFromTextArea(currentTextArea);
-	}
-
 	function setHeader(prefix) {
-		const nextState = replaceSelection(`${prefix}${initialState.selectedText}`);
+		const nextState = replaceSelection(
+			currentTextArea,
+			`${prefix}${initialState.selectedText}`,
+		);
 
 		return {
 			start: nextState.selection.end - initialState.selectedText.length,
@@ -57,6 +54,7 @@ const Commander = (currentTextArea, command) => {
 		);
 
 		replaceSelection(
+			currentTextArea,
 			`${breaksBefore}${modifiedText.modifiedText}${breaksAfter}`,
 		);
 
@@ -76,24 +74,32 @@ const Commander = (currentTextArea, command) => {
 		};
 	}
 
+	function removePrevious(regex, pos) {
+		if (initialState.text !== initialState.selectedText) {
+			currentTextArea.selectionStart = currentTextArea.selectionStart - pos;
+			currentTextArea.selectionEnd = currentTextArea.selectionEnd + pos;
+		}
+
+		const nextState = replaceSelection(
+			currentTextArea,
+			`${initialState.text.replace(regex, "")}`,
+		);
+
+		return {
+			start: nextState.selection.end - initialState.selectedText.length,
+			end: nextState.selection.end + pos,
+		};
+	}
+
 	switch (command) {
 		case "bold": {
-			const prevSelectedState = getPrevStateFromTextArea(currentTextArea, 2);
+			if (initialState.text.indexOf("**") > -1)
+				return removePrevious(/[*]/gi, 2);
 
-			if (prevSelectedState.indexOf("**") > -1) {
-				currentTextArea.selectionStart = currentTextArea.selectionStart - 2;
-				currentTextArea.selectionEnd = currentTextArea.selectionEnd + 2;
-				const nextState = replaceSelection(
-					`${prevSelectedState.replace(/[*]/gi, "")}`,
-				);
-
-				return {
-					start: nextState.selection.end - initialState.selectedText.length,
-					end: nextState.selection.end + 2,
-				};
-			}
-
-			const nextState = replaceSelection(`**${initialState.selectedText}**`);
+			const nextState = replaceSelection(
+				currentTextArea,
+				`**${initialState.selectedText}**`,
+			);
 			return {
 				start: nextState.selection.end - 2 - initialState.selectedText.length,
 				end: nextState.selection.end - 2,
@@ -101,7 +107,7 @@ const Commander = (currentTextArea, command) => {
 		}
 		case "code": {
 			if (initialState.selectedText.indexOf("\n") === -1) {
-				replaceSelection(`\`${initialState.selectedText}\``);
+				replaceSelection(currentTextArea, `\`${initialState.selectedText}\``);
 
 				const selectionStart = initialState.selection.start + 1;
 				const selectionEnd = selectionStart + initialState.selectedText.length;
@@ -125,6 +131,7 @@ const Commander = (currentTextArea, command) => {
 			const breaksAfter = Array(breaksAfterCount + 1).join("\n");
 
 			replaceSelection(
+				currentTextArea,
 				`${breaksBefore}\`\`\`\n${initialState.selectedText}\n\`\`\`${breaksAfter}`,
 			);
 
@@ -159,7 +166,7 @@ const Commander = (currentTextArea, command) => {
 			currentTextArea.selectionStart =
 				currentTextArea.selectionStart + initialState.text.length;
 
-			insertText(currentTextArea, `\n\n---\n`);
+			replaceSelection(currentTextArea, `\n\n---\n`);
 
 			return {
 				start: currentTextArea.selectionStart + initialState.text.length,
@@ -170,7 +177,7 @@ const Commander = (currentTextArea, command) => {
 			const imageTemplate =
 				initialState.selectedText || "https://example.com/your-image.png";
 
-			replaceSelection(`![example.png](${imageTemplate})`);
+			replaceSelection(currentTextArea, `![example.png](${imageTemplate})`);
 
 			return {
 				start: initialState.selection.start + 15,
@@ -178,22 +185,13 @@ const Commander = (currentTextArea, command) => {
 			};
 		}
 		case "italic": {
-			const prevSelectedState = getPrevStateFromTextArea(currentTextArea, 1);
+			if (initialState.text.indexOf("*") > -1)
+				return removePrevious(/[*]/gi, 1);
 
-			if (prevSelectedState.indexOf("*") > -1) {
-				currentTextArea.selectionStart = currentTextArea.selectionStart - 1;
-				currentTextArea.selectionEnd = currentTextArea.selectionEnd + 1;
-				const nextState = replaceSelection(
-					`${prevSelectedState.replace(/[*]/gi, "")}`,
-				);
-
-				return {
-					start: nextState.selection.end - initialState.selectedText.length,
-					end: nextState.selection.end + 2,
-				};
-			}
-
-			const nextState = replaceSelection(`*${initialState.selectedText}*`);
+			const nextState = replaceSelection(
+				currentTextArea,
+				`*${initialState.selectedText}*`,
+			);
 			return {
 				start: nextState.selection.end - 1 - initialState.selectedText.length,
 				end: nextState.selection.end - 1,
@@ -203,6 +201,7 @@ const Commander = (currentTextArea, command) => {
 			const linkTemplate = initialState.selectedText || "link";
 
 			const nextState = replaceSelection(
+				currentTextArea,
 				`[${linkTemplate}](https://www.example.com)`,
 			);
 
@@ -234,6 +233,7 @@ const Commander = (currentTextArea, command) => {
 			const breaksAfter = Array(breaksAfterCount + 1).join("\n");
 
 			replaceSelection(
+				currentTextArea,
 				`${breaksBefore}> ${initialState.selectedText}${breaksAfter}`,
 			);
 
@@ -247,22 +247,13 @@ const Commander = (currentTextArea, command) => {
 			};
 		}
 		case "strike-through": {
-			const prevSelectedState = getPrevStateFromTextArea(currentTextArea, 2);
+			if (initialState.text.indexOf("~~") > -1)
+				return removePrevious(/[~]/gi, 2);
 
-			if (prevSelectedState.indexOf("~") > -1) {
-				currentTextArea.selectionStart = currentTextArea.selectionStart - 2;
-				currentTextArea.selectionEnd = currentTextArea.selectionEnd + 2;
-				const nextState = replaceSelection(
-					`${prevSelectedState.replace(/[~]/gi, "")}`,
-				);
-
-				return {
-					start: nextState.selection.end - initialState.selectedText.length,
-					end: nextState.selection.end + 2,
-				};
-			}
-
-			const nextState = replaceSelection(`~~${initialState.selectedText}~~`);
+			const nextState = replaceSelection(
+				currentTextArea,
+				`~~${initialState.selectedText}~~`,
+			);
 			return {
 				start: nextState.selection.end - 2 - initialState.selectedText.length,
 				end: nextState.selection.end - 2,
@@ -272,7 +263,7 @@ const Commander = (currentTextArea, command) => {
 			currentTextArea.selectionStart = 0;
 			currentTextArea.selectionEnd = currentTextArea.value.length;
 
-			replaceSelection("");
+			replaceSelection(currentTextArea, "");
 
 			return {
 				start: 0,
@@ -280,22 +271,10 @@ const Commander = (currentTextArea, command) => {
 			};
 		}
 		// case "underline": {
-		// 	const prevSelectedState = getPrevStateFromTextArea(currentTextArea, 2);
+		// if (initialState.text.indexOf("++") > -1)
+		// 	return removePrevious(/[+]/gi, 2);
 
-		// 	if (prevSelectedState.indexOf("+") > -1) {
-		// 		currentTextArea.selectionStart = currentTextArea.selectionStart - 2;
-		// 		currentTextArea.selectionEnd = currentTextArea.selectionEnd + 2;
-		// 		const nextState = replaceSelection(
-		// 			`${prevSelectedState.replace(/[+]/gi, "")}`,
-		// 		);
-
-		// 		return {
-		// 			start: nextState.selection.end - initialState.selectedText.length,
-		// 			end: nextState.selection.end + 2,
-		// 		};
-		// 	}
-
-		// 	const nextState = replaceSelection(`++${initialState.selectedText}++`);
+		// 	const nextState = replaceSelection(currentTextArea,`++${initialState.selectedText}++`);
 		// 	return {
 		// 		start: nextState.selection.end - 2 - initialState.selectedText.length,
 		// 		end: nextState.selection.end - 2,

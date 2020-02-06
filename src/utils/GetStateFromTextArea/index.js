@@ -9,9 +9,3 @@ export const getStateFromTextArea = textArea => ({
 		textArea.selectionEnd,
 	),
 });
-
-export const getPrevStateFromTextArea = (textArea, pos) =>
-	textArea.value.slice(
-		textArea.selectionStart - pos,
-		textArea.selectionEnd + pos,
-	);
