@@ -1,20 +1,15 @@
 import Tooltip from "../index";
 
-function mountTest(Component) {
-	describe(`mount and unmount`, () => {
-		// https://github.com/ant-design/ant-design/pull/18441
-		it(`component could be updated and unmounted without errors`, () => {
-			const wrapper = mount(<Component />);
-			expect(() => {
-				wrapper.setProps({});
-				wrapper.unmount();
-			}).not.toThrow();
-		});
-	});
-}
-
 describe("Tooltip", () => {
-	mountTest(Tooltip);
+	// https://github.com/ant-design/ant-design/pull/18441
+	it(`component could be updated and unmounted without errors`, () => {
+		const wrapper = mount(<Tooltip />);
+		expect(() => {
+			wrapper.setProps({});
+			wrapper.unmount();
+		}).not.toThrow();
+	});
+
 	it("check `onVisibleChange` arguments", () => {
 		const onVisibleChange = jest.fn();
 
