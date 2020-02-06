@@ -10,6 +10,13 @@ const initProps = {
 	onChange,
 };
 
+const invalidCommand = {
+	name: "invalid-command",
+	tooltip: "Add an invalid command",
+	buttonProps: { "aria-label": "Add invalid command" },
+	icon: <p>Invalid</p>,
+};
+
 jest.mock("~utils", (_, value) => ({
 	...require.requireActual("~utils"),
 	replaceSelection: jest.fn().mockReturnValue({
@@ -28,6 +35,7 @@ document.removeEventListener = jest.fn();
 describe("MDEditor", () => {
 	let wrapper;
 	let textareaNode;
+	let command;
 	beforeEach(() => {
 		wrapper = mount(
 			<MDEditor {...initProps}>
@@ -35,6 +43,8 @@ describe("MDEditor", () => {
 			</MDEditor>,
 		);
 		textareaNode = () => wrapper.find("textarea").getDOMNode();
+		command = name =>
+			wrapper.find(`button[data-name='${name}']`).simulate("click");
 	});
 
 	afterEach(() => {
@@ -102,6 +112,17 @@ describe("MDEditor", () => {
 		expect(wrapper.state("editorHeight")).toEqual(300);
 	});
 
+	it("handles invalid commands", () => {
+		wrapper = mount(
+			<MDEditor {...initProps} commands={[[invalidCommand]]}>
+				<ReactMarkdown skipHtml>{value}</ReactMarkdown>
+			</MDEditor>,
+		);
+
+		wrapper.find("button[data-name='invalid-command']").simulate("click");
+		expect(replaceSelection).not.toHaveBeenCalled();
+	});
+
 	it("removes mouse listeners on unmount", () => {
 		wrapper.unmount();
 		expect(document.removeEventListener).toHaveBeenCalled();
@@ -112,20 +133,27 @@ describe("MDEditor", () => {
 			wrapper.setProps({ value: "Hello" });
 		});
 
-		it("toggles the markdown preview and textarea", () => {
-			wrapper.find("button[data-name='preview-write']").simulate("click");
+		it("removes previous selection", () => {
+			wrapper.setProps({ value: "**Hello**" });
+			textareaNode().setSelectionRange(2, 7);
+			command("bold");
+			expect(replaceSelection).toHaveBeenCalledWith(textareaNode(), "Hello");
+		});
 
-			expect(wrapper.state("tab")).toEqual("preview");
-
-			wrapper.find("button[data-name='preview-write']").simulate("click");
-
-			expect(wrapper.state("tab")).toEqual("write");
+		it("handles one liner offsets", () => {
+			wrapper.setProps({ value: "Hello\nGoodbye" });
+			textareaNode().setSelectionRange(0, 13);
+			command("ordered-list");
+			expect(replaceSelection).toHaveBeenCalledWith(
+				textareaNode(),
+				"1. Hello\n2. Goodbye",
+			);
 		});
 
 		it("adds headers to the textarea", () => {
 			const addHeader = type => {
-				wrapper.find("button[data-name='header']").simulate("click");
-				wrapper.find(`button[data-name='header-${type}']`).simulate("click");
+				command("header");
+				command(`header-${type}`);
 			};
 
 			addHeader(1);
@@ -201,9 +229,99 @@ describe("MDEditor", () => {
 			expect(replaceSelection).toHaveBeenCalledWith(textareaNode(), "Hello");
 		});
 
+		it("adds a horizontal rule", () => {
+			wrapper.find("button[data-name='horizontal-rule']").simulate("click");
+			expect(replaceSelection).toHaveBeenCalledWith(
+				textareaNode(),
+				"\n\n---\n",
+			);
+		});
+
+		it("adds a link", () => {
+			command("link");
+
+			expect(replaceSelection).toHaveBeenCalledWith(
+				textareaNode(),
+				"[Hello](https://www.example.com)",
+			);
+
+			// show default template
+			wrapper.setProps({ value: "" });
+			command("link");
+			expect(replaceSelection).toHaveBeenCalledWith(
+				textareaNode(),
+				"[link](https://www.example.com)",
+			);
+		});
+
+		it("adds a quote", () => {
+			command("quote");
+			expect(replaceSelection).toHaveBeenCalledWith(textareaNode(), "> Hello");
+		});
+
+		it("adds a inline code", () => {
+			command("code");
+			expect(replaceSelection).toHaveBeenCalledWith(textareaNode(), "`Hello`");
+		});
+
+		it("adds a code block", () => {
+			wrapper.setProps({ value: "\nHello\n" });
+			textareaNode().setSelectionRange(0, 7);
+
+			command("code");
+			expect(replaceSelection).toHaveBeenCalledWith(
+				textareaNode(),
+				"```\n\nHello\n\n```",
+			);
+		});
+
+		it("adds an image", () => {
+			command("image");
+			expect(replaceSelection).toHaveBeenCalledWith(
+				textareaNode(),
+				"![example.png](Hello)",
+			);
+
+			// show default template
+			wrapper.setProps({ value: "" });
+			command("image");
+			expect(replaceSelection).toHaveBeenCalledWith(
+				textareaNode(),
+				"![example.png](https://example.com/your-image.png)",
+			);
+		});
+
+		it("adds an unordered list", () => {
+			command("unordered-list");
+			expect(replaceSelection).toHaveBeenCalledWith(textareaNode(), "- Hello");
+		});
+
+		it("adds an ordered list", () => {
+			command("ordered-list");
+			expect(replaceSelection).toHaveBeenCalledWith(textareaNode(), "1. Hello");
+		});
+
+		it("adds a checked list", () => {
+			command("checked-list");
+			expect(replaceSelection).toHaveBeenCalledWith(
+				textareaNode(),
+				"- [ ] Hello",
+			);
+		});
+
 		it("clears all text", () => {
-			wrapper.find("button[data-name='trash']").simulate("click");
+			command("trash");
 			expect(replaceSelection).toHaveBeenCalledWith(textareaNode(), "");
+		});
+
+		it("previews/unpreviews the markdown text", () => {
+			command("preview-write");
+			expect(wrapper.state("tab")).toEqual("preview");
+			expect(wrapper.find("ReactMarkdown").exists()).toBeTruthy();
+
+			command("preview-write");
+			expect(wrapper.state("tab")).toEqual("write");
+			expect(wrapper.find("ReactMarkdown").exists()).toBeFalsy();
 		});
 	});
 });
