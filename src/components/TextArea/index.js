@@ -45,13 +45,11 @@ export class TextArea extends React.Component {
 	};
 
 	handleSuggestions = async (text, promise) => {
-		// console.log("triggered handleSuggestions", text);
 		const suggestions = await this.props.loadSuggestions(text);
 		const { status, currentPromise } = this.state;
 
 		// check that the current promise matches the incoming promise to avoid UI flashing
 		if (currentPromise === promise && status !== "inactive") {
-			// console.log("triggered suggestions update", suggestions);
 			this.setState(
 				{
 					status: "active",
@@ -61,8 +59,6 @@ export class TextArea extends React.Component {
 				},
 				() => (this.promiseCount = 0),
 			);
-
-			// setTimeout(() => console.log(this.state), 1000);
 		}
 	};
 
@@ -110,7 +106,6 @@ export class TextArea extends React.Component {
 
 	handleKeyDown = event => {
 		const { key, ctrlKey } = event;
-		// console.log("triggered", key);
 		const { focusIndex, suggestions, startPosition } = this.state;
 		const {
 			disableHotKeys,
@@ -137,10 +132,7 @@ export class TextArea extends React.Component {
 		// if suggestions are enabled
 		if (suggestionsEnabled) {
 			// and active/loading and the following keys were pressed...
-			if (
-				(suggestionsActive || suggestionsLoading) &&
-				(isNavKey || (ctrlKey && key === "k"))
-			) {
+			if ((suggestionsActive || suggestionsLoading) && isNavKey) {
 				// prevent default key presses within textarea when suggestions are active
 				event.preventDefault();
 			}
@@ -151,7 +143,7 @@ export class TextArea extends React.Component {
 				this.textAreaElement.focus();
 				this.setState(
 					{
-						status: "loading",
+						status: this.showLoading ? "loading" : "active",
 						startPosition: selectionStart + 1,
 						caret: getCaretCoordinates(
 							this.textAreaElement,

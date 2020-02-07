@@ -143,6 +143,50 @@ describe("TextArea", () => {
 		expect(onTabChange).toHaveBeenCalledTimes(0);
 	});
 
+	it("doesn't display a loading indicator if 'debounceSuggestions' is less than 300 and initiated", () => {
+		wrapper = mount(
+			<TextArea
+				{...initProps}
+				debounceSuggestions={0}
+				suggestionsEnabled
+				value=""
+			/>,
+		);
+		keydownHandler({ key: "@" });
+		wrapper.update();
+
+		expect(wrapper.state()).toEqual(
+			expect.objectContaining({
+				status: "active",
+				currentPromise: 0,
+			}),
+		);
+		expect(wrapper.find("Spinner").exists()).toBeFalsy();
+	});
+
+	it("doesn't display a loading indicator if 'debounceSuggestions' is less than 300 and refiltered", () => {
+		wrapper = mount(
+			<TextArea
+				{...initProps}
+				debounceSuggestions={0}
+				suggestionsEnabled
+				value=""
+			/>,
+		);
+		wrapper.setState({ status: "active", suggestions });
+		keydownHandler({ key: "b" });
+		wrapper.update();
+
+		expect(wrapper.state()).toEqual(
+			expect.objectContaining({
+				status: "active",
+				suggestions,
+				currentPromise: 0,
+			}),
+		);
+		expect(wrapper.find("Spinner").exists()).toBeFalsy();
+	});
+
 	describe("Suggestions", () => {
 		beforeEach(() => {
 			wrapper.setProps({
@@ -271,6 +315,19 @@ describe("TextArea", () => {
 			expect(wrapper.find("li.mde-no-suggestions")).toBeTruthy();
 		});
 
+		it("resets suggestions to be refiltered", async () => {
+			keydownHandler({ key: "@" });
+			keydownHandler({ key: "b" });
+
+			expect(wrapper.state()).toEqual(
+				expect.objectContaining({
+					status: "loading",
+					suggestions: [],
+					currentPromise: 2,
+				}),
+			);
+		});
+
 		it("calls 'preventDefault' when specific keys are pressed", async () => {
 			preventDefault.mockClear();
 			wrapper.setState({ status: "loading" });
@@ -281,6 +338,28 @@ describe("TextArea", () => {
 			keydownHandler({ key: "k", ctrlKey: true });
 			jest.runAllTimers();
 			wrapper.update();
+
+			expect(preventDefault).toHaveBeenCalledTimes(5);
+		});
+
+		it("deactivates the suggestions when the '@' symbol is deleted", async () => {
+			loadSuggestions.mockReturnValue(suggestions);
+			keydownHandler({ key: "@" });
+			jest.runAllTimers();
+			wrapper.update();
+
+			await flushPromises();
+			wrapper.update();
+
+			wrapper.setProps({ value: "" });
+			keydownHandler({ key: "Backspace" });
+
+			expect(wrapper.state()).toEqual(
+				expect.objectContaining({
+					status: "inactive",
+					suggestions: [],
+				}),
+			);
 
 			expect(preventDefault).toHaveBeenCalledTimes(5);
 		});
