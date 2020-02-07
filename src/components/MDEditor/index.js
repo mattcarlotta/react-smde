@@ -13,8 +13,12 @@ export class MDEditor extends React.Component {
 		this.state = {
 			editorHeight: parseInt(props.minEditorHeight, 10),
 			tab: props.selectedTab,
+			isDragging: false,
+			originalHeight: 0,
+			originalDragY: 0,
+			textAreaOffsetHeight: 0,
+			textAreaScrollHeight: 0,
 		};
-		this.gripDrag = null;
 		checkPropTypes(props);
 	}
 
@@ -30,32 +34,37 @@ export class MDEditor extends React.Component {
 
 	handleTextChange = value => {
 		this.props.onChange(value);
-		this.adjustEditorSize();
+		this.setState(
+			{
+				textAreaScrollHeight: this.textAreaRef.scrollHeight,
+				textAreaOffsetHeight: this.textAreaRef.offsetHeight,
+			},
+			() => this.adjustEditorSize(),
+		);
 	};
 
 	handleGripMouseDown = ({ clientY }) => {
-		this.gripDrag = {
-			originalHeight: this.state.editorHeight,
+		this.setState(prevState => ({
+			originalHeight: prevState.editorHeight,
 			originalDragY: clientY,
-		};
+			isDragging: true,
+		}));
 	};
 
-	handleGripMouseUp = () => (this.gripDrag = null);
+	handleGripMouseUp = () =>
+		this.setState({ isDragging: false, originalDragY: 0 });
 
 	handleGripMouseMove = ({ clientY }) => {
-		if (this.gripDrag !== null) {
-			const newHeight =
-				this.gripDrag.originalHeight + (clientY - this.gripDrag.originalDragY);
-			if (
-				newHeight >= parseInt(this.props.minEditorHeight, 10) &&
-				newHeight <= parseInt(this.props.maxEditorHeight, 10)
-			) {
-				this.setState({
-					editorHeight:
-						this.gripDrag.originalHeight +
-						(clientY - this.gripDrag.originalDragY),
-				});
-			}
+		const { maxEditorHeight, minEditorHeight } = this.props;
+		const newHeight =
+			this.state.originalHeight + (clientY - this.state.originalDragY);
+
+		if (
+			this.state.isDragging &&
+			newHeight >= parseInt(minEditorHeight, 10) &&
+			newHeight <= parseInt(maxEditorHeight, 10)
+		) {
+			this.setState({ editorHeight: newHeight });
 		}
 	};
 
@@ -68,17 +77,16 @@ export class MDEditor extends React.Component {
 		);
 
 	adjustEditorSize = () => {
-		if (
-			this.props.autoGrow &&
-			this.textAreaRef &&
-			this.textAreaRef.scrollHeight > this.textAreaRef.offsetHeight
-		) {
-			this.setState(prevState => ({
+		const { autoGrow, maxEditorHeight, minEditorHeight } = this.props;
+		const { textAreaOffsetHeight, textAreaScrollHeight } = this.state;
+
+		if (autoGrow && textAreaScrollHeight > textAreaOffsetHeight) {
+			this.setState(({ editorHeight, textAreaLineHeight }) => ({
 				editorHeight:
-					prevState.editorHeight >= parseInt(this.props.minEditorHeight, 10) &&
-					prevState.editorHeight <= parseInt(this.props.maxEditorHeight, 10)
-						? this.textAreaRef.scrollHeight + this.textAreaLineHeight
-						: prevState.editorHeight,
+					editorHeight >= parseInt(minEditorHeight, 10) &&
+					editorHeight <= parseInt(maxEditorHeight, 10)
+						? textAreaScrollHeight + textAreaLineHeight
+						: editorHeight,
 			}));
 		}
 	};
@@ -86,15 +94,15 @@ export class MDEditor extends React.Component {
 	setTextAreaRef = element => {
 		this.textAreaRef = element;
 
-		if (this.props.autoGrow && element && window) {
+		if (this.props.autoGrow && element) {
 			const computed = window.getComputedStyle(element);
-			let lineHeight = parseInt(computed.getPropertyValue("line-height"), 10);
+			const lineHeight = parseInt(computed.getPropertyValue("line-height"), 10);
 
-			if (isNaN(lineHeight)) {
-				lineHeight = parseInt(computed.getPropertyValue("font-size"), 10) * 1.5;
-			}
-
-			this.textAreaLineHeight = lineHeight;
+			this.setState({
+				textAreaLineHeight: !isNaN(lineHeight)
+					? lineHeight
+					: parseInt(computed.getPropertyValue("font-size"), 10) * 1.5,
+			});
 		}
 
 		this.adjustEditorSize();

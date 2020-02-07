@@ -120,12 +120,65 @@ describe("MDEditor", () => {
 		expect(wrapper.state("editorHeight")).toEqual(300);
 	});
 
+	it("handlers editor autoGrow resizing", () => {
+		Object.defineProperty(window, "getComputedStyle", {
+			value: () => ({
+				getPropertyValue: prop => (prop === "line-height" ? NaN : "13"),
+			}),
+		});
+
+		wrapper = mount(
+			<MDEditor
+				{...initProps}
+				autoGrow
+				minEditorHeight={100}
+				maxEditorHeight={300}
+			>
+				<ReactMarkdown skipHtml>{value}</ReactMarkdown>
+			</MDEditor>,
+		);
+
+		// adding text to textarea
+		wrapper.setState({
+			textAreaScrollHeight: 140.5,
+			textAreaOffsetHeight: 100,
+		});
+		wrapper.instance().adjustEditorSize();
+		wrapper.update();
+
+		expect(wrapper.find("textarea").props().style).toEqual({
+			height: 160,
+		});
+
+		// maxing out text to textarea
+		wrapper.setState({
+			textAreaScrollHeight: 340.5,
+			textAreaOffsetHeight: 300,
+		});
+		wrapper.instance().adjustEditorSize();
+		wrapper.update();
+
+		expect(wrapper.find("textarea").props().style).toEqual({
+			height: 360,
+		});
+
+		// going over maxEditorHeight
+		wrapper.setState({
+			textAreaScrollHeight: 495.5,
+			textAreaOffsetHeight: 455,
+		});
+		wrapper.instance().adjustEditorSize();
+		wrapper.update();
+
+		expect(wrapper.find("textarea").props().style).toEqual({
+			height: 360,
+		});
+	});
+
 	it("handles editor lineheight via 'font-size' property", () => {
 		Object.defineProperty(window, "getComputedStyle", {
 			value: () => ({
-				getPropertyValue: () => {
-					return "13";
-				},
+				getPropertyValue: () => "13",
 			}),
 		});
 
@@ -135,15 +188,13 @@ describe("MDEditor", () => {
 			</MDEditor>,
 		);
 
-		expect(wrapper.instance().textAreaLineHeight).toEqual(13);
+		expect(wrapper.state("textAreaLineHeight")).toEqual(13);
 	});
 
 	it("handles editor lineheight via 'line-height' property", () => {
 		Object.defineProperty(window, "getComputedStyle", {
 			value: () => ({
-				getPropertyValue: prop => {
-					return prop === "line-height" ? NaN : "13";
-				},
+				getPropertyValue: prop => (prop === "line-height" ? NaN : "13"),
 			}),
 		});
 
@@ -153,7 +204,7 @@ describe("MDEditor", () => {
 			</MDEditor>,
 		);
 
-		expect(wrapper.instance().textAreaLineHeight).toEqual(19.5);
+		expect(wrapper.state("textAreaLineHeight")).toEqual(19.5);
 	});
 
 	it("handles invalid commands", () => {
