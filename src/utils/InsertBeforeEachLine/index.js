@@ -12,7 +12,9 @@ export function insertBeforeEachLine(selectedText, insertBefore) {
 				insertionLength += insertionResult.length;
 				return insertBefore(item, index) + item;
 			}
-			throw Error("insertion is expected to be either a string or a function");
+			throw Error(
+				"An invalid 'insertBefore' argument was passed to insertBeforeEachLine. The 'insertBefore' argument should either be a string or a function!",
+			);
 		})
 		.join("\n");
 
