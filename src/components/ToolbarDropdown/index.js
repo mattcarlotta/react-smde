@@ -72,7 +72,12 @@ ToolbarDropdown.defaultProps = {
 ToolbarDropdown.propTypes = {
 	buttonContent: PropTypes.node.isRequired,
 	buttonProps: PropTypes.objectOf(
-		PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.func]),
+		PropTypes.oneOfType([
+			PropTypes.bool,
+			PropTypes.func,
+			PropTypes.number,
+			PropTypes.string,
+		]),
 	),
 	classes: PropTypes.objectOf(PropTypes.string),
 	commands: PropTypes.arrayOf(

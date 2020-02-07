@@ -148,7 +148,7 @@ export class MDEditor extends React.Component {
 					onCommand={this.handleCommand}
 					onChange={this.handleTextChange}
 					onTabChange={this.handleTabChange}
-					suggestionsEnabled={suggestionTriggerCharacter && loadSuggestions}
+					suggestionsEnabled={suggestionTriggerCharacter && !!loadSuggestions}
 					textAreaProps={textAreaProps}
 				/>
 				{!disableGrip && (
@@ -219,10 +219,10 @@ MDEditor.propTypes = {
 	suggestionTriggerCharacter: PropTypes.string,
 	textAreaProps: PropTypes.objectOf(
 		PropTypes.oneOfType([
+			PropTypes.bool,
+			PropTypes.func,
 			PropTypes.number,
 			PropTypes.string,
-			PropTypes.func,
-			PropTypes.bool,
 		]),
 	),
 	tooltipPlacement: PropTypes.string,

@@ -25,17 +25,6 @@ jest.mock("~utils", (_, value) => ({
 	}),
 }));
 
-// Object.defineProperty(window, "getComputedStyle", {
-// 	value: () => ({
-// 		getPropertyValue: prop => {
-// 			return prop === "line-height" ? NaN : "13";
-// 		},
-// 	}),
-// });
-
-const nextValue =
-	"Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.";
-
 const eventListener = {};
 document.addEventListener = (evt, cb) => (eventListener[evt] = cb);
 document.removeEventListener = jest.fn();

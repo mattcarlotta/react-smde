@@ -305,14 +305,20 @@ TextArea.propTypes = {
 	disableHotKeys: PropTypes.bool.isRequired,
 	editorRef: PropTypes.func.isRequired,
 	height: PropTypes.number,
+	loadSuggestions: PropTypes.func,
 	onChange: PropTypes.func.isRequired,
 	onCommand: PropTypes.func.isRequired,
 	onTabChange: PropTypes.func.isRequired,
 	readOnly: PropTypes.bool,
-	suggestionsEnabled: PropTypes.func,
+	suggestionsEnabled: PropTypes.bool.isRequired,
 	tab: PropTypes.string.isRequired,
 	textAreaProps: PropTypes.objectOf(
-		PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.func]),
+		PropTypes.oneOfType([
+			PropTypes.bool,
+			PropTypes.func,
+			PropTypes.number,
+			PropTypes.string,
+		]),
 	),
 	value: PropTypes.string,
 };

@@ -17,7 +17,7 @@ export const ToolbarButton = ({
 		<button
 			type="button"
 			tabIndex="0"
-			className={disabled ? "disabled" : undefined}
+			className={classNames({ disabled })}
 			data-name={name}
 			disabled={disabled}
 			onClick={onClick}
@@ -52,7 +52,12 @@ ToolbarButton.defaultProps = {
 ToolbarButton.propTypes = {
 	buttonContent: PropTypes.node.isRequired,
 	buttonProps: PropTypes.objectOf(
-		PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.func]),
+		PropTypes.oneOfType([
+			PropTypes.bool,
+			PropTypes.func,
+			PropTypes.number,
+			PropTypes.string,
+		]),
 	),
 	classes: PropTypes.objectOf(PropTypes.string),
 	disabled: PropTypes.bool,
