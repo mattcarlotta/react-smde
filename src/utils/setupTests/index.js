@@ -14,6 +14,7 @@ global.HTMLAnchorElement = window.HTMLAnchorElement;
 global.shallow = shallow;
 global.mount = mount;
 global.React = require("react");
+global.flushPromises = () => new Promise(res => setImmediate(res));
 
 Object.keys(document.defaultView).forEach(property => {
 	if (typeof global[property] === "undefined") {

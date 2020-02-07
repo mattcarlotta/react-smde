@@ -94,7 +94,7 @@ export class MDEditor extends React.Component {
 	setTextAreaRef = element => {
 		this.textAreaRef = element;
 
-		if (this.props.autoGrow && element) {
+		if (this.props.autoGrow && element && typeof window !== "undefined") {
 			const computed = window.getComputedStyle(element);
 			const lineHeight = parseInt(computed.getPropertyValue("line-height"), 10);
 

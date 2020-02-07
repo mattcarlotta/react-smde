@@ -44,12 +44,14 @@ export class TextArea extends React.Component {
 		this.setState(initialState, () => (this.promiseCount = 0));
 	};
 
-	handleSuggestions = async (text = "", promise) => {
+	handleSuggestions = async (text, promise) => {
+		// console.log("triggered handleSuggestions", text);
 		const suggestions = await this.props.loadSuggestions(text);
 		const { status, currentPromise } = this.state;
 
 		// check that the current promise matches the incoming promise to avoid UI flashing
 		if (currentPromise === promise && status !== "inactive") {
+			// console.log("triggered suggestions update", suggestions);
 			this.setState(
 				{
 					status: "active",
@@ -59,6 +61,8 @@ export class TextArea extends React.Component {
 				},
 				() => (this.promiseCount = 0),
 			);
+
+			// setTimeout(() => console.log(this.state), 1000);
 		}
 	};
 
@@ -72,7 +76,7 @@ export class TextArea extends React.Component {
 	};
 
 	clearSearchTimer = () => {
-		if (this.searchTimer) clearTimeout(this.searchTimer);
+		clearTimeout(this.searchTimer);
 		this.searchTimer = null;
 	};
 
@@ -85,6 +89,7 @@ export class TextArea extends React.Component {
 		["active", "loading", "inactive"].map(s => this.state.status === s);
 
 	handleSuggestionSearch = () => {
+		// console.log("triggered handleSuggestionSearch");
 		// clear timeout
 		this.clearSearchTimer();
 
@@ -105,6 +110,7 @@ export class TextArea extends React.Component {
 
 	handleKeyDown = event => {
 		const { key, ctrlKey } = event;
+		// console.log("triggered", key);
 		const { focusIndex, suggestions, startPosition } = this.state;
 		const {
 			disableHotKeys,
@@ -302,6 +308,7 @@ export class TextArea extends React.Component {
 TextArea.propTypes = {
 	children: PropTypes.node.isRequired,
 	classes: PropTypes.objectOf(PropTypes.string),
+	debounceSuggestions: PropTypes.number.isRequired,
 	disableHotKeys: PropTypes.bool.isRequired,
 	editorRef: PropTypes.func.isRequired,
 	height: PropTypes.number,
@@ -311,6 +318,7 @@ TextArea.propTypes = {
 	onTabChange: PropTypes.func.isRequired,
 	readOnly: PropTypes.bool,
 	suggestionsEnabled: PropTypes.bool.isRequired,
+	suggestionTriggerCharacter: PropTypes.string.isRequired,
 	tab: PropTypes.string.isRequired,
 	textAreaProps: PropTypes.objectOf(
 		PropTypes.oneOfType([
