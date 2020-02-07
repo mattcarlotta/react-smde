@@ -44,7 +44,7 @@ yarn install react-smde
 
 - [Live Demo]()
 - [Demo on CodeSandbox]()
-- Local demo (cloned repo) `npm i && npm run builddemo && npm run demo` or `yarn install && yarn builddemo && yarn demo`
+- Local demo (cloned repo) `npm run demo` or `yarn demo`
 
 ## Basic Usage
 
