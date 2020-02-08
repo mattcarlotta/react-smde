@@ -75,16 +75,16 @@ const Commander = (currentTextArea, command) => {
 	}
 
 	function removePrevious(regex, pos) {
-		let currentText = initialState.text;
-		if (currentText !== initialState.selectedText) {
-			currentTextArea.selectionStart = currentTextArea.selectionStart - pos;
+		if (initialState.text !== initialState.selectedText) {
+			const textDiffLength = initialState.text - initialState.selectedText;
+			currentTextArea.selectionStart =
+				currentTextArea.selectionStart + textDiffLength - pos;
 			currentTextArea.selectionEnd = currentTextArea.selectionEnd + pos;
-			currentText = initialState.selectedText;
 		}
 
 		const nextState = replaceSelection(
 			currentTextArea,
-			`${currentText.replace(regex, "")}`,
+			`${initialState.text.replace(regex, "")}`,
 		);
 
 		return {
