@@ -74,37 +74,77 @@ const Commander = (currentTextArea, command) => {
 		};
 	}
 
-	// function removePrevious(regex, pos) {
-	// 	console.log("initialState.text", initialState.text);
-	// 	console.log("initialState.selectedText", initialState.selectedText);
-	// 	if (initialState.text !== initialState.selectedText) {
-	// 		currentTextArea.selectionStart = currentTextArea.selectionStart - pos;
-	// 		currentTextArea.selectionEnd = currentTextArea.selectionEnd + pos;
-	// 	}
+	/**
+	 *  Removes the previous symbol if present.
+	 *
+	 *  There are two conditions:
+	 *  - The word is selected but the surrounding symbols aren't
+	 *  - The word is selected in addition to the surrounding symbols
+	 *
+	 *  Ex: unselected: **"hello"** needs a 0 offset.
+	 *  while selected: "**hello**" needs an offset of 2 from both sides.
+	 *
+	 *  Doesn't handle removing symbols from multi-word/multi-lined unselected symbols.
+	 */
+	function removePreviousSymbol(sym) {
+		const symLength = sym.length;
+		const selectedTextContainsSymbol =
+			initialState.selectedText.indexOf(sym) >= 0;
+		const initialTextIsGreater =
+			initialState.text.length > initialState.selectedText.length;
+		const differentText = initialState.text !== initialState.selectedText;
 
-	// 	const nextState = replaceSelection(
-	// 		currentTextArea,
-	// 		`${initialState.text.replace(regex, "")}`,
-	// 	);
+		const includeCursorStart =
+			selectedTextContainsSymbol && initialTextIsGreater ? 0 : symLength;
+		const includeCursorEnd =
+			selectedTextContainsSymbol && initialTextIsGreater ? 0 : symLength;
 
-	// 	return {
-	// 		start: nextState.selection.end - initialState.selectedText.length,
-	// 		end: nextState.selection.end + pos,
-	// 	};
-	// }
+		if (differentText) {
+			currentTextArea.selectionStart =
+				initialState.selection.start - includeCursorStart;
+			currentTextArea.selectionEnd =
+				initialState.selection.end + includeCursorEnd;
+		}
+
+		const nextState = replaceSelection(
+			currentTextArea,
+			`${initialState.selectedText.replace(new RegExp(`[${sym}]`, "gi"), "")}`,
+		);
+
+		return {
+			start: differentText
+				? nextState.selection.start
+				: nextState.selection.start - initialState.selectedText.length,
+			end: differentText
+				? nextState.selection.end
+				: nextState.selection.end + symLength,
+		};
+	}
+
+	function selectSurroundingWord(sym) {
+		return currentTextArea.value.slice(
+			currentTextArea.selectionStart - sym.length,
+			currentTextArea.selectionEnd + sym.length,
+		);
+	}
 
 	switch (command) {
 		case "bold": {
-			// if (initialState.text.indexOf("**") > -1)
-			// 	return removePrevious(/[*]/gi, 2);
+			const sym = "**";
+			if (selectSurroundingWord(sym).indexOf(sym) > -1)
+				return removePreviousSymbol(sym, 2);
 
 			const nextState = replaceSelection(
 				currentTextArea,
-				`**${initialState.selectedText}**`,
+				`${sym}${initialState.selectedText}${sym}`,
 			);
+
 			return {
-				start: nextState.selection.end - 2 - initialState.selectedText.length,
-				end: nextState.selection.end - 2,
+				start:
+					nextState.selection.end -
+					sym.length -
+					initialState.selectedText.length,
+				end: nextState.selection.end - sym.length,
 			};
 		}
 		case "code": {
@@ -187,16 +227,20 @@ const Commander = (currentTextArea, command) => {
 			};
 		}
 		case "italic": {
-			// if (initialState.text.indexOf("*") > -1)
-			// 	return removePrevious(/[*]/gi, 1);
+			const sym = "*";
+			if (selectSurroundingWord(sym).indexOf(sym) > -1)
+				return removePreviousSymbol(sym);
 
 			const nextState = replaceSelection(
 				currentTextArea,
-				`*${initialState.selectedText}*`,
+				`${sym}${initialState.selectedText}${sym}`,
 			);
 			return {
-				start: nextState.selection.end - 1 - initialState.selectedText.length,
-				end: nextState.selection.end - 1,
+				start:
+					nextState.selection.end -
+					sym.length -
+					initialState.selectedText.length,
+				end: nextState.selection.end - sym.length,
 			};
 		}
 		case "link": {
@@ -249,16 +293,20 @@ const Commander = (currentTextArea, command) => {
 			};
 		}
 		case "strike-through": {
-			// if (initialState.text.indexOf("~~") > -1)
-			// 	return removePrevious(/[~]/gi, 2);
+			const sym = "~~";
+			if (selectSurroundingWord(sym).indexOf(sym) > -1)
+				return removePreviousSymbol(sym);
 
 			const nextState = replaceSelection(
 				currentTextArea,
-				`~~${initialState.selectedText}~~`,
+				`${sym}${initialState.selectedText}${sym}`,
 			);
 			return {
-				start: nextState.selection.end - 2 - initialState.selectedText.length,
-				end: nextState.selection.end - 2,
+				start:
+					nextState.selection.end -
+					sym.length -
+					initialState.selectedText.length,
+				end: nextState.selection.end - sym.length,
 			};
 		}
 		case "trash": {

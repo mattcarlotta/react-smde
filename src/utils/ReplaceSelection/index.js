@@ -1,4 +1,5 @@
-import { insertText, getStateFromTextArea } from "~utils";
+import { insertText } from "~utils/InsertTextAtPosition";
+import { getStateFromTextArea } from "~utils/GetStateFromTextArea";
 
 export function replaceSelection(currentTextArea, text) {
 	insertText(currentTextArea, text);

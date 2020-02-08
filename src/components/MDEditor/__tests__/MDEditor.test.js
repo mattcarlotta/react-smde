@@ -217,11 +217,15 @@ describe("MDEditor", () => {
 			wrapper.setProps({ value: "Hello" });
 		});
 
-		it("removes previous selection", () => {
+		it("removes previous symbols", () => {
 			wrapper.setProps({ value: "**Hello**" });
-			textareaNode().setSelectionRange(2, 7);
 			command("bold");
 			expect(replaceSelection).toHaveBeenCalledWith(textareaNode(), "Hello");
+
+			wrapper.setProps({ value: "Hello **Goodbye**" });
+			textareaNode().setSelectionRange(6, 6);
+			command("bold");
+			expect(replaceSelection).toHaveBeenCalledWith(textareaNode(), "Goodbye");
 		});
 
 		it("handles one liner offsets", () => {
