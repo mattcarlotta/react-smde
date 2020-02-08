@@ -1,5 +1,9 @@
 @import "vars.scss";
 
+* {
+	box-sizing: border-box;
+}
+
 .mde {
 	width: 100%;
 
@@ -11,7 +15,6 @@
 		border-bottom: 1px solid $border-color;
 		background-color: $toolbar-color;
 		text-align: center;
-		height: $grip-height;
 		color: $grip-color;
 		cursor: s-resize;
 
