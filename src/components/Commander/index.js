@@ -74,29 +74,29 @@ const Commander = (currentTextArea, command) => {
 		};
 	}
 
-	function removePrevious(regex, pos) {
-		if (initialState.text !== initialState.selectedText) {
-			const textDiffLength = initialState.text - initialState.selectedText;
-			currentTextArea.selectionStart =
-				currentTextArea.selectionStart + textDiffLength - pos;
-			currentTextArea.selectionEnd = currentTextArea.selectionEnd + pos;
-		}
+	// function removePrevious(regex, pos) {
+	// 	console.log("initialState.text", initialState.text);
+	// 	console.log("initialState.selectedText", initialState.selectedText);
+	// 	if (initialState.text !== initialState.selectedText) {
+	// 		currentTextArea.selectionStart = currentTextArea.selectionStart - pos;
+	// 		currentTextArea.selectionEnd = currentTextArea.selectionEnd + pos;
+	// 	}
 
-		const nextState = replaceSelection(
-			currentTextArea,
-			`${initialState.text.replace(regex, "")}`,
-		);
+	// 	const nextState = replaceSelection(
+	// 		currentTextArea,
+	// 		`${initialState.text.replace(regex, "")}`,
+	// 	);
 
-		return {
-			start: nextState.selection.end - initialState.selectedText.length,
-			end: nextState.selection.end + pos,
-		};
-	}
+	// 	return {
+	// 		start: nextState.selection.end - initialState.selectedText.length,
+	// 		end: nextState.selection.end + pos,
+	// 	};
+	// }
 
 	switch (command) {
 		case "bold": {
-			if (initialState.text.indexOf("**") > -1)
-				return removePrevious(/[*]/gi, 2);
+			// if (initialState.text.indexOf("**") > -1)
+			// 	return removePrevious(/[*]/gi, 2);
 
 			const nextState = replaceSelection(
 				currentTextArea,
@@ -187,8 +187,8 @@ const Commander = (currentTextArea, command) => {
 			};
 		}
 		case "italic": {
-			if (initialState.text.indexOf("*") > -1)
-				return removePrevious(/[*]/gi, 1);
+			// if (initialState.text.indexOf("*") > -1)
+			// 	return removePrevious(/[*]/gi, 1);
 
 			const nextState = replaceSelection(
 				currentTextArea,
@@ -249,8 +249,8 @@ const Commander = (currentTextArea, command) => {
 			};
 		}
 		case "strike-through": {
-			if (initialState.text.indexOf("~~") > -1)
-				return removePrevious(/[~]/gi, 2);
+			// if (initialState.text.indexOf("~~") > -1)
+			// 	return removePrevious(/[~]/gi, 2);
 
 			const nextState = replaceSelection(
 				currentTextArea,
