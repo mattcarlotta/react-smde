@@ -1,7 +1,7 @@
 {
-	"name": "react-mde",
+	"name": "react-smde",
 	"version": "0.0.1",
-	"description": "React Simple Markdown Editor",
+	"description": "Simple Markdown Editor for React",
 	"main": "dist/index.js",
 	"browser": "dist/esm/index.esm.js",
 	"fallback": "dist/umd/index.umd.js",
@@ -10,7 +10,6 @@
 		"dist"
 	],
 	"scripts": {
-		"deploy": "gh-pages -d docs",
 		"checkbuild": "es-check es5 './dist/index.js' './dist/umd/index.umd.js' './docs/**/*.js'",
 		"dev": "cross-env NODE_ENV=development BABEL_ENV=development PORT=8080 webpack-dev-server --config ./demo/webpack.config.js",
 		"builddemo": "rimraf docs && cross-env NODE_ENV=production PORT=8080 webpack --config ./demo/webpack.config.js",
@@ -39,7 +38,7 @@
 	"author": "Matt Carlotta",
 	"license": "MIT",
 	"bugs": {
-		"url": "https://github.com/mattcarlotta/react-mde.git/issues"
+		"url": "https://github.com/mattcarlotta/react-smde.git/issues"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.8.4",
