@@ -10,6 +10,7 @@
 		"dist"
 	],
 	"scripts": {
+		"deploy": "gh-pages -d docs",
 		"checkbuild": "es-check es5 './dist/index.js' './dist/umd/index.umd.js' './docs/**/*.js'",
 		"dev": "cross-env NODE_ENV=development BABEL_ENV=development PORT=8080 webpack-dev-server --config ./demo/webpack.config.js",
 		"builddemo": "rimraf docs && cross-env NODE_ENV=production PORT=8080 webpack --config ./demo/webpack.config.js",
@@ -74,7 +75,6 @@
 		"jest-css-modules-transform": "^4.0.0",
 		"jest-enzyme": "^7.1.2",
 		"jest-resolve": "^25.1.0",
-		"jest-styled-components": "^7.0.0",
 		"jsdom": "^16.1.0",
 		"mini-css-extract-plugin": "^0.9.0",
 		"morgan": "^1.9.1",
@@ -105,7 +105,7 @@
 		"webpack-manifest-plugin": "^2.2.0",
 		"webpackbar": "^4.0.0"
 	},
-	"homepage": "https://github.com/mattcarlotta/react-mde.git#readme",
+	"homepage": "https://mattcarlotta.github.io/react-smde",
 	"peerDependencies": {
 		"react": "^15.0.0 || ^16.0.0",
 		"react-dom": "^15.0.0 || ^16.0.0"

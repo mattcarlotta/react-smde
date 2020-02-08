@@ -7,12 +7,12 @@ const { inDevelopment } = require("./envs");
 
 const filename = inDevelopment ? "[name].js" : `${jsFolder}/[name].[hash].js`;
 const chunkFilename = inDevelopment
-  ? "[name].js"
-  : `${jsFolder}/[name].[chunkhash].js`;
+	? "[name].js"
+	: `${jsFolder}/[name].[chunkhash].js`;
 
 module.exports = {
-  filename,
-  path: outputPath,
-  chunkFilename,
-  publicPath
+	filename,
+	path: outputPath,
+	chunkFilename,
+	publicPath,
 };
