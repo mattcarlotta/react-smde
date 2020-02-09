@@ -81,7 +81,7 @@ const ShowSource = ({ children, text }) => {
 	}
 }
 
-const text = `import React, { Component,PureComponent } from "react";
+const text = `import React, { Component, PureComponent } from "react";
 import ReactMarkdown from "react-markdown";
 import MDEditor from "react-smde";
 import hljs from "highlight.js";
