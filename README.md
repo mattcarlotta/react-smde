@@ -2,6 +2,8 @@
 
 A lightweight **Simple Markdown Editor** for React.
 
+[![NPM](https://nodei.co/npm/react-smde.png)](https://nodei.co/npm/react-smde/)
+
 <img src="https://img.shields.io/github/package-json/v/mattcarlotta/react-smde?style=for-the-badge"></img> [![Codecov](https://img.shields.io/codecov/c/github/mattcarlotta/react-smde?style=for-the-badge)](https://codecov.io/gh/mattcarlotta/react-smde) [![Open Issues](https://img.shields.io/github/issues-raw/mattcarlotta/react-smde?style=for-the-badge)](https://github.com/mattcarlotta/react-smde/issues) [![Dependencies](https://img.shields.io/david/mattcarlotta/react-smde.svg?style=for-the-badge)](https://david-dm.org/mattcarlotta/react-smde) [![License](https://img.shields.io/github/license/mattcarlotta/react-smde?style=for-the-badge)](https://github.com/mattcarlotta/react-smde/blob/master/LICENSE)
 
 [Installation](#installation)
