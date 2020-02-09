@@ -84,8 +84,6 @@ const ShowSource = ({ children, text }) => {
 const text = `import React, { Component,PureComponent } from "react";
 import ReactMarkdown from "react-markdown";
 import MDEditor from "react-smde";
-import ShowSource from "~components/ShowSource";
-import Container from "~components/Container";
 import hljs from "highlight.js";
 import "highlight.js/styles/atelier-forest-light.css";
 
