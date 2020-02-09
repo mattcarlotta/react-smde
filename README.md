@@ -43,7 +43,7 @@ npm i react-smde
 or
 
 ```
-yarn install react-smde
+yarn add react-smde
 ```
 
 ## Demo
