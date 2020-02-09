@@ -10,7 +10,7 @@ class SyntaxHighlightExample extends Component {
 		super();
 		this.state = {
 			value: `
-This example includes a configuration to add syntax highlighting to \`JSX\` code! Please note that this example will vary depending on which editor and which syntax highlighter you choose.
+This example includes a configuration to add syntax highlighting to \`JSX\` code blocks! Please note that this example will vary depending on which editor and which syntax highlighter you choose.
 
 \`\`\`jsx
 import React, { useCallback, useEffect, useState } from "react";
@@ -49,7 +49,7 @@ const ShowSource = ({ children, text }) => {
       {showModal && (
         <Modal maxWidth="100%" onClick={toggleModalState}>
           <SyntaxHighlighter height="400px" language="javascript">
-          {text}
+            {text}
           </SyntaxHighlighter>
           <CopyButton copied={copied} onClick={handleCopyClick} />
         </Modal>
@@ -83,7 +83,7 @@ const ShowSource = ({ children, text }) => {
 
 const text = `import React, { Component,PureComponent } from "react";
 import ReactMarkdown from "react-markdown";
-import MDEditor from "~components/MDEditor";
+import MDEditor from "react-smde";
 import ShowSource from "~components/ShowSource";
 import Container from "~components/Container";
 import hljs from "highlight.js";
