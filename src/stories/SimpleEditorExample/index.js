@@ -39,7 +39,7 @@ import MDEditor from "react-smde";
 import "react-smde/dist/styles/react-smde.css";
 import "./styles.scss";
 
-class SimpleEditor extends Component {
+class SimpleEditorExample extends Component {
   constructor() {
     super();
     this.state = { 

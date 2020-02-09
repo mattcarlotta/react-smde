@@ -4,7 +4,7 @@ import Container from "~components/Container";
 import MDEditor from "~components/MDEditor";
 import ShowSource from "~components/ShowSource";
 
-class AutoGrow extends Component {
+class AutoGrowExample extends Component {
 	constructor() {
 		super();
 		this.state = { value: "" };
@@ -36,7 +36,7 @@ import ReactMarkdown from "react-markdown";
 import MDEditor from "react-smde";
 import "react-smde/dist/styles/react-smde.css";
 
-class BasicExample extends Component {
+class AutoGrowExample extends Component {
   constructor() {
     super();
     this.state = { value: "" };
@@ -66,7 +66,7 @@ class BasicExample extends Component {
 export default () => (
 	<Container>
 		<ShowSource text={text}>
-			<AutoGrow />
+			<AutoGrowExample />
 		</ShowSource>
 	</Container>
 );
