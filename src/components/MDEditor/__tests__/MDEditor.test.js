@@ -290,6 +290,21 @@ describe("MDEditor", () => {
 			expect(replaceSelection).toHaveBeenCalledWith(textareaNode(), "Hello");
 		});
 
+		it("bolditalicizes or unbolditalicizes the current text", () => {
+			const boldItalicText = () =>
+				wrapper.find("button[data-name='bolditalic']").simulate("click");
+
+			boldItalicText();
+			expect(replaceSelection).toHaveBeenCalledWith(
+				textareaNode(),
+				"***Hello***",
+			);
+
+			wrapper.setProps({ value: "***Hello***" });
+			boldItalicText();
+			expect(replaceSelection).toHaveBeenCalledWith(textareaNode(), "Hello");
+		});
+
 		it("italicizes or unitalicizes the current text", () => {
 			const italicText = () =>
 				wrapper.find("button[data-name='italic']").simulate("click");

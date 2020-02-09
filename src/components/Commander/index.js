@@ -121,7 +121,7 @@ const Commander = (currentTextArea, command) => {
 		};
 	}
 
-	function selectSurroundingWord(sym) {
+	function surroundingWord(sym) {
 		return currentTextArea.value.slice(
 			currentTextArea.selectionStart - sym.length,
 			currentTextArea.selectionEnd + sym.length,
@@ -131,8 +131,33 @@ const Commander = (currentTextArea, command) => {
 	switch (command) {
 		case "bold": {
 			const sym = "**";
-			if (selectSurroundingWord(sym).indexOf(sym) > -1)
-				return removePreviousSymbol(sym, 2);
+			if (
+				initialState.selectedText.indexOf(sym) > -1 ||
+				surroundingWord(sym).indexOf(sym) > -1
+			) {
+				return removePreviousSymbol(sym);
+			}
+
+			const nextState = replaceSelection(
+				currentTextArea,
+				`${sym}${initialState.selectedText}${sym}`,
+			);
+
+			return {
+				start:
+					nextState.selection.end -
+					sym.length -
+					initialState.selectedText.length,
+				end: nextState.selection.end - sym.length,
+			};
+		}
+		case "bolditalic": {
+			const sym = "***";
+			if (
+				initialState.selectedText.indexOf(sym) > -1 ||
+				surroundingWord(sym).indexOf(sym) > -1
+			)
+				return removePreviousSymbol(sym);
 
 			const nextState = replaceSelection(
 				currentTextArea,
@@ -228,7 +253,10 @@ const Commander = (currentTextArea, command) => {
 		}
 		case "italic": {
 			const sym = "*";
-			if (selectSurroundingWord(sym).indexOf(sym) > -1)
+			if (
+				initialState.selectedText.indexOf(sym) > -1 ||
+				surroundingWord(sym).indexOf(sym) > -1
+			)
 				return removePreviousSymbol(sym);
 
 			const nextState = replaceSelection(
@@ -294,7 +322,10 @@ const Commander = (currentTextArea, command) => {
 		}
 		case "strike-through": {
 			const sym = "~~";
-			if (selectSurroundingWord(sym).indexOf(sym) > -1)
+			if (
+				initialState.selectedText.indexOf(sym) > -1 ||
+				surroundingWord(sym).indexOf(sym) > -1
+			)
 				return removePreviousSymbol(sym);
 
 			const nextState = replaceSelection(

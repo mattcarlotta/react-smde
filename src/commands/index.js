@@ -1,4 +1,5 @@
 import bold from "./bold";
+import boldItalic from "./boldItalic";
 import code from "./code";
 import header from "./header";
 import image from "./image";
@@ -12,7 +13,7 @@ import trash from "./trash";
 // import underline from "./underline"; // not supported
 
 const getDefaultCommands = () => [
-	[header, bold, italic, strikeThrough],
+	[header, bold, boldItalic, italic, strikeThrough],
 	[horizontalRule],
 	[link, quote, code, image],
 	[unorderedList, orderedList, checkedList],
@@ -22,6 +23,7 @@ const getDefaultCommands = () => [
 const commands = {
 	header,
 	bold,
+	boldItalic,
 	italic,
 	strikeThrough,
 	horizontalRule,

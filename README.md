@@ -60,19 +60,26 @@ import ReactMarkdown from "react-markdown";
 import "react-smde/dist/styles/react-smde.css";
 
 class App extends Component {
-	state = {
-		value: "## Hello",
-	};
+  constructor() {
+    super();
+    this.state = { value: "" };
+    this.handleValueChange = this.handleValueChange.bind(this);
+  }
 
-	handleValueChange = value => this.setState({ value });
+  handleValueChange(value){
+    this.setState({ value });
+  }
 
-	render = () => (
-		<div className="container">
-			<MDEditor onChange={this.handleValueChange} value={this.state.value}>
-				<ReactMarkdown skipHtml renderers={{"code"",inlineCode"}}>{this.state.value}</ReactMarkdown>
-			</MDEditor>
-		</div>
-	);
+  render() {
+    return (
+      <MDEditor
+        onChange={this.handleValueChange}
+        value={this.state.value}
+      >
+        <ReactMarkdown>{this.state.value || "(empty)"}</ReactMarkdown>
+      </MDEditor>
+    );
+  }
 }
 ```
 
@@ -115,19 +122,23 @@ import ReactMarkdown from "react-markdown";
 import "react-smde/dist/styles/react-smde.css";
 
 class App extends Component {
-	state = {
-		value: "## Hello",
-	};
+  constructor() {
+    super();
+    this.state = { value: "" };
+    this.handleValueChange = this.handleValueChange.bind(this);
+  }
 
-	handleValueChange = value => this.setState({ value });
+  handleValueChange(value) {
+    this.setState({ value });
+  }
 
-	render = () => (
-		<div className="container">
-			<MDEditor onChange={this.handleValueChange} value={this.state.value}>
-				<ReactMarkdown skipHtml>{this.state.value}</ReactMarkdown>
-			</MDEditor>
-		</div>
-	);
+  render() {
+    return (
+      <MDEditor onChange={this.handleValueChange} value={this.state.value}>
+        <ReactMarkdown>{this.state.value || "(empty)"}</ReactMarkdown>
+      </MDEditor>
+    );
+  }
 }
 ```
 
@@ -273,35 +284,45 @@ import MDEditor from "react-smde";
 import "react-smde/dist/styles/react-smde.css";
 
 class App extends Component {
-  state = {
-    value: ""
-    suggestions: [
-      { value: "andre" },
-      { value: "angela" },
-      { value: "david" },
-      { value: "louise" }
-    ]
-  };
+  constructor() {
+    super();
+    this.state = {
+      value: ""
+      suggestions: [
+        { value: "andre" },
+        { value: "angela" },
+        { value: "david" },
+        { value: "louise" }
+      ]
+    };
+    this.handleValueChange = this.handleValueChange.bind(this);
+    this.loadSuggestions = this.loadSuggestions.bind(this);
+  }
 
-  handleValueChange = value => this.setState({ value });
+  handleValueChange(value) {
+    this.setState({ value });
+  }
 
-  loadSuggestions = searchText =>
+  loadSuggestions(searchText) {
     this.state.suggestions.filter(({ value }) =>
       value.toLowerCase().includes(searchText.toLowerCase())
     );
+  }
 
-  render = () => (
-    <div className="container">
-      <MDEditor
-        onChange={this.handleValueChange}
-        value={this.state.value}
-        debounceSuggestions={0}
-        loadSuggestions={this.loadSuggestions}
-      >
-        <ReactMarkdown skipHtml>{this.state.value}</ReactMarkdown>
-      </MDEditor>
-    </div>
-  );
+  render() {
+    return(
+      <div className="container">
+        <MDEditor
+          onChange={this.handleValueChange}
+          value={this.state.value}
+          debounceSuggestions={0}
+          loadSuggestions={this.loadSuggestions}
+        >
+          <ReactMarkdown skipHtml>{this.state.value}</ReactMarkdown>
+        </MDEditor>
+      </div>
+    );
+  }
 }
 ```
 
