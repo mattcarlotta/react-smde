@@ -4,7 +4,7 @@ import Container from "~components/Container";
 import MDEditor from "~components/MDEditor";
 import ShowSource from "~components/ShowSource";
 
-class BasicExample extends Component {
+class AutoGrow extends Component {
 	constructor() {
 		super();
 		this.state = { value: "" };
@@ -17,7 +17,14 @@ class BasicExample extends Component {
 
 	render() {
 		return (
-			<MDEditor onChange={this.handleValueChange} value={this.state.value}>
+			<MDEditor
+				autoGrow
+				onChange={this.handleValueChange}
+				value={this.state.value}
+				minEditorHeight={100}
+				maxEditorHeight={600}
+				textAreaProps={{ placeholder: "As you type this editor will grow!" }}
+			>
 				<ReactMarkdown>{this.state.value || "(empty)"}</ReactMarkdown>
 			</MDEditor>
 		);
@@ -42,9 +49,13 @@ class BasicExample extends Component {
 
   render() {
     return (
-      <MDEditor 
-        onChange={this.handleValueChange} 
+      <MDEditor
+        autoGrow
+        onChange={this.handleValueChange}
         value={this.state.value}
+        minEditorHeight={100}
+        maxEditorHeight={600}
+        textAreaProps={{ placeholder: "As you type this editor will grow!" }}
       >
         <ReactMarkdown>{this.state.value || "(empty)"}</ReactMarkdown>
       </MDEditor>
@@ -55,7 +66,7 @@ class BasicExample extends Component {
 export default () => (
 	<Container>
 		<ShowSource text={text}>
-			<BasicExample />
+			<AutoGrow />
 		</ShowSource>
 	</Container>
 );

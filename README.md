@@ -145,6 +145,7 @@ mdenosuggestions (applied to no suggestions result item)
 mdesuggestions (applied to suggestions overlay)
 mdetextarea (applied to textarea input)
 mdetextareawrapper (applied to textarea wrapper)
+mdegrip (applied to editor window grip)
 mdetooltip (applied to root tooltip)
 </code></pre>
 </details>
@@ -178,6 +179,7 @@ mde-no-suggestions (applied to no suggestion results item)
 mde-suggestions (applied to suggestions overlay)
 mde-textarea (applied to textarea input)
 mde-textarea-wrapper (applied to textarea wrapper)
+mde-grip (applied to editor window grip)
 mde-tooltip (applied to root tooltip)
 </code></pre>
 </details>

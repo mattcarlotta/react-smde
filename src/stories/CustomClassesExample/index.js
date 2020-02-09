@@ -3,8 +3,9 @@ import ReactMarkdown from "react-markdown";
 import Container from "~components/Container";
 import MDEditor from "~components/MDEditor";
 import ShowSource from "~components/ShowSource";
+import "./styles.scss";
 
-class BasicExample extends Component {
+class CustomClasses extends Component {
 	constructor() {
 		super();
 		this.state = { value: "" };
@@ -17,7 +18,18 @@ class BasicExample extends Component {
 
 	render() {
 		return (
-			<MDEditor onChange={this.handleValueChange} value={this.state.value}>
+			<MDEditor
+				onChange={this.handleValueChange}
+				value={this.state.value}
+				classes={{
+					mde: "editor",
+					mdetooltip: "tooltip",
+				}}
+				textAreaProps={{
+					placeholder:
+						"This example uses the 'classes' property to customize the look of the editor!",
+				}}
+			>
 				<ReactMarkdown>{this.state.value || "(empty)"}</ReactMarkdown>
 			</MDEditor>
 		);
@@ -28,8 +40,9 @@ const text = `import React, { Component } from "react";
 import ReactMarkdown from "react-markdown";
 import MDEditor from "react-smde";
 import "react-smde/styles/react-smde.css";
+import "./styles.scss";
 
-class BasicExample extends Component {
+class CustomClassesExample extends Component {
   constructor() {
     super();
     this.state = { value: "" };
@@ -42,9 +55,17 @@ class BasicExample extends Component {
 
   render() {
     return (
-      <MDEditor 
-        onChange={this.handleValueChange} 
+      <MDEditor
+        onChange={this.handleValueChange}
         value={this.state.value}
+        classes={{
+          mde: "editor",
+          mdetooltip: "tooltip",
+        }}
+        textAreaProps={{
+          placeholder:
+            "This example uses the 'classes' property to customize the look of the editor!",
+        }}
       >
         <ReactMarkdown>{this.state.value || "(empty)"}</ReactMarkdown>
       </MDEditor>
@@ -55,7 +76,19 @@ class BasicExample extends Component {
 export default () => (
 	<Container>
 		<ShowSource text={text}>
-			<BasicExample />
+			<CustomClasses />
 		</ShowSource>
+		<p>
+			To see the stylesheet source, click{" "}
+			<a
+				href="https://github.com/mattcarlotta/react-smde/master/src/stories/CustomClassesExample/styles.scss"
+				area-label="stylesheet source link"
+				rel="noopener noreferrer"
+				target="_blank"
+			>
+				here
+			</a>
+			.
+		</p>
 	</Container>
 );

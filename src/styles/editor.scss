@@ -2,21 +2,21 @@
 	position: relative;
 	border: 1px solid $border-color;
 
-	textarea.mde-textarea {
-		border: 0;
-		padding: 10px;
-		width: 100%;
-		vertical-align: top;
-		resize: none;
-		overflow-y: auto;
-
-		&:focus {
-			outline: none;
-			box-shadow: none;
-		}
-	}
-
-	& textarea.hidden {
+	& .hidden {
 		display: none;
+	}
+}
+
+.mde-textarea {
+	border: 0;
+	padding: 10px;
+	width: 100%;
+	vertical-align: top;
+	resize: none;
+	overflow-y: auto;
+
+	&:focus {
+		outline: none;
+		box-shadow: none;
 	}
 }

@@ -153,7 +153,7 @@ export class MDEditor extends React.Component {
 				/>
 				{!disableGrip && (
 					<div
-						className={classNames("mde-grip", classes.grip)}
+						className={classNames("mde-grip", classes.mdegrip)}
 						onMouseDown={this.handleGripMouseDown}
 					>
 						<SvgIcon icon="grip" />

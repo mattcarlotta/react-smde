@@ -21,9 +21,11 @@ const StyledHighlighter = styled(Highlighter)`
 	white-space: pre-wrap !important;
 	word-break: break-word !important;
 	height: auto;
-	width: 90%;
+	width: 95%;
 	overflow-y: auto;
-	margin: 0 auto !important;
+	margin-left: auto !important;
+	margin-right: auto !important;
+	margin-top: 20px !important;
 	border-radius: 4px !important;
 	transition: height 350ms cubic-bezier(0.4, 0, 0.2, 1);
 	code {

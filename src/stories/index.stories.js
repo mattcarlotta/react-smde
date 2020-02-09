@@ -1,10 +1,18 @@
-import React from "react";
 import BasicExample from "./BasicExample";
+import AutoGrowExample from "./AutoGrowExample";
+import ClassesExample from "./CustomClassesExample";
+import SimpleEditorExample from "./SimpleEditorExample";
+import SuggestionsExample from "./SuggestionsExample";
+import SyntaxHighlightingExample from "./SyntaxHighlightingExample";
 import "~styles/all.scss";
-import "~styles/button.scss";
-import "~styles/code.scss";
-import "~styles/container.scss";
 
 export default { title: "MDEditor" };
 
-export const basicExample = () => <BasicExample />;
+export {
+	BasicExample,
+	AutoGrowExample,
+	ClassesExample,
+	SimpleEditorExample,
+	SuggestionsExample,
+	SyntaxHighlightingExample,
+};
