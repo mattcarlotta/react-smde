@@ -217,6 +217,7 @@ export class TextArea extends React.Component {
 		) {
 			switch (key) {
 				case "b": {
+					event.preventDefault();
 					this.textAreaElement.focus();
 					onCommand("bold");
 					break;
@@ -228,6 +229,7 @@ export class TextArea extends React.Component {
 					break;
 				}
 				case "i": {
+					event.preventDefault();
 					this.textAreaElement.focus();
 					onCommand("italic");
 					break;

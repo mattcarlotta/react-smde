@@ -63,6 +63,7 @@ describe("TextArea", () => {
 		onChange.mockClear();
 		onCommand.mockClear();
 		onTabChange.mockClear();
+		preventDefault.mockClear();
 	});
 
 	it("renders without errors", () => {
@@ -106,6 +107,7 @@ describe("TextArea", () => {
 		jest.runAllTimers();
 		wrapper.update();
 
+		expect(preventDefault).toHaveBeenCalledTimes(1);
 		expect(onCommand).toHaveBeenCalledWith("bold");
 	});
 
@@ -123,6 +125,7 @@ describe("TextArea", () => {
 		jest.runAllTimers();
 		wrapper.update();
 
+		expect(preventDefault).toHaveBeenCalledTimes(1);
 		expect(onCommand).toHaveBeenCalledWith("italic");
 	});
 
@@ -329,7 +332,7 @@ describe("TextArea", () => {
 		});
 
 		it("calls 'preventDefault' when specific keys are pressed", async () => {
-			preventDefault.mockClear();
+			// preventDefault.mockClear();
 			wrapper.setState({ status: "loading" });
 			keydownHandler({ key: "ArrowUp" });
 			keydownHandler({ key: "ArrowDown" });
@@ -360,8 +363,6 @@ describe("TextArea", () => {
 					suggestions: [],
 				}),
 			);
-
-			expect(preventDefault).toHaveBeenCalledTimes(5);
 		});
 	});
 });
