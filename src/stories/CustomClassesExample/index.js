@@ -81,7 +81,7 @@ export default () => (
 		<p>
 			To see the stylesheet source, click{" "}
 			<a
-				href="https://github.com/mattcarlotta/react-smde/master/src/stories/CustomClassesExample/styles.scss"
+				href="https://github.com/mattcarlotta/react-smde/blob/master/src/stories/CustomClassesExample/styles.scss"
 				area-label="stylesheet source link"
 				rel="noopener noreferrer"
 				target="_blank"
