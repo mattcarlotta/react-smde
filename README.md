@@ -47,7 +47,7 @@ yarn install react-smde
 ## Demo
 
 - [Live Demo](https://mattcarlotta.github.io/react-smde/)
-- [Demo on CodeSandbox]()
+- [Demo on CodeSandbox](https://codesandbox.io/s/react-smde-basic-example-9uo1o)
 - Local demo (cloned repo) `npm run demo` or `yarn demo`
 
 ## Basic Usage
