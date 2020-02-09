@@ -19,6 +19,7 @@
 		"prepare": "yarn run build",
 		"rundemo": "cross-env NODE_ENV=production PORT=8080 HOST=http://localhost: node ./server.js",
 		"story": "start-storybook -p 8000",
+		"storybook": "rimraf docs && build-storybook -o docs",
 		"test": "cross-env NODE_ENV=testing jest --config ./jest.json",
 		"test:cov": "cross-env NODE_ENV=testing jest --config ./jest.json --coverage",
 		"test:watch": "cross-env NODE_ENV=testing jest --config ./jest.json --watch --onlyChanged",
