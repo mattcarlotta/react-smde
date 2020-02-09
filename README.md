@@ -60,26 +60,23 @@ import ReactMarkdown from "react-markdown";
 import "react-smde/dist/styles/react-smde.css";
 
 class App extends Component {
-  constructor() {
-    super();
-    this.state = { value: "" };
-    this.handleValueChange = this.handleValueChange.bind(this);
-  }
+	constructor() {
+		super();
+		this.state = { value: "" };
+		this.handleValueChange = this.handleValueChange.bind(this);
+	}
 
-  handleValueChange(value){
-    this.setState({ value });
-  }
+	handleValueChange(value) {
+		this.setState({ value });
+	}
 
-  render() {
-    return (
-      <MDEditor
-        onChange={this.handleValueChange}
-        value={this.state.value}
-      >
-        <ReactMarkdown>{this.state.value || "(empty)"}</ReactMarkdown>
-      </MDEditor>
-    );
-  }
+	render() {
+		return (
+			<MDEditor onChange={this.handleValueChange} value={this.state.value}>
+				<ReactMarkdown>{this.state.value || "(empty)"}</ReactMarkdown>
+			</MDEditor>
+		);
+	}
 }
 ```
 
@@ -122,23 +119,23 @@ import ReactMarkdown from "react-markdown";
 import "react-smde/dist/styles/react-smde.css";
 
 class App extends Component {
-  constructor() {
-    super();
-    this.state = { value: "" };
-    this.handleValueChange = this.handleValueChange.bind(this);
-  }
+	constructor() {
+		super();
+		this.state = { value: "" };
+		this.handleValueChange = this.handleValueChange.bind(this);
+	}
 
-  handleValueChange(value) {
-    this.setState({ value });
-  }
+	handleValueChange(value) {
+		this.setState({ value });
+	}
 
-  render() {
-    return (
-      <MDEditor onChange={this.handleValueChange} value={this.state.value}>
-        <ReactMarkdown>{this.state.value || "(empty)"}</ReactMarkdown>
-      </MDEditor>
-    );
-  }
+	render() {
+		return (
+			<MDEditor onChange={this.handleValueChange} value={this.state.value}>
+				<ReactMarkdown>{this.state.value || "(empty)"}</ReactMarkdown>
+			</MDEditor>
+		);
+	}
 }
 ```
 
@@ -304,7 +301,7 @@ class App extends Component {
   }
 
   loadSuggestions(searchText) {
-    this.state.suggestions.filter(({ value }) =>
+    return this.state.suggestions.filter(({ value }) =>
       value.toLowerCase().includes(searchText.toLowerCase())
     );
   }

@@ -85,9 +85,11 @@ class SuggestionsExample extends Component {
         ].filter(({ value }) =>
           value.toLowerCase().includes(searchText.toLowerCase()),
         );
-				resolve(suggestions);
+        resolve(suggestions);
       }, 1000);
-  });
+    );
+    return suggestions;
+  }
 
   render() {
     return (
