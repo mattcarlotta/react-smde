@@ -24,6 +24,8 @@ A lightweight **Simple Markdown Editor** for React.
 
 [Tooltips](#tooltips)
 
+[Builds](#builds)
+
 [Report Bugs](#report-bugs)
 
 [License](#license)
@@ -321,6 +323,10 @@ rightBottom
 ```
 
 Please note that there must be sufficient space for the tooltip to occupy the specified area; otherwise, the tooltip will default to the next closest available space.
+
+## Builds
+
+By default, this package is compiled to a `common-js` (CJS) file with supplemental `Universal Module Definition` (UMD) and a `ECMAScript Module` (ESM) files. If you wish to use one of the supplemental verisons, then you can do so by importing from `react-smde/dist/(esm|umd)/index.(esm.umd).js`.
 
 ## Report bugs
 
