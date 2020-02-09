@@ -7,8 +7,8 @@ export default styled.button`
 	border: 0;
 	height: 25px;
 	width: 25px;
-	top: 6px;
-	right: 14px;
+	top: 10px;
+	right: 20px;
 	position: absolute;
 	background-color: transparent;
 	-webkit-font-smoothing: auto;
