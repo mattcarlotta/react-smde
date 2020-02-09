@@ -1,0 +1,51 @@
+$bg-color: #212325;
+$main-color: #191919;
+$accent: #cbcbcb;
+$compliment: #03a9f3;
+$hover-color: #544f4f;
+$light-shadow: #827878;
+
+.editor {
+	width: 400px;
+
+	.mde-toolbar,
+	.mde-grip {
+		background: $bg-color;
+	}
+
+	.mde-toolbar-separator {
+		border-left: 1px solid $light-shadow;
+		border-right: 1px solid $accent;
+	}
+
+	.mde-toolbar {
+		& button {
+			color: $compliment;
+			&:hover {
+				background: $hover-color;
+			}
+		}
+	}
+
+	.disabled {
+		opacity: 0.25;
+	}
+
+	.mde-textarea,
+	.mde-preview {
+		background: $main-color;
+		color: $accent;
+	}
+
+	.mde-textarea-wrapper {
+		border: 1px solid $light-shadow;
+	}
+
+	.mde-grip > .icon {
+		color: $accent;
+	}
+}
+
+.tooltip > .ant-tooltip-inner {
+	background: $compliment;
+}

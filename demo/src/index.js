@@ -46,7 +46,6 @@ class App extends Component {
 				value={this.state.value}
 				loadSuggestions={this.loadSuggestions}
 				maxEditorWidth={800}
-				classes={{ mde: "editor" }}
 			>
 				<ReactMarkdown renderers={{ code: CodeBlock }}>
 					{this.state.value || "(empty)"}

@@ -1,18 +1,11 @@
-* {
-	box-sizing: border-box;
-}
-
 body {
 	font-size: 14px;
 	font-family: sans-serif;
 }
 
 .container {
-	height: 600px;
-	margin: 0 auto;
-	padding: 50px 20px;
-}
-
-.editor {
-	margin: 0 auto;
+	width: 800px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 50px;
 }

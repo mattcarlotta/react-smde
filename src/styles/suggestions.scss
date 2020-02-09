@@ -1,6 +1,6 @@
 @import "vars.scss";
 
-ul.mde-suggestions {
+.mde-suggestions {
 	position: absolute;
 	min-width: 180px;
 	padding: 0;
@@ -11,14 +11,7 @@ ul.mde-suggestions {
 	border: 1px solid $border-color;
 	border-radius: $mde-suggestions-radius;
 	box-shadow: 0 1px 5px $mde-suggestions-boxshadow;
-
-	.mde-no-suggestions {
-		color: $no-suggestions-color;
-		&:hover {
-			color: $no-suggestions-color;
-			background-color: $white-color;
-		}
-	}
+	text-align: left;
 
 	li {
 		padding: 4px 8px;
@@ -41,17 +34,26 @@ ul.mde-suggestions {
 	}
 }
 
+.mde-no-suggestions {
+	text-align: left;
+	color: $no-suggestions-color;
+	&:hover {
+		color: $no-suggestions-color;
+		background-color: $white-color;
+	}
+}
+
 .mde-loading {
-	display: block;
-	position: relative;
-	top: 7px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
 	height: 30px;
 	width: 42px;
 	margin: 0 auto;
 }
 
 .mde-loading span {
-	display: inline-block;
+	display: flex;
 	width: 9px;
 	height: 15px;
 	margin-right: 5px;

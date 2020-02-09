@@ -215,22 +215,25 @@ export class TextArea extends React.Component {
 			ctrlKey &&
 			(!suggestionsEnabled || suggestionsInactive)
 		) {
-			this.textAreaElement.focus();
 			switch (key) {
 				case "b": {
+					this.textAreaElement.focus();
 					onCommand("bold");
 					break;
 				}
 				case "k": {
 					event.preventDefault();
+					this.textAreaElement.focus();
 					onCommand("link");
 					break;
 				}
 				case "i": {
+					this.textAreaElement.focus();
 					onCommand("italic");
 					break;
 				}
 				case "0": {
+					this.textAreaElement.focus();
 					onTabChange();
 					break;
 				}
