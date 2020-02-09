@@ -55,7 +55,7 @@ yarn install react-smde
 ```jsx
 import MDEditor from "react-smde";
 import ReactMarkdown from "react-markdown";
-import "react-smde/styles/react-smde.css";
+import "react-smde/dist/styles/react-smde.css";
 
 class App extends Component {
 	state = {
@@ -110,7 +110,7 @@ The `MDEditor` is unopinionated when it comes to previewing markdown content. Th
 import React, { Component } from "react";
 import MDEditor from "react-smde";
 import ReactMarkdown from "react-markdown";
-import "react-smde/styles/react-smde.css";
+import "react-smde/dist/styles/react-smde.css";
 
 class App extends Component {
 	state = {
@@ -174,7 +174,7 @@ classes={{ mde: "custom-mde", mdetoolbar: "custom-toolbar" }}
 
 <br />
 
-**Option 2**: Import the `.scss` files from `react-smde/styles/[name].scss` (see available files <a href="https://github.com/mattcarlotta/react-smde/tree/master/src/styles">here</a>) and overwrite them as needed (please note that your project must be set up to handle SASS imports).
+**Option 2**: Import the `.scss` files from `react-smde/dist/styles/[name].scss` (see available files <a href="https://github.com/mattcarlotta/react-smde/tree/master/src/styles">here</a>) and overwrite them as needed (please note that your project must be set up to handle SASS imports).
 
 <br />
 
@@ -221,7 +221,7 @@ For example:
 
 ```jsx
 import MDEditor, { commands, SvgIcon } from "react-smde";
-import "react-smde/styles/react-smde.css";
+import "react-smde/dist/styles/react-smde.css";
 
 const { checkedList, orderedList, unorderedList } = commands;
 
@@ -268,7 +268,7 @@ For example a dynamic data set, see the [Demo](#demo) example above, otherwise h
 ```jsx
 import React, { Component } from "react";
 import MDEditor from "react-smde";
-import "react-smde/styles/react-smde.css";
+import "react-smde/dist/styles/react-smde.css";
 
 class App extends Component {
   state = {
