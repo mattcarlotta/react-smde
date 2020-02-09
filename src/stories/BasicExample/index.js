@@ -27,7 +27,7 @@ class BasicExample extends Component {
 const text = `import React, { Component } from "react";
 import ReactMarkdown from "react-markdown";
 import MDEditor from "react-smde";
-import "react-smde/styles/react-smde.css";
+import "react-smde/dist/styles/react-smde.css";
 
 class BasicExample extends Component {
   constructor() {

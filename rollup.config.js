@@ -11,63 +11,63 @@ import { localResolver } from "./utils/resolver";
 import pkg from "./package.json";
 
 const resolutions = {
-  globals: {
-    react: "React",
-    "react-is": "reactIs",
-    "rc-trigger": "Trigger"
-  },
-  exports: "named"
+	globals: {
+		react: "React",
+		"react-is": "reactIs",
+		"rc-trigger": "Trigger",
+	},
+	exports: "named",
 };
 
 export default {
-  input: "./src/index.js",
-  output: [
-    {
-      file: pkg.main,
-      format: "cjs",
-      ...resolutions
-    },
-    {
-      file: pkg.fallback,
-      format: "umd",
-      name: "MDEditor",
-      ...resolutions
-    },
-    {
-      file: pkg.browser,
-      format: "esm",
-      ...resolutions
-    }
-  ],
-  external: ["react", "react-dom", "rc-trigger"],
-  plugins: [
-    postcss({
-      preprocessor: (_, id) =>
-        new Promise(resolve => {
-          const result = sass.renderSync({ file: id });
-          resolve({ code: result.css.toString() });
-        }),
-      plugins: [autoprefixer],
-      minimize: true,
-      sourceMap: false,
-      extract: pkg.style,
-      extensions: [".sass", ".scss", ".css"]
-    }),
-    babel({
-      runtimeHelpers: true,
-      exclude: "node_modules/**"
-    }),
-    resolve(),
-    localResolver(),
-    commonjs(),
-    terser({
-      output: {
-        comments: "false"
-      }
-    }),
-    copy({
-      targets: [{ src: "src/styles/**/*", dest: "dist/styles" }]
-    }),
-    filesize()
-  ]
+	input: "./src/index.js",
+	output: [
+		{
+			file: pkg.main,
+			format: "cjs",
+			...resolutions,
+		},
+		{
+			file: pkg.fallback,
+			format: "umd",
+			name: "MDEditor",
+			...resolutions,
+		},
+		{
+			file: pkg.browser,
+			format: "esm",
+			...resolutions,
+		},
+	],
+	external: ["react", "react-dom", "rc-trigger"],
+	plugins: [
+		postcss({
+			preprocessor: (_, id) =>
+				new Promise(resolve => {
+					const result = sass.renderSync({ file: id });
+					resolve({ code: result.css.toString() });
+				}),
+			plugins: [autoprefixer],
+			minimize: true,
+			sourceMap: false,
+			extract: pkg.styles,
+			extensions: [".sass", ".scss", ".css"],
+		}),
+		babel({
+			runtimeHelpers: true,
+			exclude: "node_modules/**",
+		}),
+		resolve(),
+		localResolver(),
+		commonjs(),
+		terser({
+			output: {
+				comments: "false",
+			},
+		}),
+		copy({
+			targets: [{ src: "src/styles/**/*", dest: "dist/styles" }],
+		}),
+		filesize(),
+	],
 };
