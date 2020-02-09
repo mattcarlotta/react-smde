@@ -9,7 +9,7 @@ class SimpleEditorExample extends Component {
 		super();
 		this.state = {
 			value:
-				"# Simple editor\n\nAlthough this example is missing a toolbar, the hotkeys to **bold** (ctrl+b), *italicize* (ctrl+i), add a [link](https://github.com/mattcarlotta/react-smde) (ctrl+k) and toggle the markdown previewer (ctrl+0) will still work!\n\n Right now, you're in the preview mode. To switch back to the editor mode, press ctrl+0!",
+				"# Simple editor\n\nAlthough this example is missing a toolbar, the syntax and hotkeys to **bold** (ctrl+b), *italicize* (ctrl+i), add a [link](https://github.com/mattcarlotta/react-smde) (ctrl+k) and toggle the markdown previewer (ctrl+0) will still work!\n\n Right now, you're in the preview mode. To switch back to the editor mode, press ctrl+0!",
 		};
 		this.handleValueChange = this.handleValueChange.bind(this);
 	}
@@ -44,7 +44,7 @@ class SimpleEditor extends Component {
     super();
     this.state = { 
       value:
-        "# Simple editor\\n\\nAlthough this example is missing a toolbar, the hotkeys to **bold** (ctrl+b), *italicize* (ctrl+i), add a [link](https://github.com/mattcarlotta/react-smde) (ctrl+k) and toggle the markdown previewer (ctrl+0) will still work!\\n\\n Right now, you're in the preview mode. To switch back to the editor mode, press ctrl+0!",
+        "# Simple editor\\n\\nAlthough this example is missing a toolbar, the syntax and hotkeys to **bold** (ctrl+b), *italicize* (ctrl+i), add a [link](https://github.com/mattcarlotta/react-smde) (ctrl+k) and toggle the markdown previewer (ctrl+0) will still work!\\n\\n Right now, you're in the preview mode. To switch back to the editor mode, press ctrl+0!",
     };
     this.handleValueChange = this.handleValueChange.bind(this);
   }
