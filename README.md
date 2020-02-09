@@ -14,6 +14,8 @@ A lightweight **Simple Markdown Editor** for React.
 
 [Markdown Previewing](#markdown-previewing)
 
+[Hot Keys](#hot-keys)
+
 [Custom Styling](#custom-styling)
 
 [Commands](#commands)
@@ -124,6 +126,17 @@ class App extends Component {
 	);
 }
 ```
+
+## Hot Keys
+
+The `MDEditor` comes configured with hot keys:
+
+- Bold (ctrl+b)
+- Italic (ctrl+i)
+- Link (ctrl+k)
+- Edit/Preview toggle (ctrl+0)
+
+If you want to remove these keys, then they can be disabled by passing the `disableHotKeys` prop to the `MDEditor`.
 
 ## Custom Styling
 
