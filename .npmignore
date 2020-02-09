@@ -1,7 +1,11 @@
+.github
+.storybook
+coverage
 demo
 docs
 src
 utils
+.cc_token
 .gitignore
 .npmignore
 .npmrc
