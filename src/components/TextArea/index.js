@@ -109,6 +109,7 @@ export class TextArea extends React.Component {
 		const { focusIndex, suggestions, startPosition } = this.state;
 		const {
 			disableHotKeys,
+			disablePreview,
 			onCommand,
 			onTabChange,
 			suggestionsEnabled,
@@ -235,8 +236,11 @@ export class TextArea extends React.Component {
 					break;
 				}
 				case "0": {
-					this.textAreaElement.focus();
-					onTabChange();
+					if (!disablePreview) {
+						event.preventDefault();
+						this.textAreaElement.focus();
+						onTabChange();
+					}
 					break;
 				}
 				default:

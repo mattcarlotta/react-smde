@@ -1,6 +1,7 @@
 import BasicExample from "./BasicExample";
 import AutoGrowExample from "./AutoGrowExample";
-import ClassesExample from "./CustomClassesExample";
+import CustomClassesExample from "./CustomClassesExample";
+import CustomCommandsExample from "./CustomCommandsExample";
 import SimpleEditorExample from "./SimpleEditorExample";
 import SuggestionsExample from "./SuggestionsExample";
 import SyntaxHighlightingExample from "./SyntaxHighlightingExample";
@@ -11,7 +12,8 @@ export default { title: "MDEditor" };
 export {
 	BasicExample,
 	AutoGrowExample,
-	ClassesExample,
+	CustomClassesExample,
+	CustomCommandsExample,
 	SimpleEditorExample,
 	SuggestionsExample,
 	SyntaxHighlightingExample,

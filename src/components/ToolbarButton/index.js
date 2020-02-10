@@ -12,6 +12,7 @@ export const ToolbarButton = ({
 	name,
 	tooltip,
 	tooltipPlacement,
+	value,
 }) => {
 	const button = (
 		<button
@@ -19,6 +20,7 @@ export const ToolbarButton = ({
 			tabIndex="0"
 			className={classNames({ disabled })}
 			data-name={name}
+			data-value={value}
 			disabled={disabled}
 			onClick={onClick}
 			{...buttonProps}
@@ -65,6 +67,7 @@ ToolbarButton.propTypes = {
 	name: PropTypes.string.isRequired,
 	tooltip: PropTypes.string,
 	tooltipPlacement: PropTypes.string.isRequired,
+	value: PropTypes.string,
 };
 
 export default ToolbarButton;

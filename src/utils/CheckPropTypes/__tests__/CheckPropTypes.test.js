@@ -1,20 +1,22 @@
-import { getDefaultCommands } from "~commands";
+import { defaultCommandLayout } from "~commands";
 import CheckPropTypes from "../index";
 
 const onChange = jest.fn();
 const value = "";
 const children = <p>Previewer</p>;
+const editorRef = jest.fn();
 
 const initProps = {
 	autoGrow: false,
 	classes: {},
 	children,
-	commands: getDefaultCommands(),
+	commands: defaultCommandLayout,
 	debounceSuggestions: 300,
 	disableGrip: false,
 	disableHotKeys: false,
 	disablePreview: false,
 	disableToolbar: false,
+	editorRef,
 	maxEditorHeight: 600,
 	maxEditorWidth: "100%",
 	minEditorHeight: 300,
@@ -123,6 +125,14 @@ describe("Check MDEditor PropTypes", () => {
 			CheckPropTypes({ ...initProps, disableToolbar: undefined }),
 		).toThrow(
 			"The MDEditor was initialized with an invalid 'disableToolbar' property. It must be a boolean!",
+		);
+	});
+
+	it("handles editoRef type checks", () => {
+		expect(() =>
+			CheckPropTypes({ ...initProps, editorRef: undefined }),
+		).toThrow(
+			"The MDEditor was initialized with an invalid 'editorRef' property. It must be a callback function!",
 		);
 	});
 

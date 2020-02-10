@@ -2,8 +2,10 @@ import ReactMarkdown from "react-markdown";
 import { replaceSelection } from "~utils";
 import MDEditor from "../index";
 
+const editorRef = jest.fn();
 const onChange = jest.fn();
 const value = "";
+const onClick = jest.fn();
 
 const initProps = {
 	value,
@@ -45,6 +47,7 @@ describe("MDEditor", () => {
 	});
 
 	afterEach(() => {
+		editorRef.mockClear();
 		onChange.mockClear();
 		replaceSelection.mockClear();
 	});
@@ -196,6 +199,22 @@ describe("MDEditor", () => {
 		expect(wrapper.state("textAreaLineHeight")).toEqual(19.5);
 	});
 
+	it("handles elevating the editor ref", () => {
+		Object.defineProperty(window, "getComputedStyle", {
+			value: () => ({
+				getPropertyValue: prop => (prop === "line-height" ? NaN : "13"),
+			}),
+		});
+
+		wrapper = mount(
+			<MDEditor {...initProps} editorRef={editorRef}>
+				<ReactMarkdown skipHtml>{value}</ReactMarkdown>
+			</MDEditor>,
+		);
+
+		expect(editorRef).toHaveBeenCalledWith(textareaNode());
+	});
+
 	it("handles invalid commands", () => {
 		wrapper = mount(
 			<MDEditor {...initProps} commands={[[invalidCommand]]}>
@@ -210,6 +229,45 @@ describe("MDEditor", () => {
 	it("removes mouse listeners on unmount", () => {
 		wrapper.unmount();
 		expect(document.removeEventListener).toHaveBeenCalled();
+	});
+
+	it("handles custom button interactions", () => {
+		wrapper = mount(
+			<MDEditor
+				{...initProps}
+				commands={[
+					[
+						{
+							name: "emoji-menu",
+							tooltip: "Add an emoji",
+							buttonProps: {
+								"aria-label": "Add an emoji",
+							},
+							onClick,
+							icon: "🙂",
+							children: [
+								{
+									name: "smile",
+									icon: <p>🙂</p>,
+									value: "🙂",
+								},
+							],
+						},
+					],
+				]}
+			>
+				<ReactMarkdown>{value}</ReactMarkdown>
+			</MDEditor>,
+		);
+
+		wrapper.find("button[data-name='emoji-menu']").simulate("click");
+
+		wrapper
+			.find("p")
+			.first()
+			.simulate("click");
+
+		expect(onClick).toHaveBeenCalledWith("🙂");
 	});
 
 	describe("Toolbar Actions", () => {

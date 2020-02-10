@@ -11,6 +11,7 @@ const initProps = {
 	children: <p>Markdown preview</p>,
 	classes: {},
 	debounceSuggestions: 300,
+	disablePreview: false,
 	disableHotKeys: false,
 	editorRef,
 	height: 300,
@@ -129,12 +130,23 @@ describe("TextArea", () => {
 		expect(onCommand).toHaveBeenCalledWith("italic");
 	});
 
-	it("handles 'tab' hot key", async () => {
+	it("handles 'preview/write' hot key", async () => {
 		keydownHandler({ key: "0", ctrlKey: true });
 		jest.runAllTimers();
 		wrapper.update();
 
+		expect(preventDefault).toHaveBeenCalledTimes(1);
 		expect(onTabChange).toHaveBeenCalledTimes(1);
+
+		preventDefault.mockClear();
+		onTabChange.mockClear();
+
+		wrapper.setProps({ disablePreview: true });
+		wrapper.update();
+
+		keydownHandler({ key: "0", ctrlKey: true });
+		expect(preventDefault).toHaveBeenCalledTimes(0);
+		expect(onTabChange).toHaveBeenCalledTimes(0);
 	});
 
 	it("doesn't handle hot keys if 'disableHotKeys' is true", async () => {

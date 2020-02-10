@@ -12,7 +12,7 @@ import horizontalRule from "./horizontalRule";
 import trash from "./trash";
 // import underline from "./underline"; // not supported
 
-const getDefaultCommands = () => [
+const defaultCommandLayout = [
 	[header, bold, boldItalic, italic, strikeThrough],
 	[horizontalRule],
 	[link, quote, code, image],
@@ -37,6 +37,6 @@ const commands = {
 	trash,
 };
 
-export { getDefaultCommands };
+export { defaultCommandLayout };
 
 export default commands;

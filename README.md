@@ -16,11 +16,13 @@ A lightweight **Simple Markdown Editor** for React.
 
 [Markdown Previewing](#markdown-previewing)
 
+[Package Exports](#package-exports)
+
 [Hot Keys](#hot-keys)
 
-[Custom Styling](#custom-styling)
+[Custom Commands](#custom-commands)
 
-[Commands](#commands)
+[Custom Styling](#custom-styling)
 
 [Suggestions](#suggestions)
 
@@ -60,23 +62,23 @@ import ReactMarkdown from "react-markdown";
 import "react-smde/dist/styles/react-smde.css";
 
 class App extends Component {
-	constructor() {
-		super();
-		this.state = { value: "" };
-		this.handleValueChange = this.handleValueChange.bind(this);
-	}
+  constructor() {
+    super();
+    this.state = { value: "" };
+    this.handleValueChange = this.handleValueChange.bind(this);
+  }
 
-	handleValueChange(value) {
-		this.setState({ value });
-	}
+  handleValueChange(value) {
+    this.setState({ value });
+  }
 
-	render() {
-		return (
-			<MDEditor onChange={this.handleValueChange} value={this.state.value}>
-				<ReactMarkdown>{this.state.value || "(empty)"}</ReactMarkdown>
-			</MDEditor>
-		);
-	}
+  render() {
+    return (
+      <MDEditor onChange={this.handleValueChange} value={this.state.value}>
+        <ReactMarkdown>{this.state.value || "(empty)"}</ReactMarkdown>
+      </MDEditor>
+    );
+  }
 }
 ```
 
@@ -88,12 +90,13 @@ The following props are accepted by `MDEditor`:
 | --------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `autoGrow`(bool)                  | A `boolean` to autogrow the textarea until the `maxEditorHeight` has been reached. (default: `false`)                                               |
 | `classes`(obj)                    | An optional `object` of `string` classNames that will be appended to the specified className. (see [Custom Styling](#custom-styling) for more info) |
-| `commands`(arr)                   | A single `array` with an array of grouped object commands. (see [Commands](#commands) for more info)                                                |
+| `commands`(arr)                   | A single `array` with an array of grouped object commands. (see [Custom Commands](#custom-commands) for more info)                                  |
 | `debounceSuggestions`(num)        | A `number` set in `ms` to debounce calling the `loadSuggestions` function. (default: `300`)†                                                        |
 | `disableGrip`(bool)               | A `boolean` to disable the bottom textarea resizing button. (default: `false`)                                                                      |
 | `disableHotKeys`(bool)            | A `boolean` to disable the textarea hot keys. (default: `false`)                                                                                    |
-| `disablePreview`(bool)            | A `boolean` to disable the preview button. (default: `false`)                                                                                       |
+| `disablePreview`(bool)            | A `boolean` to disable the preview button -- also disables the preview/write hot key. (default: `false`)                                            |
 | `disableToolbar`(bool)            | A `boolean` to disable the toolbar. (default: `false`)                                                                                              |
+| `editorRef`(func)                 | An optional callback `function` to hoist the MDEditor's `ref`.                                                                                      |
 | `loadSuggestions`(func)           | A `function` that returns an `array` of suggestions triggered by the `suggestionTriggerCharacter`. (see [Suggestions](#suggestions) for more info)  |
 | `maxEditorHeight`(num/str)        | A maximum editor height `number` that is set in `px` or `string`. (default: `500`)                                                                  |
 | `maxEditorWidth` (num/str)        | A maximum editor width `number` or `string`. (default: `100%`)                                                                                      |
@@ -119,25 +122,38 @@ import ReactMarkdown from "react-markdown";
 import "react-smde/dist/styles/react-smde.css";
 
 class App extends Component {
-	constructor() {
-		super();
-		this.state = { value: "" };
-		this.handleValueChange = this.handleValueChange.bind(this);
-	}
+  constructor() {
+    super();
+    this.state = { value: "" };
+    this.handleValueChange = this.handleValueChange.bind(this);
+  }
 
-	handleValueChange(value) {
-		this.setState({ value });
-	}
+  handleValueChange(value) {
+    this.setState({ value });
+  }
 
-	render() {
-		return (
-			<MDEditor onChange={this.handleValueChange} value={this.state.value}>
-				<ReactMarkdown>{this.state.value || "(empty)"}</ReactMarkdown>
-			</MDEditor>
-		);
-	}
+  render() {
+    return (
+      <MDEditor onChange={this.handleValueChange} value={this.state.value}>
+        <ReactMarkdown>{this.state.value || "(empty)"}</ReactMarkdown>
+      </MDEditor>
+    );
+  }
 }
 ```
+
+## Package Exports
+
+Aside from the default exported `MDEditor`, this package also exports a few other **named** internals:
+
+```
+commands (an object of all predefined commands)
+defaultCommandLayout (a chunked array of predefined commands)
+replaceSelection (function to replace/insert text -- it requires two arguments: the editor ref and a string)
+SvgIcon (component used for default command icons)
+```
+
+You can see use cases for these internals by visiting the [Live Demo](https://mattcarlotta.github.io/react-smde/).
 
 ## Hot Keys
 
@@ -210,11 +226,11 @@ mde-tooltip (applied to root tooltip)
 </details>
 <br />
 
-## Commands
+## Custom Commands
 
-You can rearrange, remove and adjust command properties (and their icons). The `commands` property of `MDEditor` expects a single array of one or many arrays of grouped object commands.
+You can rearrange, remove, and adjust properties and/or add your own commands! The `commands` property of the `MDEditor` expects a single array of one or many arrays of grouped object commands.
 
-Commands are simple objects where `name` must match a name from the predefined [list](src/commands/index.js#L23-L35), however, everything else is customizable:
+Commands are simple objects where `name` must either match a name from this predefined [list](src/commands/index.js#L23-L38) or must be a unique string:
 
 ```
 {
@@ -225,19 +241,24 @@ Commands are simple objects where `name` must match a name from the predefined [
 }
 ```
 
-The `icon` property must be a React node. You can either pass your own node or you can import the `SvgIcon` from this package and pass it an `icon` string property as shown above. For predefined icons, please see this [function](src/icons/index.js#L271-L308), which returns a predefined React SVG node based upon a string.
+The `icon` property must be a React node or a string. You can either pass your own node or you can import the `SvgIcon` from this package and pass it an `icon` string property as shown above. For predefined icons, please see this [function](src/icons/index.js#L271-L308), which returns a predefined React SVG node based upon a string.
+
+You can override button commands by passing in a callback function to the the `buttonProps`. This assumes that your button is not a menu. If it is a menu, then you can pass an `onClick` callback function as a property and it will override the `children`'s button commands. For a working example, see the [Custom Commands Demo](https://mattcarlotta.github.io/react-smde/?path=/story/mdeditor--custom-commands-example).
+
+If you wish to append to the predefined commands, then you can import the `defaultCommandLayout` from the package and spread it out in the `commands` property (see example below).
 
 For example:
 
 ```jsx
-import MDEditor, { commands, SvgIcon } from "react-smde";
+import MDEditor, { commands, defaultCommandLayout, SvgIcon } from "react-smde";
 import "react-smde/dist/styles/react-smde.css";
 
 const { checkedList, orderedList, unorderedList } = commands;
 
+// manual command layout
 <MDEditor
     commands={[
-        [orderedList, unorderedList, checkedList],
+      [orderedList, unorderedList, checkedList],
         [
           {
             name: "bold",
@@ -252,6 +273,26 @@ const { checkedList, orderedList, unorderedList } = commands;
 >
   ...etc
 </MDEditor>
+
+// appending custom commands to the default layout
+<MDEditor
+    commands={[
+        ...defaultCommandLayout,
+        [
+          {
+            name: "bold",
+            tooltip: "Add bold text (ctrl+b)",
+            buttonProps: { "aria-label": "Add bold text" },
+            icon: <SvgIcon icon="bold" />
+          }
+        ]
+      ]
+    }
+    ...otherProps
+>
+  ...etc
+</MDEditor>
+
 ```
 
 ## Suggestions
@@ -315,7 +356,7 @@ class App extends Component {
           debounceSuggestions={0}
           loadSuggestions={this.loadSuggestions}
         >
-          <ReactMarkdown skipHtml>{this.state.value}</ReactMarkdown>
+          <ReactMarkdown>{this.state.value}</ReactMarkdown>
         </MDEditor>
       </div>
     );

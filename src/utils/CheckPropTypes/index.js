@@ -2,12 +2,13 @@ export function checkPropTypes({
 	autoGrow,
 	children,
 	classes,
+	commands,
 	debounceSuggestions,
 	disableGrip,
 	disableHotKeys,
 	disablePreview,
 	disableToolbar,
-	commands,
+	editorRef,
 	maxEditorHeight,
 	maxEditorWidth,
 	minEditorHeight,
@@ -63,6 +64,10 @@ export function checkPropTypes({
 	if (typeof disableToolbar !== "boolean")
 		throw Error(
 			"The MDEditor was initialized with an invalid 'disableToolbar' property. It must be a boolean!",
+		);
+	if (typeof editorRef !== "function")
+		throw Error(
+			"The MDEditor was initialized with an invalid 'editorRef' property. It must be a callback function!",
 		);
 	if (
 		typeof maxEditorHeight !== "number" &&

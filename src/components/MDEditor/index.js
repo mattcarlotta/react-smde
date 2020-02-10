@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import Toolbar from "~components/Toolbar";
 import TextArea from "~components/TextArea";
 import SvgIcon from "~icons";
-import { getDefaultCommands } from "~commands";
+import { defaultCommandLayout } from "~commands";
 import { checkPropTypes, classNames } from "~utils";
 import Commander from "../Commander";
 
@@ -93,6 +93,7 @@ export class MDEditor extends React.Component {
 
 	setTextAreaRef = element => {
 		this.textAreaRef = element;
+		this.props.editorRef(element);
 
 		if (this.props.autoGrow && element && typeof window !== "undefined") {
 			const computed = window.getComputedStyle(element);
@@ -167,12 +168,13 @@ export class MDEditor extends React.Component {
 MDEditor.defaultProps = {
 	autoGrow: false,
 	classes: {},
-	commands: getDefaultCommands(),
+	commands: defaultCommandLayout,
 	debounceSuggestions: 300,
 	disableGrip: false,
 	disableHotKeys: false,
 	disablePreview: false,
 	disableToolbar: false,
+	editorRef: () => {},
 	maxEditorHeight: 600,
 	maxEditorWidth: "100%",
 	minEditorHeight: 300,

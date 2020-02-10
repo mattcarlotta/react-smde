@@ -14,6 +14,7 @@ export const ToolbarDropdown = ({
 	commands,
 	disabled,
 	name,
+	onClick,
 	onCommand,
 	tooltip,
 	tooltipPlacement,
@@ -42,7 +43,7 @@ export const ToolbarDropdown = ({
 					</Tooltip>
 					{isVisible ? (
 						<ul className={classNames("mde-dropdown", classes.mdedrop)}>
-							{commands.map(({ name, buttonProps, icon }) => (
+							{commands.map(({ name, buttonProps, icon, value }) => (
 								<ToolbarButton
 									key={name}
 									name={name}
@@ -50,7 +51,11 @@ export const ToolbarDropdown = ({
 									buttonContent={icon}
 									classes={classes}
 									onClick={() => {
-										onCommand(name);
+										if (onClick) {
+											onClick(value);
+										} else {
+											onCommand(name);
+										}
 										closeDropdown();
 									}}
 									readOnly={disabled}
@@ -96,6 +101,7 @@ ToolbarDropdown.propTypes = {
 	),
 	disabled: PropTypes.bool,
 	name: PropTypes.string,
+	onClick: PropTypes.func,
 	onCommand: PropTypes.func.isRequired,
 	tooltip: PropTypes.string,
 	tooltipPlacement: PropTypes.string.isRequired,
