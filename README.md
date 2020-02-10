@@ -241,7 +241,7 @@ Commands are simple objects where `name` must either match a name from this pred
 }
 ```
 
-The `icon` property must be a React node or a string. You can either pass your own node or you can import the `SvgIcon` from this package and pass it an `icon` string property as shown above. For predefined icons, please see this [function](src/icons/index.js#L271-L308), which returns a predefined React SVG node based upon a string.
+The `icon` property must be a React node or a string. You can either pass your own node or you can import the `SvgIcon` from this package and pass it an `icon` string property as shown above. For predefined icons, please see this [function](src/icons/index.js#L286-L325), which returns a predefined React SVG node based upon a string.
 
 You can override button commands by passing in a callback function to the the `buttonProps`. This assumes that your button is not a menu. If it is a menu, then you can pass an `onClick` callback function as a property and it will override the `children`'s button commands. For a working example, see the [Custom Commands Demo](https://mattcarlotta.github.io/react-smde/?path=/story/mdeditor--custom-commands-example).
 
