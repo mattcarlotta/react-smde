@@ -314,7 +314,7 @@ The suggestions overlay will only be triggered by the `suggestionTriggerCharacte
 
 Please note that setting a `debounceSuggestions` lower than `300`ms will disable the loading indicator -- this is useful if the returned data remains static.
 
-For example a dynamic data set, see the [Demo](#demo) example above, otherwise here's a static data example:
+For a dynamic data set example, see the [Demo](#demo) example above, otherwise here's a static data example:
 
 ```jsx
 import React, { Component } from "react";
