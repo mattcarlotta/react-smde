@@ -85,7 +85,6 @@ export class TextArea extends React.Component {
 		["active", "loading", "inactive"].map(s => this.state.status === s);
 
 	handleSuggestionSearch = () => {
-		// console.log("triggered handleSuggestionSearch");
 		// clear timeout
 		this.clearSearchTimer();
 
