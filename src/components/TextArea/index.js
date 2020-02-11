@@ -312,7 +312,7 @@ export class TextArea extends React.Component {
 					<span
 						className={classNames(
 							"mde-textarea-character-length",
-							classes.textareacharacterlength,
+							classes.mdetextareacharacterlength,
 						)}
 					>
 						{value.length}
