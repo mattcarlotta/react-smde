@@ -1,11 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
+import Commander from "~components/Commander";
 import Toolbar from "~components/Toolbar";
 import TextArea from "~components/TextArea";
 import SvgIcon from "~icons";
 import { defaultCommandLayout } from "~commands";
 import { checkPropTypes, classNames } from "~utils";
-import Commander from "../Commander";
 
 export class MDEditor extends React.Component {
 	constructor(props) {
