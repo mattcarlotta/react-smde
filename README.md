@@ -98,12 +98,14 @@ The following props are accepted by `MDEditor`:
 | `disableToolbar`(bool)            | A `boolean` to disable the toolbar. (default: `false`)                                                                                              |
 | `editorRef`(func)                 | An optional callback `function` to hoist the MDEditor's `ref`.                                                                                      |
 | `loadSuggestions`(func)           | A `function` that returns an `array` of suggestions triggered by the `suggestionTriggerCharacter`. (see [Suggestions](#suggestions) for more info)  |
-| `maxEditorHeight`(num/str)        | A maximum editor height `number` that is set in `px` or `string`. (default: `500`)                                                                  |
-| `maxEditorWidth` (num/str)        | A maximum editor width `number` or `string`. (default: `100%`)                                                                                      |
-| `minEditorHeight`(num/str)        | A minimum editor height `number` that is set in `px` or `string`. (default: `250`)                                                                  |
+| `maxCharacterLength`(num/str)     | A maximum MDEditor character length as a `number` or `string`. (default: `null`)                                                                    |
+| `maxEditorHeight`(num/str)        | A maximum MDEditor height `number` that is set in `px` or `string`. (default: `500`)                                                                |
+| `maxEditorWidth` (num/str)        | A maximum MDEditor width `number` or `string`. (default: `100%`)                                                                                    |
+| `minEditorHeight`(num/str)        | A minimum MDEditor height `number` that is set in `px` or `string`. (default: `250`)                                                                |
 | `onChange`(func)                  | A **required** callback `function` to handle value changes.                                                                                         |
 | `readOnly`(bool)                  | A `boolean` to disable editing the text within the textarea. (default: `false`)                                                                     |
-| `selectedTab`(str)                | A `string` (`write`/`preview`) to initialize the editor view in. (default: `write`)                                                                 |
+| `selectedTab`(str)                | A `string` (`write`/`preview`) to initialize the MDEditor's view in. (default: `write`)                                                             |
+| `showCharacterLength`(bool)       | A `boolean` to display the MDEditor's character length. (default: `false`)                                                                          |
 | `suggestionTriggerCharacter`(str) | A `string` character to trigger suggestions. (default: `@`)                                                                                         |
 | `textAreaProps`(obj)              | An optional `object` of properties to apply to the textarea.                                                                                        |
 | `tooltipPlacement`(str)           | The tooltip position relative to the target. (default: `top` -- see [Tooltips](#tooltips) for more info)                                            |

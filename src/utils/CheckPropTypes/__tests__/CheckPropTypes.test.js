@@ -17,12 +17,14 @@ const initProps = {
 	disablePreview: false,
 	disableToolbar: false,
 	editorRef,
+	maxCharacterLength: null,
 	maxEditorHeight: 600,
 	maxEditorWidth: "100%",
 	minEditorHeight: 300,
 	onChange,
 	readOnly: false,
 	selectedTab: "write",
+	showCharacterLength: false,
 	suggestionTriggerCharacter: "@",
 	textAreaProps: { placeholder: "What's on your mind?" },
 	tooltipPlacement: "top",
@@ -128,11 +130,19 @@ describe("Check MDEditor PropTypes", () => {
 		);
 	});
 
-	it("handles editoRef type checks", () => {
+	it("handles editorRef type checks", () => {
 		expect(() =>
 			CheckPropTypes({ ...initProps, editorRef: undefined }),
 		).toThrow(
 			"The MDEditor was initialized with an invalid 'editorRef' property. It must be a callback function!",
+		);
+	});
+
+	it("handles maxCharacterLength type checks", () => {
+		expect(() =>
+			CheckPropTypes({ ...initProps, maxCharacterLength: undefined }),
+		).toThrow(
+			"The MDEditor was initialized with an invalid 'maxCharacterLength' property. It must be a number or string!",
 		);
 	});
 
@@ -163,6 +173,14 @@ describe("Check MDEditor PropTypes", () => {
 	it("handles readOnly type checks", () => {
 		expect(() => CheckPropTypes({ ...initProps, readOnly: undefined })).toThrow(
 			"The MDEditor was initialized with an invalid 'readOnly' property. It must be a boolean!",
+		);
+	});
+
+	it("handles showCharacterLength type checks", () => {
+		expect(() =>
+			CheckPropTypes({ ...initProps, showCharacterLength: undefined }),
+		).toThrow(
+			"The MDEditor was initialized with an invalid 'showCharacterLength' property. It must be a boolean!",
 		);
 	});
 

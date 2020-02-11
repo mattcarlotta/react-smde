@@ -175,11 +175,13 @@ MDEditor.defaultProps = {
 	disablePreview: false,
 	disableToolbar: false,
 	editorRef: () => {},
+	maxCharacterLength: null,
 	maxEditorHeight: 600,
 	maxEditorWidth: "100%",
 	minEditorHeight: 300,
 	readOnly: false,
 	selectedTab: "write",
+	showCharacterLength: false,
 	suggestionTriggerCharacter: "@",
 	textAreaProps: { placeholder: "What's on your mind?" },
 	tooltipPlacement: "top",
@@ -209,6 +211,7 @@ MDEditor.propTypes = {
 	disableHotKeys: PropTypes.bool.isRequired,
 	disablePreview: PropTypes.bool.isRequired,
 	disableToolbar: PropTypes.bool.isRequired,
+	maxCharacterLength: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 	maxEditorHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 		.isRequired,
 	maxEditorWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
@@ -218,6 +221,7 @@ MDEditor.propTypes = {
 	onChange: PropTypes.func.isRequired,
 	readOnly: PropTypes.bool,
 	selectedTab: PropTypes.string,
+	showCharacterLength: PropTypes.bool.isRequired,
 	suggestionTriggerCharacter: PropTypes.string,
 	textAreaProps: PropTypes.objectOf(
 		PropTypes.oneOfType([

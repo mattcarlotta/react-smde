@@ -250,7 +250,13 @@ export class TextArea extends React.Component {
 	};
 
 	render() {
-		const { classes, editorHeight } = this.props;
+		const {
+			classes,
+			editorHeight,
+			maxCharacterLength,
+			showCharacterLength,
+			value,
+		} = this.props;
 		const [suggestionsActive, suggestionsLoading] = this.getSuggestionState();
 		const selectedTab = this.props.tab === "preview";
 
@@ -275,6 +281,7 @@ export class TextArea extends React.Component {
 					onChange={this.handleOnChange}
 					readOnly={this.props.readOnly}
 					value={this.props.value}
+					maxLength={maxCharacterLength}
 					{...this.props.textAreaProps}
 				/>
 				{selectedTab && (
@@ -301,6 +308,17 @@ export class TextArea extends React.Component {
 					/>
 				) : null}
 				{suggestionsLoading && <Spinner {...this.state} classes={classes} />}
+				{showCharacterLength && (
+					<span
+						className={classNames(
+							"mde-textarea-character-length",
+							classes.textareacharacterlength,
+						)}
+					>
+						{value.length}
+						{maxCharacterLength && <span>&#47;{maxCharacterLength}</span>}
+					</span>
+				)}
 			</div>
 		);
 	}
@@ -314,10 +332,12 @@ TextArea.propTypes = {
 	editorRef: PropTypes.func.isRequired,
 	height: PropTypes.number,
 	loadSuggestions: PropTypes.func,
+	maxCharacterLength: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 	onChange: PropTypes.func.isRequired,
 	onCommand: PropTypes.func.isRequired,
 	onTabChange: PropTypes.func.isRequired,
 	readOnly: PropTypes.bool,
+	showCharacterLength: PropTypes.bool.isRequired,
 	suggestionsEnabled: PropTypes.bool.isRequired,
 	suggestionTriggerCharacter: PropTypes.string.isRequired,
 	tab: PropTypes.string.isRequired,

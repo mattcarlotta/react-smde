@@ -9,12 +9,14 @@ export function checkPropTypes({
 	disablePreview,
 	disableToolbar,
 	editorRef,
+	maxCharacterLength,
 	maxEditorHeight,
 	maxEditorWidth,
 	minEditorHeight,
 	onChange,
 	readOnly,
 	selectedTab,
+	showCharacterLength,
 	suggestionTriggerCharacter,
 	textAreaProps,
 	tooltipPlacement,
@@ -70,6 +72,14 @@ export function checkPropTypes({
 			"The MDEditor was initialized with an invalid 'editorRef' property. It must be a callback function!",
 		);
 	if (
+		maxCharacterLength !== null &&
+		typeof maxCharacterLength !== "string" &&
+		typeof maxCharacterLength !== "number"
+	)
+		throw Error(
+			"The MDEditor was initialized with an invalid 'maxCharacterLength' property. It must be a number or string!",
+		);
+	if (
 		typeof maxEditorHeight !== "number" &&
 		typeof maxEditorHeight !== "string"
 	)
@@ -90,6 +100,10 @@ export function checkPropTypes({
 	if (typeof readOnly !== "boolean")
 		throw Error(
 			"The MDEditor was initialized with an invalid 'readOnly' property. It must be a boolean!",
+		);
+	if (typeof showCharacterLength !== "boolean")
+		throw Error(
+			"The MDEditor was initialized with an invalid 'showCharacterLength' property. It must be a boolean!",
 		);
 	if (typeof suggestionTriggerCharacter !== "string")
 		throw Error(

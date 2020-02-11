@@ -16,10 +16,12 @@ const initProps = {
 	editorRef,
 	height: 300,
 	loadSuggestions,
+	maxCharacterLength: null,
 	onChange,
 	onCommand,
 	onTabChange,
 	readOnly: false,
+	showCharacterLength: false,
 	suggestionsEnabled: false,
 	suggestionTriggerCharacter: "@",
 	tab: "write",
@@ -147,6 +149,24 @@ describe("TextArea", () => {
 		keydownHandler({ key: "0", ctrlKey: true });
 		expect(preventDefault).toHaveBeenCalledTimes(0);
 		expect(onTabChange).toHaveBeenCalledTimes(0);
+	});
+
+	it("displays the characterLength", () => {
+		wrapper.setProps({ showCharacterLength: true });
+
+		expect(
+			wrapper.find("span.mde-textarea-character-length").exists(),
+		).toBeTruthy();
+
+		expect(wrapper.find("span.mde-textarea-character-length").text()).toEqual(
+			"5",
+		);
+
+		wrapper.setProps({ maxCharacterLength: 100 });
+
+		expect(wrapper.find("span.mde-textarea-character-length").text()).toEqual(
+			"5/100",
+		);
 	});
 
 	it("doesn't handle hot keys if 'disableHotKeys' is true", async () => {
