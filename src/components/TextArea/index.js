@@ -177,8 +177,8 @@ export class TextArea extends React.Component {
 					),
 				}));
 			} else if (!suggestionsInactive && !isSpecialKey) {
-				// check if suggestions aren't inactive
-				// set status to loading, reset suggestions and call handleSuggesitons
+				// check if suggestions aren't inactive and a special key wasn't pressed
+				// set status to loading, reset suggestions and call handleSuggestions
 				// debounced handleSuggestionSearch sets status to active when resolved
 				this.setState(
 					prevState => ({
