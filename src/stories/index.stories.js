@@ -1,10 +1,10 @@
-import BasicExample from "./BasicExample";
-import AutoGrowExample from "./AutoGrowExample";
-import CustomClassesExample from "./CustomClassesExample";
-import CustomCommandsExample from "./CustomCommandsExample";
-import SimpleEditorExample from "./SimpleEditorExample";
-import SuggestionsExample from "./SuggestionsExample";
-import SyntaxHighlightingExample from "./SyntaxHighlightingExample";
+import BasicExample from "~stories/BasicExample";
+import AutoGrowExample from "~stories/AutoGrowExample";
+import CustomClassesExample from "~stories/CustomClassesExample";
+import CustomCommandsExample from "~stories/CustomCommandsExample";
+import SimpleEditorExample from "~stories/SimpleEditorExample";
+import SuggestionsExample from "~stories/SuggestionsExample";
+import SyntaxHighlightingExample from "~stories/SyntaxHighlightingExample";
 import "~styles/all.scss";
 
 export default { title: "MDEditor" };
