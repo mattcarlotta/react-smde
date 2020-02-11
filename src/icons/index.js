@@ -118,7 +118,7 @@ const strikeThroughIcon = (
 		aria-hidden="true"
 		role="img"
 		xmlns="http://www.w3.org/2000/svg"
-		viewBox="0 0 500 500"
+		viewBox="0 0 500 505"
 		data-fa-i2svg=""
 	>
 		<path
@@ -134,7 +134,7 @@ const italicIcon = (
 		aria-hidden="true"
 		role="img"
 		xmlns="http://www.w3.org/2000/svg"
-		viewBox="0 0 320 500"
+		viewBox="0 0 320 505"
 		data-fa-i2svg=""
 	>
 		<path
@@ -273,7 +273,7 @@ export const boldItalicIcon = (
 		aria-hidden="true"
 		role="img"
 		xmlns="http://www.w3.org/2000/svg"
-		viewBox="40 40 315 200"
+		viewBox="40 57 315 172"
 		className="svg-icon"
 	>
 		<path
