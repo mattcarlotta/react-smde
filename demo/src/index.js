@@ -47,7 +47,6 @@ class App extends Component {
 				value={this.state.value}
 				loadSuggestions={this.loadSuggestions}
 				maxEditorWidth={800}
-				minEditorHeight={100}
 				maxCharacterLength={1000}
 				showCharacterLength
 			>
