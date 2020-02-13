@@ -7,6 +7,7 @@ document.removeEventListener = jest.fn();
 describe("Click Handler", () => {
 	let openMenu;
 	let wrapper;
+	let clickListener;
 	beforeEach(() => {
 		wrapper = mount(
 			<div>
@@ -25,6 +26,7 @@ describe("Click Handler", () => {
 				<div tabIndex={0} className="outside" />
 			</div>,
 		);
+		clickListener = event => eventListener.click(event);
 		openMenu = () => wrapper.find("div.open").simulate("click");
 	});
 
@@ -47,12 +49,9 @@ describe("Click Handler", () => {
 
 		openMenu();
 
-		wrapper
-			.find("ClickHandler")
-			.instance()
-			.handleGlobalClick({
-				target: wrapper.find("div.outside").getDOMNode(),
-			});
+		clickListener({
+			target: wrapper.find("div.outside").getDOMNode(),
+		});
 
 		expect(wrapper.find("ClickHandler").state("isVisible")).toBeFalsy();
 	});
@@ -73,12 +72,9 @@ describe("Click Handler", () => {
 
 		expect(wrapper.find("ClickHandler").state("isVisible")).toBeTruthy();
 
-		wrapper
-			.find("ClickHandler")
-			.instance()
-			.handleGlobalClick({
-				target: wrapper.find("div.wrapper").getDOMNode(),
-			});
+		clickListener({
+			target: wrapper.find("div.wrapper").getDOMNode(),
+		});
 
 		expect(wrapper.find("ClickHandler").state("isVisible")).toBeTruthy();
 	});

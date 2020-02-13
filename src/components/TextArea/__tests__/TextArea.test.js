@@ -54,9 +54,7 @@ describe("TextArea", () => {
 		textarea = () => wrapper.find("textarea");
 		textareaNode = () => textarea().getDOMNode();
 		keydownHandler = event =>
-			wrapper
-				.instance()
-				.handleKeyDown({ preventDefault, ctrlKey: false, ...event });
+			eventListener.keydown({ preventDefault, ctrlKey: false, ...event });
 	});
 
 	afterEach(() => {
@@ -364,7 +362,6 @@ describe("TextArea", () => {
 		});
 
 		it("calls 'preventDefault' when specific keys are pressed", async () => {
-			// preventDefault.mockClear();
 			wrapper.setState({ status: "loading" });
 			keydownHandler({ key: "ArrowUp" });
 			keydownHandler({ key: "ArrowDown" });
@@ -377,7 +374,7 @@ describe("TextArea", () => {
 			expect(preventDefault).toHaveBeenCalledTimes(5);
 		});
 
-		it("deactivates the suggestions when the '@' symbol is deleted", async () => {
+		it("deactivates the suggestions when the '@' symbol is removed", async () => {
 			loadSuggestions.mockReturnValue(suggestions);
 			keydownHandler({ key: "@" });
 			jest.runAllTimers();

@@ -35,6 +35,8 @@ describe("MDEditor", () => {
 	let wrapper;
 	let textareaNode;
 	let command;
+	let mousemoveHandler;
+	let mouseupHandler;
 	beforeEach(() => {
 		wrapper = mount(
 			<MDEditor {...initProps}>
@@ -44,6 +46,8 @@ describe("MDEditor", () => {
 		textareaNode = () => wrapper.find("textarea").getDOMNode();
 		command = name =>
 			wrapper.find(`button[data-name='${name}']`).simulate("click");
+		mousemoveHandler = event => eventListener.mousemove(event);
+		mouseupHandler = () => eventListener.mouseup();
 	});
 
 	afterEach(() => {
@@ -87,29 +91,48 @@ describe("MDEditor", () => {
 
 	it("handles editor resizing", () => {
 		expect(wrapper.state("editorHeight")).toEqual(300);
+		const initiateGrip = num =>
+			wrapper.find("div.mde-grip").simulate("mousedown", { clientY: num });
 
-		wrapper.instance().handleGripMouseDown({ clientY: 410 });
-		wrapper.instance().handleGripMouseMove({ clientY: 710 });
-
-		expect(wrapper.state("editorHeight")).toEqual(600);
+		// clicking the grip and moving the mouse down, updates the height
+		initiateGrip(100);
+		mousemoveHandler({ clientY: 200 });
+		expect(wrapper.state("isDragging")).toBeTruthy();
+		expect(wrapper.state("originalDragY")).toEqual(100);
+		mouseupHandler();
+		expect(wrapper.state("editorHeight")).toEqual(400);
+		expect(wrapper.state("isDragging")).toBeFalsy();
+		expect(wrapper.state("originalDragY")).toEqual(0);
 
 		// prevents resizing beyond maxEditorHeight
-		wrapper.instance().handleGripMouseDown({ clientY: 710 });
-		wrapper.instance().handleGripMouseMove({ clientY: 810 });
-
+		initiateGrip(200);
+		mousemoveHandler({ clientY: 400 });
+		expect(wrapper.state("isDragging")).toBeTruthy();
+		expect(wrapper.state("originalDragY")).toEqual(200);
+		// editor reaches max height
 		expect(wrapper.state("editorHeight")).toEqual(600);
+		// user attempts to move past height
+		mousemoveHandler({ clientY: 500 });
+		mouseupHandler();
+		// editor height doesn't update
+		expect(wrapper.state("editorHeight")).toEqual(600);
+		expect(wrapper.state("isDragging")).toBeFalsy();
+		expect(wrapper.state("originalDragY")).toEqual(0);
 
 		// prevents resizing beyond minEditorHeight
-		wrapper.instance().handleGripMouseDown({ clientY: 410 });
-		wrapper.instance().handleGripMouseMove({ clientY: 110 });
-
+		initiateGrip(400);
+		mousemoveHandler({ clientY: 100 });
+		expect(wrapper.state("isDragging")).toBeTruthy();
+		expect(wrapper.state("originalDragY")).toEqual(400);
+		// editor reaches min height
 		expect(wrapper.state("editorHeight")).toEqual(300);
-
-		// after releasing mouse click
-		wrapper.instance().handleGripMouseUp();
-		wrapper.instance().handleGripMouseMove({ clientY: 710 });
-
+		// user attempts to move past min height
+		mousemoveHandler({ clientY: 90 });
+		mouseupHandler();
+		// editor height doesn't update
 		expect(wrapper.state("editorHeight")).toEqual(300);
+		expect(wrapper.state("isDragging")).toBeFalsy();
+		expect(wrapper.state("originalDragY")).toEqual(0);
 	});
 
 	it("handlers editor autoGrow resizing", () => {
