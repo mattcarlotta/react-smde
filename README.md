@@ -403,7 +403,7 @@ If you run into any issues, please fill out a <a href="https://github.com/mattca
 
 ## Feature Requests
 
-Have a feature you want included or believe the editor is missing a standard feature? You can either fork the repo, commit changes, and submit a new  <a href="https://github.com/mattcarlotta/react-smde/pulls">PR</a> across branches (please include relevant `.tests.js` files and run `npm run test:cov` or `yarn test:cov` to make sure the code is covered) or submit a <a href="https://github.com/mattcarlotta/react-smde/issues/new?assignees=&labels=&template=feature_request.md&title=">feature request</a>. 
+Have a feature you want included or believe the editor is missing a standard feature? You can either fork the repo, commit changes, and submit a new  <a href="https://github.com/mattcarlotta/react-smde/pulls">PR</a> (please include relevant `.tests.js` files and run `npm run test:cov` or `yarn test:cov` to make sure the code is covered) or you can submit a <a href="https://github.com/mattcarlotta/react-smde/issues/new?assignees=&labels=&template=feature_request.md&title=">feature request</a>. 
 
 ## License
 
