@@ -32,6 +32,8 @@ A lightweight **Simple Markdown Editor** for React.
 
 [Report Bugs](#report-bugs)
 
+[Feature Requests](#feature-requests)
+
 [License](#license)
 
 [Third Party Resources](#third-party-resources)
@@ -395,7 +397,13 @@ By default, this package is compiled to a `common-js` (CJS) file with supplement
 
 ## Report bugs
 
-If you run into any issues, please fill out an issue report <a href="https://github.com/mattcarlotta/react-smde/issues">here</a>. **Please provide a reproducible codesandbox example of the bug(s) you're experiencing. Issues that don't provide a reproducible example may be ignored.**
+If you run into any issues, please fill out a <a href="https://github.com/mattcarlotta/react-smde/issues/new?assignees=&labels=&template=bug_report.md&title=">bug report</a>. 
+
+**⚠️ NOTE**: Please provide a reproducible codesandbox example of the bug(s) you're experiencing. Issues that don't provide a reproducible example **may be ignored.**
+
+## Feature Requests
+
+Have a feature you want included or believe the editor is missing a standard feature? You can either fork the repo, commit changes, and submit a new  <a href="https://github.com/mattcarlotta/react-smde/pulls">PR</a> across branches (please include relevant `.tests.js` files and run `npm run test:cov` or `yarn test:cov` to make sure the code is covered) or submit a <a href="https://github.com/mattcarlotta/react-smde/issues/new?assignees=&labels=&template=feature_request.md&title=">feature request</a>. 
 
 ## License
 
