@@ -41,13 +41,13 @@ A lightweight **Simple Markdown Editor** for React.
 ## Installation
 
 ```
-npm i react-smde
+npm i react-smde rc-trigger
 ```
 
 or
 
 ```
-yarn add react-smde
+yarn add react-smde rc-trigger
 ```
 
 ## Demo

@@ -1,6 +1,6 @@
 {
 	"name": "react-smde",
-	"version": "0.2.4",
+	"version": "0.3.0",
 	"description": "Simple Markdown Editor for React",
 	"main": "dist/index.js",
 	"browser": "dist/esm/index.esm.js",
@@ -85,6 +85,7 @@
 		"prettier": "^1.19.1",
 		"prismjs": "^1.19.0",
 		"prop-types": "^15.7.2",
+		"rc-trigger": "^4.0.0-rc.5",
 		"react": "^16.12.0",
 		"react-dev-utils": "^10.1.0",
 		"react-dom": "^16.12.0",
@@ -112,13 +113,11 @@
 	},
 	"homepage": "https://mattcarlotta.github.io/react-smde",
 	"peerDependencies": {
+		"rc-trigger": "^4.0.0-rc.5",
 		"react": "^15.0.0 || ^16.0.0",
 		"react-dom": "^15.0.0 || ^16.0.0"
 	},
 	"resolutions": {
 		"babel-core": "7.0.0-bridge.0"
-	},
-	"dependencies": {
-		"rc-trigger": "^4.0.0-rc.5"
 	}
 }
