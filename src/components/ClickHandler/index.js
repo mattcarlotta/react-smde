@@ -7,11 +7,11 @@ export class ClickHandler extends React.Component {
 	};
 
 	componentDidMount() {
-		document.addEventListener("click", this.handleGlobalClick, false);
+		document.addEventListener("mousedown", this.handleGlobalClick, false);
 	}
 
 	componentWillUnmount() {
-		document.removeEventListener("click", this.handleGlobalClick, false);
+		document.removeEventListener("mousedown", this.handleGlobalClick, false);
 	}
 
 	handleGlobalClick = ({ target }) => {

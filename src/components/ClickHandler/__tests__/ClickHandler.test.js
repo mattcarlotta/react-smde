@@ -26,7 +26,7 @@ describe("Click Handler", () => {
 				<div tabIndex={0} className="outside" />
 			</div>,
 		);
-		clickListener = event => eventListener.click(event);
+		clickListener = event => eventListener.mousedown(event);
 		openMenu = () => wrapper.find("div.open").simulate("click");
 	});
 
