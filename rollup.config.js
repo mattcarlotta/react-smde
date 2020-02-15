@@ -34,7 +34,7 @@ export default {
 			...resolutions,
 		},
 		{
-			file: pkg.browser,
+			file: pkg.module,
 			format: "esm",
 			...resolutions,
 		},

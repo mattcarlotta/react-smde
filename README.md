@@ -393,7 +393,11 @@ Please note that there must be sufficient space for the tooltip to occupy the sp
 
 ## Builds
 
-By default, this package is compiled to a `common-js` (CJS) file with supplemental `Universal Module Definition` (UMD) and a `ECMAScript Module` (ESM) files. If you wish to use one of the supplemental verisons, then you can do so by importing from `react-smde/dist/(esm|umd)/index.(esm.umd).js`.
+By default, this package is compiled to a `common-js` (CJS - `main`) file with supplemental `Universal Module Definition` (UMD - `fallback`) and a `ECMAScript Module` (ESM - `module`) files. If you wish to use one of the supplemental verisons, then you can do so by either:  
+
+**Option 1**: Import from `react-smde/dist/(esm|umd)/index.(esm.umd).js`. 
+
+**Option 2**: If you're using webpack, then you can utilize the `resolve.mainFields` property and point to one of the fields listed above: `main`, `module`, or `fallback`. See the <a href="https://webpack.js.org/configuration/resolve/#resolvemainfields"> **resolve.mainFields** webpack documentation</a> for more info.
 
 ## Report bugs
 

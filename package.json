@@ -1,9 +1,9 @@
 {
 	"name": "react-smde",
-	"version": "0.3.1",
+	"version": "0.3.2",
 	"description": "Simple Markdown Editor for React",
 	"main": "dist/index.js",
-	"browser": "dist/esm/index.esm.js",
+	"module": "dist/esm/index.esm.js",
 	"fallback": "dist/umd/index.umd.js",
 	"styles": "dist/styles/react-smde.css",
 	"files": [

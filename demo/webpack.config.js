@@ -14,19 +14,19 @@ const devtool = inDevelopment ? "cheap-module-source-map" : false;
 const mode = inDevelopment ? "development" : "production";
 
 module.exports = {
-  devtool,
-  devServer,
-  entry: [entryPath],
-  mode,
-  module: { rules },
-  optimization,
-  output,
-  performance: {
-    hints: false
-  },
-  resolve: {
-    modules: ["src", "node_modules"],
-    extensions: ["*", ".js", ".jsx", ".css", ".scss"]
-  },
-  plugins
+	devtool,
+	devServer,
+	entry: [entryPath],
+	mode,
+	module: { rules },
+	optimization,
+	output,
+	performance: {
+		hints: false,
+	},
+	resolve: {
+		modules: ["src", "node_modules"],
+		extensions: ["*", ".js", ".jsx", ".css", ".scss"],
+	},
+	plugins,
 };
