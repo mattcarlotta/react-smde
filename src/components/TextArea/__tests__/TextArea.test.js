@@ -272,13 +272,16 @@ describe("TextArea", () => {
 			);
 
 			expect(wrapper.find("SuggestionsDropdown").exists()).toBeTruthy();
-			expect(wrapper.find("ul.mde-suggestions").text()).toContain(
-				"Bob",
-				"Nancy",
-			);
+			expect(
+				wrapper
+					.find("[data-testid='mde-suggestions']")
+					.find("li")
+					.first()
+					.text(),
+			).toContain("Bob", "Nancy");
 
 			wrapper
-				.find("ul.mde-suggestions")
+				.find("[data-testid='mde-suggestions']")
 				.find("li")
 				.first()
 				.simulate("mousedown", { currentTarget: 0 });
@@ -297,7 +300,7 @@ describe("TextArea", () => {
 			wrapper.update();
 
 			wrapper
-				.find("ul.mde-suggestions")
+				.find("[data-testid='mde-suggestions']")
 				.find("li")
 				.first()
 				.simulate("mousedown", { currentTarget: 0 });
@@ -316,7 +319,7 @@ describe("TextArea", () => {
 			wrapper.update();
 
 			wrapper
-				.find("ul.mde-suggestions")
+				.find("[data-testid='mde-suggestions']")
 				.find("li")
 				.at(1)
 				.simulate("mouseover", { currentTarget: 1 });
@@ -345,7 +348,7 @@ describe("TextArea", () => {
 			);
 
 			expect(wrapper.find("SuggestionsDropdown").exists()).toBeTruthy();
-			expect(wrapper.find("li.mde-no-suggestions")).toBeTruthy();
+			expect(wrapper.find("[data-test-id='mde-no-suggestions']")).toBeTruthy();
 		});
 
 		it("resets suggestions to be refiltered", async () => {

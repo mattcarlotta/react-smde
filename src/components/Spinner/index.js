@@ -1,33 +1,43 @@
 import React from "react";
 import PropTypes from "prop-types";
+import styled from "styled-components";
 import { classNames } from "~utils";
 
-const Spinner = ({ caret, classes }) => (
-  <ul
-    className={classNames("mde-suggestions", classes.mdesuggestions)}
-    style={{ left: caret.left, top: caret.top }}
-  >
-    <div className={classNames("mde-loading", classes.mdeloading)}>
-      {[0, 1, 2].map(key => (
-        <span key={key} />
-      ))}
-    </div>
-  </ul>
+const Spinner = ({ className, classes }) => (
+	<div className={classNames(className, classes.mdeloading)}>
+		{[0, 1, 2].map(key => (
+			<span key={key} />
+		))}
+	</div>
 );
 
 Spinner.propTypes = {
-  classes: PropTypes.objectOf(PropTypes.string),
-  caret: PropTypes.shape({
-    top: PropTypes.number,
-    left: PropTypes.number
-  })
+	className: PropTypes.string.isRequired,
+	classes: PropTypes.objectOf(PropTypes.string),
 };
 
-Spinner.defaultProps = {
-  caret: {
-    top: 0,
-    left: 0
-  }
-};
+export default styled(Spinner)`
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	height: 30px;
+	width: 42px;
+	margin: 0 auto;
 
-export default Spinner;
+	span {
+		display: flex;
+		width: 9px;
+		height: 15px;
+		margin-right: 5px;
+		background: rgba(0, 0, 0, 0.25);
+		animation: loading 1.35s infinite ease-in;
+	}
+
+	span:nth-child(2) {
+		animation-delay: 0.2s;
+	}
+
+	span:nth-child(3) {
+		animation-delay: 0.4s;
+	}
+`;

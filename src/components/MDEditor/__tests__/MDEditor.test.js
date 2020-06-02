@@ -86,13 +86,15 @@ describe("MDEditor", () => {
 			</MDEditor>,
 		);
 
-		expect(wrapper.find("div.mde-grip").exists()).toBeFalsy();
+		expect(wrapper.find("[data-testid='mde-grip']").exists()).toBeFalsy();
 	});
 
 	it("handles editor resizing", () => {
 		expect(wrapper.state("editorHeight")).toEqual(300);
 		const initiateGrip = num =>
-			wrapper.find("div.mde-grip").simulate("mousedown", { clientY: num });
+			wrapper
+				.find("[data-testid='mde-grip']")
+				.simulate("mousedown", { clientY: num });
 
 		// clicking the grip and moving the mouse down, updates the height
 		initiateGrip(100);

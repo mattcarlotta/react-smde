@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Spinner from "~components/Spinner";
+import SuggestionsContainer from "~components/SuggestionsContainer";
 import SuggestionsDropdown from "~components/SuggestionsDropdown";
 import { classNames, getCaretCoordinates, insertText, mod } from "~utils";
 
@@ -9,7 +10,7 @@ const initialState = {
 	suggestions: [],
 	focusIndex: null,
 	startPosition: null,
-	caret: {},
+	caret: { top: 0, left: 0 },
 	currentPromise: 0,
 };
 
@@ -154,7 +155,8 @@ export class TextArea extends React.Component {
 					() => this.handleSuggestionSearch(),
 				);
 			} else if (
-				((suggestionsActive || suggestionsLoading) && key === "Escape") ||
+				((suggestionsActive || suggestionsLoading) &&
+					(key === "Escape" || key === " ")) ||
 				((key === "Backspace" || undoKey) &&
 					selectionStart <= startPosition &&
 					this.props.value.substr(startPosition - 1) !== "@")
@@ -256,6 +258,7 @@ export class TextArea extends React.Component {
 			showCharacterLength,
 			value,
 		} = this.props;
+		const { caret } = this.state;
 		const [suggestionsActive, suggestionsLoading] = this.getSuggestionState();
 		const selectedTab = this.props.tab === "preview";
 
@@ -298,15 +301,24 @@ export class TextArea extends React.Component {
 						</div>
 					</div>
 				)}
-				{suggestionsActive ? (
-					<SuggestionsDropdown
-						{...this.props}
-						{...this.state}
-						onSuggestionSelected={this.handleSuggestionSelected}
-						onSuggestionFocus={this.handleSuggestionFocus}
-					/>
+				{suggestionsActive || suggestionsLoading ? (
+					<SuggestionsContainer
+						data-testid="mde-suggestions"
+						style={{ left: caret.left, top: caret.top }}
+					>
+						{suggestionsActive ? (
+							<SuggestionsDropdown
+								{...this.props}
+								{...this.state}
+								onSuggestionSelected={this.handleSuggestionSelected}
+								onSuggestionFocus={this.handleSuggestionFocus}
+							/>
+						) : null}
+						{suggestionsLoading && (
+							<Spinner {...this.state} classes={classes} />
+						)}
+					</SuggestionsContainer>
 				) : null}
-				{suggestionsLoading && <Spinner {...this.state} classes={classes} />}
 				{showCharacterLength && (
 					<span
 						className={classNames(

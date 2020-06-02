@@ -39,7 +39,7 @@ export default {
 			...resolutions,
 		},
 	],
-	external: ["react", "react-dom", "rc-trigger"],
+	external: ["react", "react-dom", "rc-trigger", "styled-components"],
 	plugins: [
 		postcss({
 			preprocessor: (_, id) =>

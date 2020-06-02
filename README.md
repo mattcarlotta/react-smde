@@ -172,9 +172,9 @@ If you want to remove these keys, then they can be disabled by passing the `disa
 
 ## Custom Styling
 
-The `MDEditor` was designed to be as flexible as possible when it comes to customizing the appearance of the editor. As such, you have several options:
+The `MDEditor` was designed to be as flexible as possible when it comes to customizing the appearance of the editor.
 
-**Option 1**: Pass a `classes` object property to the `MDEditor` with a custom class name targeting the specified property.
+In order to change the style, pass a `classes` object property to the `MDEditor` with a custom class name targeting the specified property.
 
 <details>
 <summary>Click to view a summary of available "mde" property overrides...</summary>
@@ -203,9 +203,8 @@ For example:
 classes={{ mde: "custom-mde", mdetoolbar: "custom-toolbar" }}
 ```
 
-<br />
 
-**Option 2**: Import the `.scss` files from `react-smde/dist/styles/[name].scss` (see available files <a href="https://github.com/mattcarlotta/react-smde/tree/master/src/styles">here</a>) and overwrite them as needed (please note that your project must be set up to handle SASS imports).
+Note: This package uses `styled-components` under the hood and your CSS classnames will need to have higher specificity when overriding styles. See [issues with specificity](https://styled-components.com/docs/advanced#issues-with-specificity) for more information.
 
 <br />
 

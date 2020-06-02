@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Commander from "~components/Commander";
+import Grip from "~components/Grip";
 import Toolbar from "~components/Toolbar";
 import TextArea from "~components/TextArea";
-import SvgIcon from "~icons";
 import { defaultCommandLayout } from "~commands";
 import { checkPropTypes, classNames } from "~utils";
 
@@ -153,12 +153,7 @@ export class MDEditor extends React.Component {
 					textAreaProps={textAreaProps}
 				/>
 				{!disableGrip && (
-					<div
-						className={classNames("mde-grip", classes.mdegrip)}
-						onMouseDown={this.handleGripMouseDown}
-					>
-						<SvgIcon icon="grip" />
-					</div>
+					<Grip classes={classes} onMouseDown={this.handleGripMouseDown} />
 				)}
 			</div>
 		);
