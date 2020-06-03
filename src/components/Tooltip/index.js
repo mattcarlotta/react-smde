@@ -70,12 +70,8 @@ class TooltipContainer extends React.Component {
 						ref={node => (this.tooltipRef = node)}
 						placement={this.props.placement}
 					>
-						<div className="TooltipArrowContainer">
-							<span className="TooltipArrow" />
-						</div>
-						<div className="TooltipOverlay">
-							<span>{this.props.overlay}</span>
-						</div>
+						<div className="TooltipArrow" />
+						<div className="TooltipOverlay">{this.props.overlay}</div>
 					</Tooltip>,
 					document.body,
 				)}

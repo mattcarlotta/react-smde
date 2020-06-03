@@ -49,7 +49,6 @@ const setArrowRotation = placement => {
 };
 
 export default styled.div`
-	box-sizing: border-box;
 	margin: 0;
 	padding: 0;
 	color: #eee;
@@ -63,7 +62,7 @@ export default styled.div`
 	${({ containerDimensions, tooltipDimensions, placement }) =>
 		setContainerPlacement(containerDimensions, tooltipDimensions, placement)};
 
-	& .TooltipArrowContainer {
+	& .TooltipArrow {
 		position: absolute;
 		display: block;
 		width: 13.07107px;
@@ -71,10 +70,9 @@ export default styled.div`
 		overflow: hidden;
 		background: transparent;
 		pointer-events: none;
-		box-sizing: border-box;
 		${({ placement }) => setArrowWindowPlacement(placement)}
 
-		& .TooltipArrow {
+		&::before {
 			transform: ${({ placement }) =>
 				`${setArrowRotation(placement)} rotate(45deg);`};
 			box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.07);
