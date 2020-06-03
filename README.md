@@ -41,13 +41,13 @@ A lightweight **Simple Markdown Editor** for React.
 ## Installation
 
 ```
-npm i react-smde rc-trigger
+npm i react-smde
 ```
 
 or
 
 ```
-yarn add react-smde rc-trigger
+yarn add react-smde
 ```
 
 ## Demo
@@ -218,8 +218,7 @@ mde-toolbar (applied to toolbar)
 mde-toolbar-group (applied to toolbar groups)
 mde-toolbar-item (applied to toolbar items)
 mde-toolbar-separator (applied to toolbar separators)
-mde-preview (applied to preview wrapper)
-mde-preview-content (applied to previewed content)
+mde-preview (applied to preview wrapper and previewed content)
 mde-no-suggestions (applied to no suggestion results item)
 mde-suggestions (applied to suggestions overlay)
 mde-textarea (applied to textarea input)

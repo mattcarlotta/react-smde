@@ -1,5 +1,5 @@
 import { insertText } from "~utils";
-import TextArea from "../index";
+import { TextArea } from "../index";
 
 const editorRef = jest.fn();
 const onChange = jest.fn();
@@ -8,6 +8,7 @@ const onTabChange = jest.fn();
 const loadSuggestions = jest.fn();
 
 const initProps = {
+	className: "testing",
 	children: <p>Markdown preview</p>,
 	classes: {},
 	debounceSuggestions: 300,
@@ -68,7 +69,9 @@ describe("TextArea", () => {
 	});
 
 	it("renders without errors", () => {
-		expect(wrapper.find("div.mde-textarea-wrapper").exists()).toBeTruthy();
+		expect(
+			wrapper.find("[data-testid='mde-textarea-wrapper']").exists(),
+		).toBeTruthy();
 	});
 
 	it("utilizes the outside controlled value", () => {
@@ -153,18 +156,24 @@ describe("TextArea", () => {
 		wrapper.setProps({ showCharacterLength: true });
 
 		expect(
-			wrapper.find("span.mde-textarea-character-length").exists(),
+			wrapper.find("[data-testid='mde-textarea-character-length']").exists(),
 		).toBeTruthy();
 
-		expect(wrapper.find("span.mde-textarea-character-length").text()).toEqual(
-			"5",
-		);
+		expect(
+			wrapper
+				.find("[data-testid='mde-textarea-character-length']")
+				.first()
+				.text(),
+		).toEqual("5");
 
 		wrapper.setProps({ maxCharacterLength: 100 });
 
-		expect(wrapper.find("span.mde-textarea-character-length").text()).toEqual(
-			"5/100",
-		);
+		expect(
+			wrapper
+				.find("[data-testid='mde-textarea-character-length']")
+				.first()
+				.text(),
+		).toEqual("5/100");
 	});
 
 	it("doesn't handle hot keys if 'disableHotKeys' is true", async () => {
@@ -244,8 +253,8 @@ describe("TextArea", () => {
 					status: "loading",
 					startPosition: 1,
 					caret: expect.objectContaining({
-						top: 1,
-						left: 1,
+						top: 0,
+						left: 0,
 					}),
 					currentPromise: 1,
 				}),

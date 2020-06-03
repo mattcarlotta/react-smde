@@ -130,7 +130,9 @@ export class MDEditor extends React.Component {
 
 		return (
 			<div
-				className={classNames("mde", classes.mde)}
+				css="width: 100%;"
+				data-testid="mde"
+				className={classNames(classes.mde)}
 				style={{ maxWidth: maxEditorWidth }}
 			>
 				{!disableToolbar && (

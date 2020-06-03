@@ -14,7 +14,7 @@ const resolutions = {
 	globals: {
 		react: "React",
 		"react-is": "reactIs",
-		"rc-trigger": "Trigger",
+		"rc-tooltip": "Tooltip",
 	},
 	exports: "named",
 };
@@ -39,7 +39,7 @@ export default {
 			...resolutions,
 		},
 	],
-	external: ["react", "react-dom", "rc-trigger", "styled-components"],
+	external: ["react", "react-dom", "rc-tooltip", "styled-components"],
 	plugins: [
 		postcss({
 			preprocessor: (_, id) =>

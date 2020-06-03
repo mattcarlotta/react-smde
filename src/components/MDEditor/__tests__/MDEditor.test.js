@@ -57,7 +57,7 @@ describe("MDEditor", () => {
 	});
 
 	it("initially renders without errors", () => {
-		expect(wrapper.find("div.mde").exists()).toBeTruthy();
+		expect(wrapper.find("[data-testid='mde']").exists()).toBeTruthy();
 	});
 
 	it("handles value changes", () => {

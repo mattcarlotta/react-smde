@@ -2,6 +2,15 @@
 import styled from "styled-components";
 
 export default styled.div`
+	@keyframes fadeIn {
+		0% {
+			opacity: 0;
+		}
+		100% {
+			opacity: 1;
+		}
+	}
+
 	text-align: center;
 	position: fixed;
 	top: 0;

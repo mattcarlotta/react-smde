@@ -1,8 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
+import styled from "styled-components";
+import CharacterLength from "~components/CharacterLength";
 import Spinner from "~components/Spinner";
 import SuggestionsContainer from "~components/SuggestionsContainer";
 import SuggestionsDropdown from "~components/SuggestionsDropdown";
+import TextAreaInput from "~components/TextAreaInput";
+import Preview from "~components/Preview";
 import { classNames, getCaretCoordinates, insertText, mod } from "~utils";
 
 const initialState = {
@@ -264,13 +268,12 @@ export class TextArea extends React.Component {
 
 		return (
 			<div
-				className={classNames(
-					"mde-textarea-wrapper",
-					classes.mdetextareawrapper,
-				)}
+				data-testid="mde-textarea-wrapper"
+				className={classNames(this.props.className, classes.mdetextareawrapper)}
 			>
-				<textarea
-					className={classNames("mde-textarea", classes.mdetextarea, {
+				<TextAreaInput
+					data-testid="mde-textarea"
+					className={classNames(classes.mdetextarea, {
 						hidden: selectedTab,
 					})}
 					style={{ height: editorHeight }}
@@ -287,19 +290,13 @@ export class TextArea extends React.Component {
 					{...this.props.textAreaProps}
 				/>
 				{selectedTab && (
-					<div
-						className={classNames("mde-preview", classes.mdepreview)}
+					<Preview
+						data-testid="mde-preview"
+						className={classNames(classes.mdepreview)}
 						style={{ height: editorHeight }}
 					>
-						<div
-							className={classNames(
-								"mde-preview-content",
-								classes.mdepreviewcontent,
-							)}
-						>
-							{this.props.children}
-						</div>
-					</div>
+						{this.props.children}
+					</Preview>
 				)}
 				{suggestionsActive || suggestionsLoading ? (
 					<SuggestionsContainer
@@ -320,15 +317,13 @@ export class TextArea extends React.Component {
 					</SuggestionsContainer>
 				) : null}
 				{showCharacterLength && (
-					<span
-						className={classNames(
-							"mde-textarea-character-length",
-							classes.mdetextareacharacterlength,
-						)}
+					<CharacterLength
+						data-testid="mde-textarea-character-length"
+						className={classNames(classes.mdetextareacharacterlength)}
 					>
 						{value.length}
 						{maxCharacterLength && <span>&#47;{maxCharacterLength}</span>}
-					</span>
+					</CharacterLength>
 				)}
 			</div>
 		);
@@ -337,6 +332,7 @@ export class TextArea extends React.Component {
 
 TextArea.propTypes = {
 	children: PropTypes.node.isRequired,
+	className: PropTypes.string.isRequired,
 	classes: PropTypes.objectOf(PropTypes.string),
 	debounceSuggestions: PropTypes.number.isRequired,
 	disableHotKeys: PropTypes.bool.isRequired,
@@ -363,4 +359,16 @@ TextArea.propTypes = {
 	value: PropTypes.string,
 };
 
-export default TextArea;
+export default styled(TextArea)`
+	position: relative;
+	border: 1px solid #c8ccd0;
+	overflow-y: auto;
+	overflow-x: hidden;
+	overflow-wrap: break-word;
+	word-break: break-word;
+	padding: 0px 2px 0 10px;
+
+	& .hidden {
+		display: none;
+	}
+`;

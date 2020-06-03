@@ -1,8 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import ClickHandler from "~components/ClickHandler";
+import Dropdown from "~components/Dropdown";
 import Tooltip from "~components/Tooltip";
 import ToolbarButton from "~components/ToolbarButton";
+import ToolbarItem from "~components/ToolbarItem";
 import { classNames } from "~utils";
 
 const { Fragment } = React;
@@ -19,15 +21,15 @@ export const ToolbarDropdown = ({
 	tooltip,
 	tooltipPlacement,
 }) => (
-	<li className={classNames("mde-toolbar-item", classes.mdetoolbaritem)}>
+	<ToolbarItem className={classNames(classes.mdetoolbaritem)}>
 		<ClickHandler>
 			{({ isVisible, closeDropdown, handleClick }) => (
 				<Fragment>
 					<Tooltip
-						overlayClassName={classNames("mde-tooltip", classes.mdetooltip)}
+						disabled={disabled}
+						className={classes.mdetooltip}
 						placement={tooltipPlacement}
-						trigger={["hover"]}
-						overlay={<span>{tooltip}</span>}
+						overlay={tooltip}
 					>
 						<button
 							type="button"
@@ -42,7 +44,7 @@ export const ToolbarDropdown = ({
 						</button>
 					</Tooltip>
 					{isVisible ? (
-						<ul className={classNames("mde-dropdown", classes.mdedrop)}>
+						<Dropdown className={classNames(classes.mdedrop)}>
 							{commands.map(({ name, buttonProps, icon, value }) => (
 								<ToolbarButton
 									key={name}
@@ -62,12 +64,12 @@ export const ToolbarDropdown = ({
 									tooltipPlacement={tooltipPlacement}
 								/>
 							))}
-						</ul>
+						</Dropdown>
 					) : null}
 				</Fragment>
 			)}
 		</ClickHandler>
-	</li>
+	</ToolbarItem>
 );
 
 ToolbarDropdown.defaultProps = {

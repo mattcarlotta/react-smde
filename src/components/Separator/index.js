@@ -1,18 +1,7 @@
-import React from "react";
-import PropTypes from "prop-types";
+/* istanbul ignore file */
 import styled from "styled-components";
-import { classNames } from "~utils";
 
-export const Separator = ({ className, classes }) => (
-	<i className={classNames(className, classes.mdetoolbarseparator)}>|</i>
-);
-
-Separator.propTypes = {
-	className: PropTypes.string.isRequired,
-	classes: PropTypes.objectOf(PropTypes.string),
-};
-
-export default styled(Separator)`
+export default styled.i`
 	display: inline-block;
 	width: 0;
 	border-left: 1px solid #d9d9d9;

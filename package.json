@@ -121,7 +121,5 @@
 	"resolutions": {
 		"babel-core": "7.0.0-bridge.0"
 	},
-	"dependencies": {
-		"rc-trigger": "^4.3.0"
-	}
+	"dependencies": {}
 }

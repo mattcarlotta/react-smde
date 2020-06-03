@@ -1,12 +1,10 @@
-@import "vars.scss";
+/* istanbul ignore file */
+import styled from "styled-components";
 
-.mde-preview {
-	padding: 10px;
+export default styled.div`
+	padding: 6px 10px 6px 0px;
 	text-align: left;
-	overflow-y: auto;
-}
 
-.mde-preview-content {
 	p,
 	blockquote,
 	ul,
@@ -22,7 +20,7 @@
 		height: 0.25em;
 		padding: 0;
 		margin: 24px 0;
-		background-color: $preview-hr-bg;
+		background-color: #e1e4e8;
 		border: 0;
 	}
 
@@ -33,39 +31,49 @@
 		margin-bottom: 16px;
 		font-weight: 600;
 		line-height: 1.25;
-		border-bottom: 1px solid $preview-header-border-color;
+		border-bottom: 1px solid #eee;
 		padding-bottom: 0.3em;
 	}
+
 	h1 {
 		font-size: 36px;
 	}
+
 	h2 {
 		font-size: 30px;
 	}
+
 	h3 {
 		font-size: 24px;
 	}
+
 	h4 {
 		font-size: 18px;
 	}
+
 	h5 {
 		font-size: 14px;
 	}
+
 	h6 {
 		font-size: 12px;
 	}
+
 	ul,
 	ol {
 		padding-left: 2em;
 	}
+
 	blockquote {
 		margin-left: 0;
 		padding: 0 1em;
-		color: $preview-block-quote-color;
-		border-left: 0.25em solid $preview-block-quote-border-color;
+		color: #777;
+		border-left: 0.25em solid #ddd;
+
 		& > :first-child {
 			margin-top: 0;
 		}
+
 		& > :last-child {
 			margin-bottom: 0;
 		}
@@ -75,12 +83,13 @@
 		padding: 0.2em 0 0.2em 0;
 		margin: 0;
 		font-size: 90%;
-		background-color: $preview-code-bg-color;
+		background-color: rbga(0, 0, 0, 0.04);
 		border-radius: 3px;
+
 		&::before,
 		&::after {
 			letter-spacing: -0.2em;
-			content: "\00a0";
+			content: "\\00a0";
 		}
 	}
 
@@ -89,7 +98,7 @@
 		overflow: auto;
 		font-size: 85%;
 		line-height: 1.45;
-		background-color: $preview-pre-bg-color;
+		background-color: #f7f7f7;
 		border-radius: 3px;
 
 		code {
@@ -119,18 +128,21 @@
 	}
 
 	a {
-		color: $preview-link-color;
+		color: #4078c0;
 		text-decoration: none;
 		&:hover {
 			text-decoration: underline;
 		}
 	}
+
 	& > *:first-child {
 		margin-top: 0 !important;
 	}
+
 	& > *:last-child {
 		margin-bottom: 0 !important;
 	}
+
 	&::after {
 		display: table;
 		clear: both;
@@ -142,15 +154,17 @@
 		width: 100%;
 		border-spacing: 0;
 		border-collapse: collapse;
+
 		thead {
 			th {
 				font-weight: bold;
 			}
 		}
+
 		th,
 		td {
 			padding: 6px 13px;
-			border: 1px solid $border-color;
+			border: 1px solid #c8ccd0;
 		}
 	}
-}
+`;
