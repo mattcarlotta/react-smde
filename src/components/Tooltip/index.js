@@ -3,24 +3,30 @@ import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
 import Tooltip from "./Tooltip";
 
-const containerDimensions = {
-	bottom: 0,
-	height: 0,
-	left: 0,
-	right: 0,
-	top: 0,
-	width: 0,
-	x: 0,
-	y: 0,
-};
-const tooltipDimensions = containerDimensions;
-
 class TooltipContainer extends React.Component {
 	state = {
 		isVisible: false,
 		wasMounted: false,
-		containerDimensions,
-		tooltipDimensions,
+		container: {
+			bottom: 0,
+			height: 0,
+			left: 0,
+			right: 0,
+			top: 0,
+			width: 0,
+			x: 0,
+			y: 0,
+		},
+		tooltip: {
+			bottom: 0,
+			height: 0,
+			left: 0,
+			right: 0,
+			top: 0,
+			width: 0,
+			x: 0,
+			y: 0,
+		},
 	};
 
 	componentDidUpdate = prevProps => {
@@ -43,23 +49,27 @@ class TooltipContainer extends React.Component {
 	hideTooltip = () => this.setState({ isVisible: false });
 
 	setTooltipDimensions = () => {
-		this.setState({
-			containerDimensions: this.containerRef
+		this.setState(prevState => ({
+			container: this.containerRef
 				? this.containerRef.getBoundingClientRect()
-				: containerDimensions,
-			tooltipDimensions: this.tooltipRef
+				: prevState.container,
+			tooltip: this.tooltipRef
 				? this.tooltipRef.getBoundingClientRect()
-				: tooltipDimensions,
-		});
+				: prevState.tooltip,
+		}));
 	};
 
 	render = () => (
 		<React.Fragment>
 			<div
+				data-testid="mde-tooltip-wrapper"
 				onMouseEnter={!this.props.disabled ? this.handleVisibleChange : null}
 				onMouseLeave={!this.props.disabled ? this.hideTooltip : null}
 			>
-				<span ref={node => (this.containerRef = node)}>
+				<span
+					data-testid="mde-tooltip-ref-wrapper"
+					ref={node => (this.containerRef = node)}
+				>
 					{this.props.children}
 				</span>
 			</div>
@@ -67,11 +77,14 @@ class TooltipContainer extends React.Component {
 				ReactDOM.createPortal(
 					<Tooltip
 						{...this.state}
+						data-testid="mde-tooltip"
 						ref={node => (this.tooltipRef = node)}
 						placement={this.props.placement}
 					>
-						<div className="TooltipArrow" />
-						<div className="TooltipOverlay">{this.props.overlay}</div>
+						<div data-testid="mde-tooltip-arrow" className="TooltipArrow" />
+						<div data-testid="mde-tooltip-overlay" className="TooltipOverlay">
+							{this.props.overlay}
+						</div>
 					</Tooltip>,
 					document.body,
 				)}

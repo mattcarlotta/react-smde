@@ -31,7 +31,7 @@ export default styled.li`
 
 		&:focus {
 			outline: none;
-			box-shadow: 0 0 1px 1px $focus-color;
+			box-shadow: 0 0 1px 1px #8f8f8f;
 			transition: all 0.2s ease-in-out;
 		}
 	}
