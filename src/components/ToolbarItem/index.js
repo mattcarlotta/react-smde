@@ -14,15 +14,19 @@ export default styled.li`
 		border: 0;
 		color: #242729;
 		border-radius: 8px;
-		transition: background 0.3s ease-in-out;
+		transition: background 0.2s ease-in-out;
 
 		&:hover {
-			background: #dcdvdc;
+			background: #c5c4c4;
 		}
 
 		&:disabled {
 			cursor: not-allowed;
 			color: #ccc;
+
+			&:hover {
+				background: transparent;
+			}
 		}
 
 		&:focus {

@@ -9,7 +9,7 @@ const setContainerPlacement = (container, tooltip, placement) => {
 		case "left":
 			return "top: 5px; right: 30px";
 		default:
-			return `top: ${container.height * 2 - 10}px; left: ${container.height +
+			return `top: ${container.height * 2 - 20}px; left: ${container.height +
 				container.left -
 				tooltip.width / 2}px;`;
 	}

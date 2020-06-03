@@ -8,7 +8,7 @@ export default styled.ul`
 	display: flex;
 	flex-wrap: nowrap;
 
-	&.hidden {
+	& .hidden {
 		visibility: hidden;
 	}
 `;
