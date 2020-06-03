@@ -370,20 +370,12 @@ You can specify the position of the tooltip in relation to its target. For examp
 
 ```
 top
-topLeft
-topRight
 bottom
-bottomLeft
-bottomRight
 left
-leftTop
-leftBottom
 right
-rightTop
-rightBottom
 ```
 
-Please note that there must be sufficient space for the tooltip to occupy the specified area; otherwise, the tooltip will default to the next closest available space.
+Please note that there must be sufficient surrounding window space for the tooltip to occupy the specified placement area; otherwise, the tooltip location may be incorrectly calculated and cause an undesirable UX.
 
 ## Builds
 

@@ -3,8 +3,6 @@ import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
 import Tooltip from "./Tooltip";
 
-// TODO - Add right, bottom, left tooltip positions
-
 const containerDimensions = {
 	bottom: 0,
 	height: 0,
@@ -20,7 +18,7 @@ const tooltipDimensions = containerDimensions;
 class TooltipContainer extends React.Component {
 	state = {
 		isVisible: false,
-		wasCreated: false,
+		wasMounted: false,
 		containerDimensions,
 		tooltipDimensions,
 	};
@@ -36,7 +34,7 @@ class TooltipContainer extends React.Component {
 		this.setState(
 			{
 				isVisible: true,
-				wasCreated: true,
+				wasMounted: true,
 			},
 			this.setTooltipDimensions,
 		);
@@ -56,26 +54,32 @@ class TooltipContainer extends React.Component {
 	};
 
 	render = () => (
-		<div
-			onMouseEnter={!this.props.disabled ? this.handleVisibleChange : null}
-			onMouseLeave={!this.props.disabled ? this.hideTooltip : null}
-		>
-			<span ref={node => (this.containerRef = node)}>
-				{this.props.children}
-			</span>
-			{this.state.wasCreated &&
+		<React.Fragment>
+			<div
+				onMouseEnter={!this.props.disabled ? this.handleVisibleChange : null}
+				onMouseLeave={!this.props.disabled ? this.hideTooltip : null}
+			>
+				<span ref={node => (this.containerRef = node)}>
+					{this.props.children}
+				</span>
+			</div>
+			{this.state.wasMounted &&
 				ReactDOM.createPortal(
 					<Tooltip
 						{...this.state}
 						ref={node => (this.tooltipRef = node)}
 						placement={this.props.placement}
 					>
-						<div className="TooltipArrow" />
-						<div className="TooltipOverlay">{this.props.overlay}</div>
+						<div className="TooltipArrowContainer">
+							<span className="TooltipArrow" />
+						</div>
+						<div className="TooltipOverlay">
+							<span>{this.props.overlay}</span>
+						</div>
 					</Tooltip>,
 					document.body,
 				)}
-		</div>
+		</React.Fragment>
 	);
 }
 

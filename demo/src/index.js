@@ -46,7 +46,7 @@ class App extends Component {
 				value={this.state.value}
 				loadSuggestions={this.loadSuggestions}
 				maxEditorWidth={800}
-				maxCharacterLength={100000}
+				maxCharacterLength={10000}
 				showCharacterLength
 			>
 				<ReactMarkdown renderers={{ code: CodeBlock }}>
