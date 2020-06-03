@@ -30,10 +30,8 @@ class TooltipContainer extends React.Component {
 	};
 
 	componentDidUpdate = prevProps => {
-		const { disabled, overlay } = this.props;
-
-		if (overlay !== prevProps.overlay) this.setTooltipDimensions();
-		if (disabled !== prevProps.disabled) this.hideTooltip();
+		if (this.props.overlay !== prevProps.overlay) this.setTooltipDimensions();
+		if (this.props.disabled !== prevProps.disabled) this.hideTooltip();
 	};
 
 	handleVisibleChange = () => {
