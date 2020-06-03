@@ -41,13 +41,13 @@ A lightweight **Simple Markdown Editor** for React.
 ## Installation
 
 ```
-npm i react-smde
+npm i react-smde styled-components
 ```
 
 or
 
 ```
-yarn add react-smde
+yarn add react-smde styled-components
 ```
 
 ## Demo
@@ -61,7 +61,6 @@ yarn add react-smde
 ```jsx
 import MDEditor from "react-smde";
 import ReactMarkdown from "react-markdown";
-import "react-smde/dist/styles/react-smde.css";
 
 class App extends Component {
   constructor() {
@@ -123,7 +122,6 @@ The `MDEditor` is unopinionated when it comes to previewing markdown content. Th
 import React, { Component } from "react";
 import MDEditor from "react-smde";
 import ReactMarkdown from "react-markdown";
-import "react-smde/dist/styles/react-smde.css";
 
 class App extends Component {
   constructor() {
@@ -255,7 +253,6 @@ For example:
 
 ```jsx
 import MDEditor, { commands, defaultCommandLayout, SvgIcon } from "react-smde";
-import "react-smde/dist/styles/react-smde.css";
 
 const { checkedList, orderedList, unorderedList } = commands;
 
@@ -323,7 +320,6 @@ For a dynamic data set example, see the [Demo](#demo) example above, otherwise h
 ```jsx
 import React, { Component } from "react";
 import MDEditor from "react-smde";
-import "react-smde/dist/styles/react-smde.css";
 
 class App extends Component {
   constructor() {

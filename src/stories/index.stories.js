@@ -5,7 +5,6 @@ import CustomCommandsExample from "~stories/CustomCommandsExample";
 import SimpleEditorExample from "~stories/SimpleEditorExample";
 import SuggestionsExample from "~stories/SuggestionsExample";
 import SyntaxHighlightingExample from "~stories/SyntaxHighlightingExample";
-import "~styles/all.scss";
 
 export default { title: "MDEditor" };
 

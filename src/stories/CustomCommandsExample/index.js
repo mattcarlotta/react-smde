@@ -106,7 +106,6 @@ const text = `import React, { Component } from "react";
 import ReactMarkdown from "react-markdown";
 import MDEditor, { defaultCommandLayout, replaceSelection } from "react-smde";
 import { FaSmile } from "react-icons/fa";
-import "react-smde/dist/styles/react-smde.css";
 
 /* 
   replaceSelection expects two arguments: (editorRef, string)

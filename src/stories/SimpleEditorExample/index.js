@@ -36,7 +36,6 @@ class SimpleEditorExample extends React.Component {
 const text = `import React, { Component } from "react";
 import ReactMarkdown from "react-markdown";
 import MDEditor from "react-smde";
-import "react-smde/dist/styles/react-smde.css";
 import "./styles.scss";
 
 class SimpleEditorExample extends Component {

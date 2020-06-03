@@ -5,7 +5,6 @@
 	"main": "dist/index.js",
 	"module": "dist/esm/index.esm.js",
 	"fallback": "dist/umd/index.umd.js",
-	"styles": "dist/styles/react-smde.css",
 	"sideEffects": false,
 	"files": [
 		"dist"
@@ -97,10 +96,8 @@
 		"rimraf": "^3.0.1",
 		"rollup": "^1.31.0",
 		"rollup-plugin-babel": "^4.3.3",
-		"rollup-plugin-copy": "^3.3.0",
 		"rollup-plugin-eslint": "^7.0.0",
 		"rollup-plugin-filesize": "^6.2.1",
-		"rollup-plugin-postcss": "^2.0.6",
 		"rollup-plugin-terser": "^5.2.0",
 		"sass-loader": "^8.0.2",
 		"style-loader": "^1.1.3",
@@ -116,6 +113,7 @@
 	"homepage": "https://mattcarlotta.github.io/react-smde",
 	"peerDependencies": {
 		"react": "^15.0.0 || ^16.0.0",
-		"react-dom": "^15.0.0 || ^16.0.0"
+		"react-dom": "^15.0.0 || ^16.0.0",
+		"styled-components": "^4.0.0 || ^5.0.0"
 	}
 }

@@ -9,7 +9,7 @@ const FriendlyErrorsWebpackPlugin = require("friendly-errors-webpack-plugin");
 const WebpackBar = require("webpackbar");
 const ManifestPlugin = require("webpack-manifest-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
-const { cssFolder, faviconPath, publicPath, templatePath } = require("./paths");
+const { cssFolder, publicPath, templatePath } = require("./paths");
 const { analyze, inDevelopment, inStaging, PORT } = require("./envs");
 
 // =============================================================== //

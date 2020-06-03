@@ -85,7 +85,6 @@ const text = `import React, { Component, PureComponent } from "react";
 import ReactMarkdown from "react-markdown";
 import MDEditor from "react-smde";
 import hljs from "highlight.js";
-import "react-smde/dist/styles/react-smde.css";
 import "highlight.js/styles/atelier-forest-light.css";
 
 class CodeBlock extends PureComponent {
