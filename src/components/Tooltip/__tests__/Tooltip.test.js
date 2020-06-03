@@ -1,6 +1,7 @@
 import Tooltip from "../index";
-import { css } from "styled-components";
 
+const tooltipArrowSelector = { modifier: `& .TooltipArrow` };
+const tooltipArrowPseudoSelector = { modifier: `& .TooltipArrow::before` };
 const container = {
 	bottom: 80,
 	height: 20,
@@ -11,7 +12,6 @@ const container = {
 	x: 500,
 	y: 60,
 };
-
 const tooltip = {
 	bottom: 40,
 	height: 40,
@@ -113,20 +113,26 @@ describe("Tooltip", () => {
 			expect(tooltipContainer).toHaveStyleRule("left", "470px");
 			expect(tooltipContainer).toHaveStyleRule("padding-bottom", "8px");
 
-			let modifier = { modifier: css`& .TooltipArrow` };
-			expect(tooltipContainer).toHaveStyleRule("left", "50%", modifier);
-			expect(tooltipContainer).toHaveStyleRule("bottom", "-5px", modifier);
+			expect(tooltipContainer).toHaveStyleRule(
+				"left",
+				"50%",
+				tooltipArrowSelector,
+			);
+			expect(tooltipContainer).toHaveStyleRule(
+				"bottom",
+				"-5px",
+				tooltipArrowSelector,
+			);
 			expect(tooltipContainer).toHaveStyleRule(
 				"transform",
 				"translateX(-50%)",
-				modifier,
+				tooltipArrowSelector,
 			);
 
-			modifier = { modifier: css`& .TooltipArrow::before` };
 			expect(tooltipContainer).toHaveStyleRule(
 				"transform",
 				"translateY(-6.5355px) rotate(45deg)",
-				modifier,
+				tooltipArrowPseudoSelector,
 			);
 		});
 
@@ -138,20 +144,26 @@ describe("Tooltip", () => {
 			expect(tooltipContainer).toHaveStyleRule("left", "470px");
 			expect(tooltipContainer).toHaveStyleRule("padding-top", "8px");
 
-			let modifier = { modifier: css`& .TooltipArrow` };
-			expect(tooltipContainer).toHaveStyleRule("left", "50%", modifier);
-			expect(tooltipContainer).toHaveStyleRule("top", "-5px", modifier);
+			expect(tooltipContainer).toHaveStyleRule(
+				"left",
+				"50%",
+				tooltipArrowSelector,
+			);
+			expect(tooltipContainer).toHaveStyleRule(
+				"top",
+				"-5px",
+				tooltipArrowSelector,
+			);
 			expect(tooltipContainer).toHaveStyleRule(
 				"transform",
 				"translateX(-50%)",
-				modifier,
+				tooltipArrowSelector,
 			);
 
-			modifier = { modifier: css`& .TooltipArrow::before` };
 			expect(tooltipContainer).toHaveStyleRule(
 				"transform",
 				"translateY(6.5355px) rotate(45deg)",
-				modifier,
+				tooltipArrowPseudoSelector,
 			);
 		});
 
@@ -163,20 +175,26 @@ describe("Tooltip", () => {
 			expect(tooltipContainer).toHaveStyleRule("left", "400px");
 			expect(tooltipContainer).toHaveStyleRule("padding-right", "8px");
 
-			let modifier = { modifier: css`& .TooltipArrow` };
-			expect(tooltipContainer).toHaveStyleRule("top", "20px", modifier);
-			expect(tooltipContainer).toHaveStyleRule("right", "-5px", modifier);
+			expect(tooltipContainer).toHaveStyleRule(
+				"top",
+				"20px",
+				tooltipArrowSelector,
+			);
+			expect(tooltipContainer).toHaveStyleRule(
+				"right",
+				"-5px",
+				tooltipArrowSelector,
+			);
 			expect(tooltipContainer).toHaveStyleRule(
 				"transform",
 				"translateY(-50%)",
-				modifier,
+				tooltipArrowSelector,
 			);
 
-			modifier = { modifier: css`& .TooltipArrow::before` };
 			expect(tooltipContainer).toHaveStyleRule(
 				"transform",
 				"translateX(-6.5355px) rotate(45deg)",
-				modifier,
+				tooltipArrowPseudoSelector,
 			);
 		});
 
@@ -188,20 +206,26 @@ describe("Tooltip", () => {
 			expect(tooltipContainer).toHaveStyleRule("left", "530px");
 			expect(tooltipContainer).toHaveStyleRule("padding-left", "8px");
 
-			let modifier = { modifier: css`& .TooltipArrow` };
-			expect(tooltipContainer).toHaveStyleRule("top", "20px", modifier);
-			expect(tooltipContainer).toHaveStyleRule("left", "-5px", modifier);
+			expect(tooltipContainer).toHaveStyleRule(
+				"top",
+				"20px",
+				tooltipArrowSelector,
+			);
+			expect(tooltipContainer).toHaveStyleRule(
+				"left",
+				"-5px",
+				tooltipArrowSelector,
+			);
 			expect(tooltipContainer).toHaveStyleRule(
 				"transform",
 				"translateY(-50%)",
-				modifier,
+				tooltipArrowSelector,
 			);
 
-			modifier = { modifier: css`& .TooltipArrow::before` };
 			expect(tooltipContainer).toHaveStyleRule(
 				"transform",
 				"translateX(6.5355px) rotate(45deg)",
-				modifier,
+				tooltipArrowPseudoSelector,
 			);
 		});
 	});
