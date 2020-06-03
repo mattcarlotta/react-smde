@@ -30,7 +30,8 @@ class TooltipContainer extends React.Component {
 	};
 
 	componentDidUpdate = prevProps => {
-		if (this.props.overlay !== prevProps.overlay) this.setTooltipDimensions();
+		if (this.props.overlay !== prevProps.overlay && this.state.wasMounted)
+			this.setTooltipDimensions();
 		if (this.props.disabled !== prevProps.disabled) this.hideTooltip();
 	};
 
@@ -48,9 +49,7 @@ class TooltipContainer extends React.Component {
 
 	setTooltipDimensions = () => {
 		this.setState(prevState => ({
-			container: this.containerRef
-				? this.containerRef.getBoundingClientRect()
-				: prevState.container,
+			container: this.containerRef.getBoundingClientRect(),
 			tooltip: this.tooltipRef
 				? this.tooltipRef.getBoundingClientRect()
 				: prevState.tooltip,
@@ -75,7 +74,7 @@ class TooltipContainer extends React.Component {
 				ReactDOM.createPortal(
 					<Tooltip
 						{...this.state}
-						data-testid="mde-tooltip"
+						data-testid="mde-tooltip-container"
 						ref={node => (this.tooltipRef = node)}
 						placement={this.props.placement}
 					>
