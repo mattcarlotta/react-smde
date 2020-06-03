@@ -26,7 +26,7 @@ describe("Modal Click Handler", () => {
 	});
 
 	it("renders without errors", () => {
-		expect(wrapper.find("div.modal-content").exists()).toBeTruthy();
+		expect(wrapper.find("div.modal-content")).toExist();
 	});
 
 	it("doesn't close the modal if the modal content was clicked", () => {

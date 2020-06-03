@@ -57,7 +57,7 @@ describe("MDEditor", () => {
 	});
 
 	it("initially renders without errors", () => {
-		expect(wrapper.find("[data-testid='mde']").exists()).toBeTruthy();
+		expect(wrapper.find("[data-testid='mde']")).toExist();
 	});
 
 	it("handles value changes", () => {
@@ -76,7 +76,7 @@ describe("MDEditor", () => {
 			</MDEditor>,
 		);
 
-		expect(wrapper.find("Toolbar").exists()).toBeFalsy();
+		expect(wrapper.find("Toolbar")).not.toExist();
 	});
 
 	it("disables the grip", () => {
@@ -86,11 +86,11 @@ describe("MDEditor", () => {
 			</MDEditor>,
 		);
 
-		expect(wrapper.find("[data-testid='mde-grip']").exists()).toBeFalsy();
+		expect(wrapper.find("[data-testid='mde-grip']")).not.toExist();
 	});
 
 	it("handles editor resizing", () => {
-		expect(wrapper.state("editorHeight")).toEqual(300);
+		expect(wrapper).toHaveState("editorHeight", 300);
 		const initiateGrip = num =>
 			wrapper
 				.find("[data-testid='mde-grip']")
@@ -99,42 +99,42 @@ describe("MDEditor", () => {
 		// clicking the grip and moving the mouse down, updates the height
 		initiateGrip(100);
 		mousemoveHandler({ clientY: 200 });
-		expect(wrapper.state("isDragging")).toBeTruthy();
-		expect(wrapper.state("originalDragY")).toEqual(100);
+		expect(wrapper).toHaveState("isDragging", true);
+		expect(wrapper).toHaveState("originalDragY", 100);
 		mouseupHandler();
-		expect(wrapper.state("editorHeight")).toEqual(400);
-		expect(wrapper.state("isDragging")).toBeFalsy();
-		expect(wrapper.state("originalDragY")).toEqual(0);
+		expect(wrapper).toHaveState("editorHeight", 400);
+		expect(wrapper).toHaveState("isDragging", false);
+		expect(wrapper).toHaveState("originalDragY", 0);
 
 		// prevents resizing beyond maxEditorHeight
 		initiateGrip(200);
 		mousemoveHandler({ clientY: 400 });
-		expect(wrapper.state("isDragging")).toBeTruthy();
-		expect(wrapper.state("originalDragY")).toEqual(200);
+		expect(wrapper).toHaveState("isDragging", true);
+		expect(wrapper).toHaveState("originalDragY", 200);
 		// editor reaches max height
-		expect(wrapper.state("editorHeight")).toEqual(600);
+		expect(wrapper).toHaveState("editorHeight", 600);
 		// user attempts to move past height
 		mousemoveHandler({ clientY: 500 });
 		mouseupHandler();
 		// editor height doesn't update
-		expect(wrapper.state("editorHeight")).toEqual(600);
-		expect(wrapper.state("isDragging")).toBeFalsy();
-		expect(wrapper.state("originalDragY")).toEqual(0);
+		expect(wrapper).toHaveState("editorHeight", 600);
+		expect(wrapper).toHaveState("isDragging", false);
+		expect(wrapper).toHaveState("originalDragY", 0);
 
 		// prevents resizing beyond minEditorHeight
 		initiateGrip(400);
 		mousemoveHandler({ clientY: 100 });
-		expect(wrapper.state("isDragging")).toBeTruthy();
-		expect(wrapper.state("originalDragY")).toEqual(400);
+		expect(wrapper).toHaveState("isDragging", true);
+		expect(wrapper).toHaveState("originalDragY", 400);
 		// editor reaches min height
-		expect(wrapper.state("editorHeight")).toEqual(300);
+		expect(wrapper).toHaveState("editorHeight", 300);
 		// user attempts to move past min height
 		mousemoveHandler({ clientY: 90 });
 		mouseupHandler();
 		// editor height doesn't update
-		expect(wrapper.state("editorHeight")).toEqual(300);
-		expect(wrapper.state("isDragging")).toBeFalsy();
-		expect(wrapper.state("originalDragY")).toEqual(0);
+		expect(wrapper).toHaveState("editorHeight", 300);
+		expect(wrapper).toHaveState("isDragging", false);
+		expect(wrapper).toHaveState("originalDragY", 0);
 	});
 
 	it("handlers editor autoGrow resizing", () => {
@@ -163,9 +163,7 @@ describe("MDEditor", () => {
 		wrapper.instance().adjustEditorSize();
 		wrapper.update();
 
-		expect(wrapper.find("textarea").props().style).toEqual({
-			height: 160,
-		});
+		expect(wrapper.find("textarea")).toHaveStyle("height", 160);
 
 		// maxing out text to textarea
 		wrapper.setState({
@@ -175,9 +173,7 @@ describe("MDEditor", () => {
 		wrapper.instance().adjustEditorSize();
 		wrapper.update();
 
-		expect(wrapper.find("textarea").props().style).toEqual({
-			height: 360,
-		});
+		expect(wrapper.find("textarea")).toHaveStyle("height", 360);
 
 		// going over maxEditorHeight
 		wrapper.setState({
@@ -187,9 +183,7 @@ describe("MDEditor", () => {
 		wrapper.instance().adjustEditorSize();
 		wrapper.update();
 
-		expect(wrapper.find("textarea").props().style).toEqual({
-			height: 360,
-		});
+		expect(wrapper.find("textarea")).toHaveStyle("height", 360);
 	});
 
 	it("handles editor lineheight via 'font-size' property", () => {
@@ -205,7 +199,7 @@ describe("MDEditor", () => {
 			</MDEditor>,
 		);
 
-		expect(wrapper.state("textAreaLineHeight")).toEqual(13);
+		expect(wrapper).toHaveState("textAreaLineHeight", 13);
 	});
 
 	it("handles editor lineheight via 'line-height' property", () => {
@@ -221,7 +215,7 @@ describe("MDEditor", () => {
 			</MDEditor>,
 		);
 
-		expect(wrapper.state("textAreaLineHeight")).toEqual(19.5);
+		expect(wrapper).toHaveState("textAreaLineHeight", 19.5);
 	});
 
 	it("handles elevating the editor ref", () => {
@@ -502,12 +496,12 @@ describe("MDEditor", () => {
 
 		it("previews/unpreviews the markdown text", () => {
 			command("preview-write");
-			expect(wrapper.state("tab")).toEqual("preview");
-			expect(wrapper.find("ReactMarkdown").exists()).toBeTruthy();
+			expect(wrapper).toHaveState("tab", "preview");
+			expect(wrapper.find("ReactMarkdown")).toExist();
 
 			command("preview-write");
-			expect(wrapper.state("tab")).toEqual("write");
-			expect(wrapper.find("ReactMarkdown").exists()).toBeFalsy();
+			expect(wrapper).toHaveState("tab", "write");
+			expect(wrapper.find("ReactMarkdown")).not.toExist();
 		});
 	});
 });

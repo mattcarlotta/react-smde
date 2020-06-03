@@ -45,15 +45,15 @@ describe("Tooltip", () => {
 	});
 
 	it("renders without errors", () => {
-		expect(getTooltipWrapper().exists()).toBeTruthy();
+		expect(getTooltipWrapper()).toExist();
 	});
 
 	it("renders a tooltip", () => {
 		getTooltipWrapper().simulate("mouseenter");
 
-		expect(wrapper.state("isVisible")).toBeTruthy();
-		expect(wrapper.state("wasMounted")).toBeTruthy();
-		expect(getTooltipContainer().exists()).toBeTruthy();
+		expect(wrapper).toHaveState("isVisible", true);
+		expect(wrapper).toHaveState("wasMounted", true);
+		expect(getTooltipContainer()).toExist();
 		expect(getTooltipOverlay().text()).toEqual("Hi");
 	});
 
@@ -61,22 +61,24 @@ describe("Tooltip", () => {
 		getTooltipWrapper().simulate("mouseenter");
 		getTooltipWrapper().simulate("mouseleave");
 
-		expect(getTooltipContainer().exists()).toBeTruthy();
+		expect(getTooltipContainer()).toExist();
 		expect(getTooltipContainer().first()).toHaveStyleRule("display", "none");
 	});
 
 	it("reuses tooltip previous state if it tries to set the dimensions on an unmounted tooltip", () => {
 		wrapper.instance().setTooltipDimensions();
 
-		expect(wrapper.state("tooltip")).toEqual({
-			bottom: 0,
-			height: 0,
-			left: 0,
-			right: 0,
-			top: 0,
-			width: 0,
-			x: 0,
-			y: 0,
+		expect(wrapper).toHaveState({
+			tooltip: {
+				bottom: 0,
+				height: 0,
+				left: 0,
+				right: 0,
+				top: 0,
+				width: 0,
+				x: 0,
+				y: 0,
+			},
 		});
 	});
 
@@ -85,7 +87,7 @@ describe("Tooltip", () => {
 		wrapper.setProps({ disabled: true });
 		wrapper.update();
 
-		expect(getTooltipContainer().exists()).toBeTruthy();
+		expect(getTooltipContainer()).toExist();
 		expect(getTooltipContainer().first()).toHaveStyleRule("display", "none");
 	});
 

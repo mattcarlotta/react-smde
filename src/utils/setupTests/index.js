@@ -2,6 +2,7 @@ import { JSDOM } from "jsdom";
 import { configure, mount, shallow } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import "jest-styled-components";
+import "jest-enzyme";
 
 configure({ adapter: new Adapter() });
 

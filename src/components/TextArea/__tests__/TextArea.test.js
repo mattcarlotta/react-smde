@@ -69,13 +69,11 @@ describe("TextArea", () => {
 	});
 
 	it("renders without errors", () => {
-		expect(
-			wrapper.find("[data-testid='mde-textarea-wrapper']").exists(),
-		).toBeTruthy();
+		expect(wrapper.find("[data-testid='mde-textarea-wrapper']")).toExist();
 	});
 
 	it("utilizes the outside controlled value", () => {
-		expect(textarea().props().value).toEqual("Hello");
+		expect(textarea()).toHaveValue("Hello");
 	});
 
 	it("calls 'editorRef' function after loading", () => {
@@ -102,8 +100,8 @@ describe("TextArea", () => {
 		jest.runAllTimers();
 		wrapper.update();
 
-		expect(wrapper.find("SuggestionsDropdown").exists()).toBeFalsy();
-		expect(wrapper.find("Spinner").exists()).toBeFalsy();
+		expect(wrapper.find("SuggestionsDropdown")).not.toExist();
+		expect(wrapper.find("Spinner")).not.toExist();
 	});
 
 	it("handles 'bold' hot key", async () => {
@@ -156,8 +154,8 @@ describe("TextArea", () => {
 		wrapper.setProps({ showCharacterLength: true });
 
 		expect(
-			wrapper.find("[data-testid='mde-textarea-character-length']").exists(),
-		).toBeTruthy();
+			wrapper.find("[data-testid='mde-textarea-character-length']"),
+		).toExist();
 
 		expect(
 			wrapper
@@ -197,13 +195,11 @@ describe("TextArea", () => {
 		keydownHandler({ key: "@" });
 		wrapper.update();
 
-		expect(wrapper.state()).toEqual(
-			expect.objectContaining({
-				status: "active",
-				currentPromise: 0,
-			}),
-		);
-		expect(wrapper.find("Spinner").exists()).toBeFalsy();
+		expect(wrapper).toHaveState({
+			status: "active",
+			currentPromise: 0,
+		});
+		expect(wrapper.find("Spinner")).not.toExist();
 	});
 
 	it("doesn't display a loading indicator if 'debounceSuggestions' is less than 300 and refiltered", () => {
@@ -219,14 +215,12 @@ describe("TextArea", () => {
 		keydownHandler({ key: "b" });
 		wrapper.update();
 
-		expect(wrapper.state()).toEqual(
-			expect.objectContaining({
-				status: "active",
-				suggestions,
-				currentPromise: 0,
-			}),
-		);
-		expect(wrapper.find("Spinner").exists()).toBeFalsy();
+		expect(wrapper).toHaveState({
+			status: "active",
+			suggestions,
+			currentPromise: 0,
+		});
+		expect(wrapper.find("Spinner")).not.toExist();
 	});
 
 	describe("Suggestions", () => {
@@ -241,26 +235,24 @@ describe("TextArea", () => {
 		it("calls 'handleBlur' when the textarea has suggestions", () => {
 			textarea().simulate("blur");
 
-			expect(wrapper.state("suggestions")).toEqual([]);
+			expect(wrapper).toHaveState("suggestions", []);
 		});
 
 		it("displays a loading indicator when suggestions have been triggered", () => {
 			keydownHandler({ key: "@" });
 			wrapper.update();
 
-			expect(wrapper.state()).toEqual(
-				expect.objectContaining({
-					status: "loading",
-					startPosition: 1,
-					caret: expect.objectContaining({
-						top: 0,
-						left: 0,
-					}),
-					currentPromise: 1,
+			expect(wrapper).toHaveState({
+				status: "loading",
+				startPosition: 1,
+				caret: expect.objectContaining({
+					top: 0,
+					left: 0,
 				}),
-			);
+				currentPromise: 1,
+			});
 
-			expect(wrapper.find("Spinner").exists()).toBeTruthy();
+			expect(wrapper.find("Spinner")).toExist();
 		});
 
 		it("initially displays all suggestions", async () => {
@@ -273,14 +265,12 @@ describe("TextArea", () => {
 			await flushPromises();
 			wrapper.update();
 
-			expect(wrapper.state()).toEqual(
-				expect.objectContaining({
-					status: "active",
-					suggestions,
-				}),
-			);
+			expect(wrapper).toHaveState({
+				status: "active",
+				suggestions,
+			});
 
-			expect(wrapper.find("SuggestionsDropdown").exists()).toBeTruthy();
+			expect(wrapper.find("SuggestionsDropdown")).toExist();
 			expect(
 				wrapper
 					.find("[data-testid='mde-suggestions']")
@@ -335,7 +325,7 @@ describe("TextArea", () => {
 
 			wrapper.update();
 
-			expect(wrapper.state("focusIndex")).toEqual(1);
+			expect(wrapper).toHaveState("focusIndex", 1);
 		});
 
 		it("displays 'No results' if suggestions are 'active' but empty", async () => {
@@ -349,14 +339,12 @@ describe("TextArea", () => {
 			await flushPromises();
 			wrapper.update();
 
-			expect(wrapper.state()).toEqual(
-				expect.objectContaining({
-					status: "active",
-					suggestions: [],
-				}),
-			);
+			expect(wrapper).toHaveState({
+				status: "active",
+				suggestions: [],
+			});
 
-			expect(wrapper.find("SuggestionsDropdown").exists()).toBeTruthy();
+			expect(wrapper.find("SuggestionsDropdown")).toExist();
 			expect(wrapper.find("[data-test-id='mde-no-suggestions']")).toBeTruthy();
 		});
 
@@ -364,13 +352,11 @@ describe("TextArea", () => {
 			keydownHandler({ key: "@" });
 			keydownHandler({ key: "b" });
 
-			expect(wrapper.state()).toEqual(
-				expect.objectContaining({
-					status: "loading",
-					suggestions: [],
-					currentPromise: 2,
-				}),
-			);
+			expect(wrapper).toHaveState({
+				status: "loading",
+				suggestions: [],
+				currentPromise: 2,
+			});
 		});
 
 		it("calls 'preventDefault' when specific keys are pressed", async () => {
@@ -398,12 +384,10 @@ describe("TextArea", () => {
 			wrapper.setProps({ value: "" });
 			keydownHandler({ key: "Backspace" });
 
-			expect(wrapper.state()).toEqual(
-				expect.objectContaining({
-					status: "inactive",
-					suggestions: [],
-				}),
-			);
+			expect(wrapper).toHaveState({
+				status: "inactive",
+				suggestions: [],
+			});
 		});
 	});
 });
