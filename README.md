@@ -41,14 +41,16 @@ A lightweight **Simple Markdown Editor** for React.
 ## Installation
 
 ```
-npm i react-smde styled-components
+npm i react-smde
 ```
 
 or
 
 ```
-yarn add react-smde styled-components
+yarn add react-smde
 ```
+
+react-smde is unopinionated about how to preview Markdown, therefore you'll **need** to supply your own Markdown previewer (see [Basic Usage](#basic-usage) for an example).
 
 ## Demo
 
@@ -153,6 +155,7 @@ commands (an object of all predefined commands)
 defaultCommandLayout (a chunked array of predefined commands)
 replaceSelection (function to replace/insert text -- it requires two arguments: the editor ref and a string)
 SvgIcon (component used for default command icons)
+Tooltip (component used for overlay tips)
 ```
 
 You can see use cases for these internals by visiting the [Live Demo](https://mattcarlotta.github.io/react-smde/).
