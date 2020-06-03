@@ -117,9 +117,5 @@
 	"peerDependencies": {
 		"react": "^15.0.0 || ^16.0.0",
 		"react-dom": "^15.0.0 || ^16.0.0"
-	},
-	"resolutions": {
-		"babel-core": "7.0.0-bridge.0"
-	},
-	"dependencies": {}
+	}
 }

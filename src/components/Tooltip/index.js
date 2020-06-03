@@ -1,10 +1,11 @@
 import React from "react";
-import { createPortal } from "react-dom";
+import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
 import Tooltip from "./Tooltip";
 import Arrow from "./Arrow";
 
 const { Component } = React;
+const { createPortal } = ReactDOM;
 
 // TODO - Add right, bottom, left tooltip positions
 
