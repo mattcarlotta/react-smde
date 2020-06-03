@@ -24,11 +24,7 @@ const tooltip = {
 };
 
 const initProps = {
-	children: (
-		<button style={{ height: 40, width: 40 }} data-testid="button">
-			Test
-		</button>
-	),
+	children: <button>Test</button>,
 	overlay: "Hi",
 	placement: "top",
 };
