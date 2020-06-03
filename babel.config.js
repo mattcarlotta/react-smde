@@ -30,13 +30,11 @@ module.exports = function(api) {
 				},
 			],
 			inProd && [
-				[
-					"transform-react-remove-prop-types",
-					{
-						mode: "remove",
-						removeImport: true,
-					},
-				],
+				"transform-react-remove-prop-types",
+				{
+					mode: "remove",
+					removeImport: true,
+				},
 			],
 			inProd && ["react-remove-properties", { properties: ["data-testid"] }],
 		].filter(Boolean),
