@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import FlexEnd from "./FlexEnd";
 import BackgroundOverlay from "./BackgroundOverlay";
@@ -10,7 +10,7 @@ import ModalContainer from "./ModalContainer";
 import WindowContainer from "./WindowContainer";
 
 export const Modal = ({ children, maxWidth, onClick }) => (
-	<Fragment>
+	<React.Fragment>
 		<BackgroundOverlay />
 		<WindowContainer>
 			<ModalContainer>
@@ -42,7 +42,7 @@ export const Modal = ({ children, maxWidth, onClick }) => (
 				</Center>
 			</ModalContainer>
 		</WindowContainer>
-	</Fragment>
+	</React.Fragment>
 );
 
 Modal.propTypes = {

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import ReactMarkdown from "react-markdown";
 import { FaSmile } from "react-icons/fa";
 import Container from "~components/Container";
@@ -7,7 +7,7 @@ import { defaultCommandLayout } from "~commands";
 import replaceSelection from "~utils/ReplaceSelection";
 import ShowSource from "~components/ShowSource";
 
-class CustomCommandsExample extends Component {
+class CustomCommandsExample extends React.Component {
 	constructor() {
 		super();
 		this.state = {

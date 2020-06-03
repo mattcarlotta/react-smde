@@ -1,10 +1,10 @@
-import React, { Component } from "react";
+import React from "react";
 import ReactMarkdown from "react-markdown";
 import Container from "~components/Container";
 import MDEditor from "~components/MDEditor";
 import ShowSource from "~components/ShowSource";
 
-class SimpleEditorExample extends Component {
+class SimpleEditorExample extends React.Component {
 	constructor() {
 		super();
 		this.state = {

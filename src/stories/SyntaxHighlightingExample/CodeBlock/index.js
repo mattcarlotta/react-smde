@@ -1,9 +1,9 @@
-import React, { PureComponent } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import hljs from "highlight.js";
 import "highlight.js/styles/atelier-forest-light.css";
 
-class CodeBlock extends PureComponent {
+class CodeBlock extends React.PureComponent {
 	componentDidMount() {
 		this.highlightCode();
 	}

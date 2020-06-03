@@ -7,8 +7,6 @@ import ToolbarButton from "~components/ToolbarButton";
 import ToolbarItem from "~components/ToolbarItem";
 import { classNames } from "~utils";
 
-const { Fragment } = React;
-
 export const ToolbarDropdown = ({
 	buttonContent,
 	buttonProps,
@@ -24,7 +22,7 @@ export const ToolbarDropdown = ({
 	<ToolbarItem className={classNames(classes.mdetoolbaritem)}>
 		<ClickHandler>
 			{({ isVisible, closeDropdown, handleClick }) => (
-				<Fragment>
+				<React.Fragment>
 					<Tooltip
 						disabled={disabled}
 						className={classes.mdetooltip}
@@ -66,7 +64,7 @@ export const ToolbarDropdown = ({
 							))}
 						</Dropdown>
 					) : null}
-				</Fragment>
+				</React.Fragment>
 			)}
 		</ClickHandler>
 	</ToolbarItem>

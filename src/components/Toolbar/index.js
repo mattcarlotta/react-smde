@@ -10,8 +10,6 @@ import Tooltip from "~components/Tooltip";
 import { classNames } from "~utils";
 import { SvgIcon } from "~icons";
 
-const { Fragment } = React;
-
 export const Toolbar = ({
 	className,
 	classes,
@@ -31,7 +29,7 @@ export const Toolbar = ({
 		<div className={classNames(className, classes.mdetoolbar)}>
 			{hasCommands &&
 				commands.map((commandGroup, i) => (
-					<Fragment key={i}>
+					<React.Fragment key={i}>
 						<ToolbarButtonGroup className={classNames(classes.mdetoolbargroup)}>
 							{commandGroup.map(props =>
 								props.children ? (
@@ -59,10 +57,10 @@ export const Toolbar = ({
 							)}
 						</ToolbarButtonGroup>
 						<Separator className={classNames(classes.mdetoolbarseparator)} />
-					</Fragment>
+					</React.Fragment>
 				))}
 			{!disablePreview && (
-				<Fragment>
+				<React.Fragment>
 					<ToolbarButtonGroup className={classNames(classes.mdetoolbargroup)}>
 						<ToolbarItem className={classNames(classes.mdetoolbaritem)}>
 							<Tooltip
@@ -85,7 +83,7 @@ export const Toolbar = ({
 						</ToolbarItem>
 					</ToolbarButtonGroup>
 					<Separator className={classNames(classes.mdetoolbarseparator)} />
-				</Fragment>
+				</React.Fragment>
 			)}
 		</div>
 	);

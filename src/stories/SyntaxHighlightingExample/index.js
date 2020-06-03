@@ -1,11 +1,11 @@
-import React, { Component } from "react";
+import React from "react";
 import ReactMarkdown from "react-markdown";
 import MDEditor from "~components/MDEditor";
 import ShowSource from "~components/ShowSource";
 import Container from "~components/Container";
 import CodeBlock from "./CodeBlock";
 
-class SyntaxHighlightExample extends Component {
+class SyntaxHighlightExample extends React.Component {
 	constructor() {
 		super();
 		this.state = {

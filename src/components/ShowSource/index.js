@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React from "react";
 import copy from "copy-to-clipboard";
 import PropTypes from "prop-types";
 import Button from "~components/Button";
@@ -7,22 +7,22 @@ import CopyButton from "~components/CopyButton";
 import SyntaxHighlighter from "~components/SyntaxHighlighter";
 
 const ShowSource = ({ children, text }) => {
-	const [showModal, setModalState] = useState(false);
-	const [copied, setCopied] = useState(false);
+	const [showModal, setModalState] = React.useState(false);
+	const [copied, setCopied] = React.useState(false);
 
-	const toggleModalState = useCallback(
+	const toggleModalState = React.useCallback(
 		() => setModalState(prevState => !prevState),
 		[],
 	);
 
-	const handleCopyClick = useCallback(() => {
+	const handleCopyClick = React.useCallback(() => {
 		setCopied(true);
 		copy(text, {
 			format: "text/plain",
 		});
 	}, [text]);
 
-	useEffect(() => {
+	React.useEffect(() => {
 		if (!showModal) setCopied(false);
 	}, [setCopied, showModal]);
 

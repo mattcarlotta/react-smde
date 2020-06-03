@@ -1,11 +1,11 @@
-import React, { Component } from "react";
+import React from "react";
 import ReactMarkdown from "react-markdown";
 import Container from "~components/Container";
 import MDEditor from "~components/MDEditor";
 import ShowSource from "~components/ShowSource";
 import "./styles.scss";
 
-class CustomClasses extends Component {
+class CustomClasses extends React.Component {
 	constructor() {
 		super();
 		this.state = { value: "" };
