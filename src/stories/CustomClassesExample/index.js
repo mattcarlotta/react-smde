@@ -23,6 +23,12 @@ class CustomClasses extends React.Component {
 				value={this.state.value}
 				classes={{
 					mde: "editor",
+					mdegrip: "grip",
+					mdetoolbar: "toolbar",
+					mdetoolbarseparator: "toolbar-separator",
+					mdepreview: "preview",
+					mdetextarea: "textarea",
+					mdetextareawrapper: "textarea-wrapper",
 					mdetooltip: "tooltip",
 				}}
 				textAreaProps={{
@@ -59,6 +65,12 @@ class CustomClassesExample extends Component {
         value={this.state.value}
         classes={{
           mde: "editor",
+          mdegrip: "grip",
+          mdetoolbar: "toolbar",
+          mdetoolbarseparator: "toolbar-separator",
+          mdepreview: "preview",
+          mdetextarea: "textarea",
+          mdetextareawrapper: "textarea-wrapper",
           mdetooltip: "tooltip",
         }}
         textAreaProps={{

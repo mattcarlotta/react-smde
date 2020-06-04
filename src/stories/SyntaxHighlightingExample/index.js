@@ -9,8 +9,7 @@ class SyntaxHighlightExample extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			value: `
-This example includes a configuration to add syntax highlighting to \`JSX\` code blocks! Please note that this example will vary depending on which previewer and which syntax highlighter you choose.
+			value: `This example includes a configuration to add syntax highlighting to \`JSX\` code blocks! Please note that this example will vary depending on which previewer and which syntax highlighter you choose.
 
 \`\`\`jsx
 import React, { useCallback, useEffect, useState } from "react";

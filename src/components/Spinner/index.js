@@ -17,6 +17,21 @@ Spinner.propTypes = {
 };
 
 export default styled(Spinner)`
+	@keyframes loading {
+		0% {
+			background: rgba(0, 0, 0, 0.25);
+		}
+		25% {
+			background: #188fff;
+		}
+		50% {
+			background: rgba(0, 0, 0, 0.25);
+		}
+		100% {
+			background: rgba(0, 0, 0, 0.25);
+		}
+	}
+
 	display: flex;
 	flex-direction: row;
 	align-items: center;

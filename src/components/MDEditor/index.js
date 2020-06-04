@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import styled from "styled-components";
 import Commander from "~components/Commander";
 import Grip from "~components/Grip";
 import Toolbar from "~components/Toolbar";
@@ -118,6 +119,7 @@ export class MDEditor extends React.Component {
 
 	render() {
 		const {
+			className,
 			classes,
 			disableGrip,
 			disableHotKeys,
@@ -130,9 +132,8 @@ export class MDEditor extends React.Component {
 
 		return (
 			<div
-				css="width: 100%;"
 				data-testid="mde"
-				className={classNames(classes.mde)}
+				className={classNames(className, classes.mde)}
 				style={{ maxWidth: maxEditorWidth }}
 			>
 				{!disableToolbar && (
@@ -174,7 +175,7 @@ MDEditor.defaultProps = {
 	editorRef: () => {},
 	maxCharacterLength: null,
 	maxEditorHeight: 600,
-	maxEditorWidth: "100%",
+	maxEditorWidth: 600,
 	minEditorHeight: 300,
 	readOnly: false,
 	selectedTab: "write",
@@ -232,4 +233,6 @@ MDEditor.propTypes = {
 	value: PropTypes.string,
 };
 
-export default MDEditor;
+export default styled(MDEditor)`
+	margin: 0 auto;
+`;

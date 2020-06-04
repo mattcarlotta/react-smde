@@ -74,6 +74,7 @@ class TooltipContainer extends React.Component {
 				ReactDOM.createPortal(
 					<Tooltip
 						{...this.state}
+						className={this.props.className}
 						data-testid="mde-tooltip-container"
 						ref={node => (this.tooltipRef = node)}
 						placement={this.props.placement}

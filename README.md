@@ -103,7 +103,7 @@ The following props are accepted by `MDEditor`:
 | `loadSuggestions`(func)           | A `function` that returns an `array` of suggestions triggered by the `suggestionTriggerCharacter`. (see [Suggestions](#suggestions) for more info)  |
 | `maxCharacterLength`(num/str)     | A maximum MDEditor character length as a `number` or `string`. (default: `null`)                                                                    |
 | `maxEditorHeight`(num/str)        | A maximum MDEditor height `number` that is set in `px` or `string`. (default: `500`)                                                                |
-| `maxEditorWidth` (num/str)        | A maximum MDEditor width `number` or `string`. (default: `100%`)                                                                                    |
+| `maxEditorWidth` (num/str)        | A maximum MDEditor width `number` or `string`. (default: `600px`)                                                                                    |
 | `minEditorHeight`(num/str)        | A minimum MDEditor height `number` that is set in `px` or `string`. (default: `250`)                                                                |
 | `onChange`(func)                  | A **required** callback `function` to handle value changes.                                                                                         |
 | `readOnly`(bool)                  | A `boolean` to disable editing the text within the textarea. (default: `false`)                                                                     |
@@ -207,28 +207,6 @@ classes={{ mde: "custom-mde", mdetoolbar: "custom-toolbar" }}
 
 Note: This package uses `styled-components` under the hood and your CSS classnames will need to have higher specificity when overriding styles. See [issues with specificity](https://styled-components.com/docs/advanced#issues-with-specificity) for more information.
 
-<br />
-
-**Option 3**: Create your own stylesheets that target the available `classNames`.
-
-<details>
-<summary>Click to view a summary of available "mde" classNames...</summary>
-<pre><code>
-mde (applied to root)
-mde-toolbar (applied to toolbar)
-mde-toolbar-group (applied to toolbar groups)
-mde-toolbar-item (applied to toolbar items)
-mde-toolbar-separator (applied to toolbar separators)
-mde-preview (applied to preview wrapper and previewed content)
-mde-no-suggestions (applied to no suggestion results item)
-mde-suggestions (applied to suggestions overlay)
-mde-textarea (applied to textarea input)
-mde-textarea-wrapper (applied to textarea wrapper)
-mde-textarea-character-length (applied to textarea character length)
-mde-grip (applied to editor window grip)
-mde-tooltip (applied to root tooltip)
-</code></pre>
-</details>
 <br />
 
 ## Custom Commands

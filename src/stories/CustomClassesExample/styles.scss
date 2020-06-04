@@ -5,45 +5,47 @@ $compliment: #03a9f3;
 $hover-color: #544f4f;
 $light-shadow: #827878;
 
-.editor {
-	.mde-toolbar,
-	.mde-grip {
-		background: $bg-color;
-	}
+.disabled {
+	opacity: 0.25;
+}
 
-	.mde-toolbar-separator {
-		border-left: 1px solid $light-shadow;
-		border-right: 1px solid $accent;
-	}
+.grip.grip > .icon {
+	color: $accent;
+}
 
-	.mde-toolbar {
-		& button {
-			color: $compliment;
-			&:hover {
-				background: $hover-color;
-			}
+.grip.grip,
+.toolbar.toolbar {
+	background: $bg-color;
+}
+
+.toolbar.toolbar {
+	& button {
+		color: $compliment;
+		&:hover {
+			background: $hover-color;
 		}
-	}
-
-	.disabled {
-		opacity: 0.25;
-	}
-
-	.mde-textarea,
-	.mde-preview {
-		background: $main-color;
-		color: $accent;
-	}
-
-	.mde-textarea-wrapper {
-		border: 1px solid $light-shadow;
-	}
-
-	.mde-grip > .icon {
-		color: $accent;
 	}
 }
 
-.tooltip > .ant-tooltip-inner {
-	background: $compliment;
+.toolbar-separator.toolbar-separator {
+	border-left: 1px solid $light-shadow;
+	border-right: 1px solid $accent;
+}
+
+.preview.preview,
+.textarea.textarea,
+.textarea-wrapper.textarea-wrapper {
+	background: $main-color;
+	color: $accent;
+}
+
+.textarea-wrapper.textarea-wrapper {
+	border: 1px solid $light-shadow;
+}
+
+.tooltip.tooltip {
+	& .TooltipOverlay,
+	& .TooltipArrow::before {
+		background-color: $compliment;
+	}
 }

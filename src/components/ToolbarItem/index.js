@@ -22,7 +22,7 @@ export default styled.li`
 
 		&:disabled {
 			cursor: not-allowed;
-			color: #ccc;
+			color: #949494;
 
 			&:hover {
 				background: transparent;

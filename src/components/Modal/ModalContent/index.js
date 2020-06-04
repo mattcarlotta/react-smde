@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export default styled.div`
 	max-width: ${({ maxWidth }) => maxWidth || "500px"};
-	width: 100%;
+	width: 95%;
 	max-height: calc(100% - 96px);
 	padding: 35px;
 	display: flex;

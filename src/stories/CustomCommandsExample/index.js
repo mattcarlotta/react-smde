@@ -91,6 +91,7 @@ class CustomCommandsExample extends React.Component {
 				]}
 				onChange={this.handleValueChange}
 				value={this.state.value}
+				maxEditorWidth={650}
 				textAreaProps={{
 					placeholder:
 						"This example demonstrates how to create your own custom button interactions.",
@@ -211,6 +212,7 @@ class CustomCommandsExample extends Component {
           ],
         ]}
         onChange={this.handleValueChange}
+        maxEditorWidth={650}
         value={this.state.value}
         textAreaProps={{
           placeholder:
