@@ -264,7 +264,7 @@ export class TextArea extends React.Component {
 		} = this.props;
 		const { caret } = this.state;
 		const [suggestionsActive, suggestionsLoading] = this.getSuggestionState();
-		const selectedTab = this.props.tab === "preview";
+		const selectedPreviewTab = this.props.tab === "preview";
 
 		return (
 			<div
@@ -274,7 +274,7 @@ export class TextArea extends React.Component {
 				<TextAreaInput
 					data-testid="mde-textarea"
 					className={classNames(classes.mdetextarea, {
-						hidden: selectedTab,
+						hidden: selectedPreviewTab,
 					})}
 					style={{ height: editorHeight }}
 					ref={this.handleTextAreaRef}
@@ -289,7 +289,7 @@ export class TextArea extends React.Component {
 					maxLength={maxCharacterLength}
 					{...this.props.textAreaProps}
 				/>
-				{selectedTab && (
+				{selectedPreviewTab && (
 					<Preview
 						data-testid="mde-preview"
 						className={classNames(classes.mdepreview)}
@@ -316,7 +316,7 @@ export class TextArea extends React.Component {
 						)}
 					</SuggestionsContainer>
 				) : null}
-				{showCharacterLength && (
+				{showCharacterLength && !selectedPreviewTab && (
 					<CharacterLength
 						data-testid="mde-textarea-character-length"
 						className={classNames(classes.mdetextareacharacterlength)}
@@ -362,11 +362,10 @@ TextArea.propTypes = {
 export default styled(TextArea)`
 	position: relative;
 	border: 1px solid #c8ccd0;
-	overflow-y: auto;
-	overflow-x: hidden;
+	overflow: hidden;
 	overflow-wrap: break-word;
 	word-break: break-word;
-	padding: 0px 2px 0 10px;
+	padding: 0px 4px 0px 10px;
 
 	& .hidden {
 		display: none;

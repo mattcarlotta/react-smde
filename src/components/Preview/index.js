@@ -2,8 +2,10 @@
 import styled from "styled-components";
 
 export default styled.div`
-	padding: 6px 10px 6px 0px;
+	padding: 6px 6px 6px 0px;
 	text-align: left;
+	overflow-y: auto;
+	margin-right: -4px;
 
 	p,
 	blockquote,
