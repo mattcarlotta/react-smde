@@ -155,7 +155,6 @@ commands (an object of all predefined commands)
 defaultCommandLayout (a chunked array of predefined commands)
 replaceSelection (function to replace/insert text -- it requires two arguments: the editor ref and a string)
 SvgIcon (component used for default command icons)
-Tooltip (component used for overlay tips)
 ```
 
 You can see use cases for these internals by visiting the [Live Demo](https://mattcarlotta.github.io/react-smde/).
@@ -193,7 +192,15 @@ mdetextarea (applied to textarea input)
 mdetextareawrapper (applied to textarea wrapper)
 mdetextareacharacterlength (applied to textarea character length)
 mdegrip (applied to editor window grip)
-mdetooltip (applied to root tooltip)
+mdetooltiparrow (tooltip arrow) 
+mdetooltippopper (tooltip container) 
+mdetooltippopperarrow (tooltip arrow container) 
+mdetooltip (tooltip) 
+mdetooltipplacementbottom (tooltips with placement bottom) 
+mdetooltipplacementleft (tooltips with placement left) 
+mdetooltipplacementright (tooltips with placement rights) 
+mdetooltipplacementtop (tooltips with placement top) 
+mdetooltiptouch (tooltip that has been activated by touch)
 </code></pre>
 </details>
 <br />
@@ -350,10 +357,18 @@ class App extends Component {
 You can specify the position of the tooltip in relation to its target. For example, one of the following `string`s can be passed to the `tooltipPlacement` property:
 
 ```
-top
-bottom
-left
-right
+'bottom-end'
+'bottom-start'
+'bottom'
+'left-end'
+'left-start'
+'left'
+'right-end'
+'right-start'
+'right'
+'top-end'
+'top-start'
+'top'
 ```
 
 Please note that there must be sufficient surrounding window space for the tooltip to occupy the specified placement area; otherwise, the tooltip location may be incorrectly calculated and cause an undesirable UX.

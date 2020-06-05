@@ -45,7 +45,6 @@ class App extends Component {
 				onChange={this.handleValueChange}
 				value={this.state.value}
 				loadSuggestions={this.loadSuggestions}
-				maxEditorWidth={800}
 				maxCharacterLength={10000}
 				showCharacterLength
 			>

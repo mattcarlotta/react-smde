@@ -1,6 +1,6 @@
 import ReactMarkdown from "react-markdown";
 import { replaceSelection } from "~utils";
-import MDEditor from "../index";
+import { MDEditor } from "../index";
 
 const editorRef = jest.fn();
 const onChange = jest.fn();

@@ -12,6 +12,7 @@ const resolutions = {
 		"react-is": "reactIs",
 		"react-dom": "ReactDOM",
 		"styled-components": "styled",
+		"@material-ui/core/Tooltip": "Tooltip",
 	},
 	exports: "named",
 };
@@ -36,7 +37,12 @@ export default {
 			...resolutions,
 		},
 	],
-	external: ["react", "react-dom", "styled-components"],
+	external: [
+		"react",
+		"react-dom",
+		"styled-components",
+		"@material-ui/core/Tooltip",
+	],
 	plugins: [
 		babel({
 			runtimeHelpers: true,

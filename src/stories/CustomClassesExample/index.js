@@ -22,7 +22,6 @@ class CustomClasses extends React.Component {
 				onChange={this.handleValueChange}
 				value={this.state.value}
 				classes={{
-					mde: "editor",
 					mdegrip: "grip",
 					mdetoolbar: "toolbar",
 					mdetoolbarseparator: "toolbar-separator",
@@ -30,11 +29,13 @@ class CustomClasses extends React.Component {
 					mdetextarea: "textarea",
 					mdetextareawrapper: "textarea-wrapper",
 					mdetooltip: "tooltip",
+					mdetooltiparrow: "tooltip-arrow",
 				}}
 				textAreaProps={{
 					placeholder:
 						"This example uses the 'classes' property to customize the look of the editor!",
 				}}
+				tooltipPlacement="bottom"
 			>
 				<ReactMarkdown>{this.state.value || "(empty)"}</ReactMarkdown>
 			</MDEditor>
@@ -64,7 +65,6 @@ class CustomClassesExample extends Component {
         onChange={this.handleValueChange}
         value={this.state.value}
         classes={{
-          mde: "editor",
           mdegrip: "grip",
           mdetoolbar: "toolbar",
           mdetoolbarseparator: "toolbar-separator",
@@ -72,11 +72,12 @@ class CustomClassesExample extends Component {
           mdetextarea: "textarea",
           mdetextareawrapper: "textarea-wrapper",
           mdetooltip: "tooltip",
+          mdetooltiparrow: "tooltip-arrow",
         }}
         textAreaProps={{
-          placeholder:
-            "This example uses the 'classes' property to customize the look of the editor!",
+          placeholder: "This example uses the 'classes' property to customize the look of the editor!",
         }}
+        tooltipPlacement="bottom"
       >
         <ReactMarkdown>{this.state.value || "(empty)"}</ReactMarkdown>
       </MDEditor>

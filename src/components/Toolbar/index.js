@@ -1,12 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
+import Tooltip from "@material-ui/core/Tooltip";
 import Separator from "~components/Separator";
 import ToolbarButtonGroup from "~components/ToolbarButtonGroup";
 import ToolbarDropdown from "~components/ToolbarDropdown";
 import ToolbarButton from "~components/ToolbarButton";
 import ToolbarItem from "~components/ToolbarItem";
-import Tooltip from "~components/Tooltip";
 import { classNames } from "~utils";
 import { SvgIcon } from "~icons";
 
@@ -64,9 +64,20 @@ export const Toolbar = ({
 					<ToolbarButtonGroup className={classNames(classes.mdetoolbargroup)}>
 						<ToolbarItem className={classNames(classes.mdetoolbaritem)}>
 							<Tooltip
-								className={classes.mdetooltip}
+								arrow
+								classes={{
+									arrow: classes.mdetooltiparrow,
+									popper: classes.mdetooltippopper,
+									popperArrow: classes.mdetooltippopperarrow,
+									tooltip: classes.mdetooltip,
+									tooltipPlacementBottom: classes.mdetooltipplacementbottom,
+									tooltipPlacementLeft: classes.mdetooltipplacementleft,
+									tooltipPlacementRight: classes.mdetooltipplacementright,
+									tooltipPlacementTop: classes.mdetooltipplacementtop,
+									touch: classes.mdetooltiptouch,
+								}}
 								placement={tooltipPlacement}
-								overlay={
+								title={
 									isPreviewing ? "Hide Preview (ctrl+0)" : "Preview (ctrl+0)"
 								}
 							>
