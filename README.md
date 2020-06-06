@@ -198,7 +198,7 @@ mdetooltippopperarrow (tooltip arrow container)
 mdetooltip (tooltip) 
 mdetooltipplacementbottom (tooltips with placement bottom) 
 mdetooltipplacementleft (tooltips with placement left) 
-mdetooltipplacementright (tooltips with placement rights) 
+mdetooltipplacementright (tooltips with placement right) 
 mdetooltipplacementtop (tooltips with placement top) 
 mdetooltiptouch (tooltip that has been activated by touch)
 </code></pre>
@@ -402,6 +402,6 @@ In order to make react-smde, the following packages are referenced and used with
 - https://github.com/grassator/insert-text-at-cursor
 - https://github.com/JedWatson/classnames
 - https://github.com/andrerpena/react-mde
-- https://github.com/ant-design/ant-design
-- https://github.com/react-component/tooltip
+- https://github.com/mui-org/material-ui
+- https://github.com/styled-components/styled-components
 - https://github.com/lakebeach/rollup-plugin-local-resolving
