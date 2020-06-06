@@ -6,37 +6,27 @@ import { terser } from "rollup-plugin-terser";
 import { localResolver } from "./utils/resolver";
 import pkg from "./package.json";
 
-const resolutions = {
-	globals: {
-		react: "React",
-		"react-is": "reactIs",
-		"react-dom": "ReactDOM",
-		"styled-components": "styled",
-		"@material-ui/core/Tooltip": "Tooltip",
-	},
-	exports: "named",
-};
+const outputs = [
+	{ file: "main", format: "cjs" },
+	{ file: "fallback", format: "umd" },
+	{ file: "module", format: "esm" },
+];
 
 export default {
 	input: "./src/index.js",
-	output: [
-		{
-			file: pkg.main,
-			format: "cjs",
-			...resolutions,
+	output: outputs.map(({ file, format }) => ({
+		file: pkg[file],
+		name: "SMDEditor",
+		format,
+		globals: {
+			react: "React",
+			"react-is": "reactIs",
+			"react-dom": "ReactDOM",
+			"styled-components": "styled",
+			"@material-ui/core/Tooltip": "Tooltip",
 		},
-		{
-			file: pkg.fallback,
-			format: "umd",
-			name: "MDEditor",
-			...resolutions,
-		},
-		{
-			file: pkg.module,
-			format: "esm",
-			...resolutions,
-		},
-	],
+		exports: "named",
+	})),
 	external: [
 		"react",
 		"react-dom",
