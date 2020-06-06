@@ -41,14 +41,16 @@ A lightweight **Simple Markdown Editor** for React.
 ## Installation
 
 ```
-npm i react-smde rc-trigger
+npm i react-smde
 ```
 
 or
 
 ```
-yarn add react-smde rc-trigger
+yarn add react-smde
 ```
+
+react-smde is unopinionated about how to preview Markdown, therefore you'll **need** to supply your own Markdown previewer (see [Basic Usage](#basic-usage) for an example).
 
 ## Demo
 
@@ -61,7 +63,6 @@ yarn add react-smde rc-trigger
 ```jsx
 import MDEditor from "react-smde";
 import ReactMarkdown from "react-markdown";
-import "react-smde/dist/styles/react-smde.css";
 
 class App extends Component {
   constructor() {
@@ -102,7 +103,7 @@ The following props are accepted by `MDEditor`:
 | `loadSuggestions`(func)           | A `function` that returns an `array` of suggestions triggered by the `suggestionTriggerCharacter`. (see [Suggestions](#suggestions) for more info)  |
 | `maxCharacterLength`(num/str)     | A maximum MDEditor character length as a `number` or `string`. (default: `null`)                                                                    |
 | `maxEditorHeight`(num/str)        | A maximum MDEditor height `number` that is set in `px` or `string`. (default: `500`)                                                                |
-| `maxEditorWidth` (num/str)        | A maximum MDEditor width `number` or `string`. (default: `100%`)                                                                                    |
+| `maxEditorWidth` (num/str)        | A maximum MDEditor width `number` or `string`. (default: `600px`)                                                                                    |
 | `minEditorHeight`(num/str)        | A minimum MDEditor height `number` that is set in `px` or `string`. (default: `250`)                                                                |
 | `onChange`(func)                  | A **required** callback `function` to handle value changes.                                                                                         |
 | `readOnly`(bool)                  | A `boolean` to disable editing the text within the textarea. (default: `false`)                                                                     |
@@ -123,7 +124,6 @@ The `MDEditor` is unopinionated when it comes to previewing markdown content. Th
 import React, { Component } from "react";
 import MDEditor from "react-smde";
 import ReactMarkdown from "react-markdown";
-import "react-smde/dist/styles/react-smde.css";
 
 class App extends Component {
   constructor() {
@@ -172,9 +172,9 @@ If you want to remove these keys, then they can be disabled by passing the `disa
 
 ## Custom Styling
 
-The `MDEditor` was designed to be as flexible as possible when it comes to customizing the appearance of the editor. As such, you have several options:
+The `MDEditor` was designed to be as flexible as possible when it comes to customizing the appearance of the editor.
 
-**Option 1**: Pass a `classes` object property to the `MDEditor` with a custom class name targeting the specified property.
+In order to change the style, pass a `classes` object property to the `MDEditor` with a custom class name targeting the specified property.
 
 <details>
 <summary>Click to view a summary of available "mde" property overrides...</summary>
@@ -192,7 +192,15 @@ mdetextarea (applied to textarea input)
 mdetextareawrapper (applied to textarea wrapper)
 mdetextareacharacterlength (applied to textarea character length)
 mdegrip (applied to editor window grip)
-mdetooltip (applied to root tooltip)
+mdetooltiparrow (tooltip arrow) 
+mdetooltippopper (tooltip container) 
+mdetooltippopperarrow (tooltip arrow container) 
+mdetooltip (tooltip) 
+mdetooltipplacementbottom (tooltips with placement bottom) 
+mdetooltipplacementleft (tooltips with placement left) 
+mdetooltipplacementright (tooltips with placement rights) 
+mdetooltipplacementtop (tooltips with placement top) 
+mdetooltiptouch (tooltip that has been activated by touch)
 </code></pre>
 </details>
 <br />
@@ -203,33 +211,9 @@ For example:
 classes={{ mde: "custom-mde", mdetoolbar: "custom-toolbar" }}
 ```
 
-<br />
 
-**Option 2**: Import the `.scss` files from `react-smde/dist/styles/[name].scss` (see available files <a href="https://github.com/mattcarlotta/react-smde/tree/master/src/styles">here</a>) and overwrite them as needed (please note that your project must be set up to handle SASS imports).
+Note: This package uses `styled-components` under the hood and your CSS classnames will need to have higher specificity when overriding styles. See [issues with specificity](https://styled-components.com/docs/advanced#issues-with-specificity) for more information.
 
-<br />
-
-**Option 3**: Create your own stylesheets that target the available `classNames`.
-
-<details>
-<summary>Click to view a summary of available "mde" classNames...</summary>
-<pre><code>
-mde (applied to root)
-mde-toolbar (applied to toolbar)
-mde-toolbar-group (applied to toolbar groups)
-mde-toolbar-item (applied to toolbar items)
-mde-toolbar-separator (applied to toolbar separators)
-mde-preview (applied to preview wrapper)
-mde-preview-content (applied to previewed content)
-mde-no-suggestions (applied to no suggestion results item)
-mde-suggestions (applied to suggestions overlay)
-mde-textarea (applied to textarea input)
-mde-textarea-wrapper (applied to textarea wrapper)
-mde-textarea-character-length (applied to textarea character length)
-mde-grip (applied to editor window grip)
-mde-tooltip (applied to root tooltip)
-</code></pre>
-</details>
 <br />
 
 ## Custom Commands
@@ -257,7 +241,6 @@ For example:
 
 ```jsx
 import MDEditor, { commands, defaultCommandLayout, SvgIcon } from "react-smde";
-import "react-smde/dist/styles/react-smde.css";
 
 const { checkedList, orderedList, unorderedList } = commands;
 
@@ -325,7 +308,6 @@ For a dynamic data set example, see the [Demo](#demo) example above, otherwise h
 ```jsx
 import React, { Component } from "react";
 import MDEditor from "react-smde";
-import "react-smde/dist/styles/react-smde.css";
 
 class App extends Component {
   constructor() {
@@ -375,21 +357,21 @@ class App extends Component {
 You can specify the position of the tooltip in relation to its target. For example, one of the following `string`s can be passed to the `tooltipPlacement` property:
 
 ```
-top
-topLeft
-topRight
-bottom
-bottomLeft
-bottomRight
-left
-leftTop
-leftBottom
-right
-rightTop
-rightBottom
+'bottom-end'
+'bottom-start'
+'bottom'
+'left-end'
+'left-start'
+'left'
+'right-end'
+'right-start'
+'right'
+'top-end'
+'top-start'
+'top'
 ```
 
-Please note that there must be sufficient space for the tooltip to occupy the specified area; otherwise, the tooltip will default to the next closest available space.
+Please note that there must be sufficient surrounding window space for the tooltip to occupy the specified placement area; otherwise, the tooltip location may be incorrectly calculated and cause an undesirable UX.
 
 ## Builds
 

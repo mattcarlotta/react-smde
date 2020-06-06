@@ -1,16 +1,14 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { classNames } from "~utils";
+/* istanbul ignore file */
+import styled from "styled-components";
 
-export const ToolbarButtonGroup = ({ children, classes }) => (
-  <ul className={classNames("mde-toolbar-group", classes.mdetoolbargroup)}>
-    {children}
-  </ul>
-);
+export default styled.ul`
+	margin: 0;
+	padding: 5px;
+	list-style: none;
+	display: flex;
+	flex-wrap: nowrap;
 
-ToolbarButtonGroup.propTypes = {
-  children: PropTypes.arrayOf(PropTypes.node).isRequired,
-  classes: PropTypes.objectOf(PropTypes.string)
-};
-
-export default ToolbarButtonGroup;
+	& .hidden {
+		visibility: hidden;
+	}
+`;

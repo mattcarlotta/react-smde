@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Tooltip from "~components/Tooltip";
+import Tooltip from "@material-ui/core/Tooltip";
+import ToolbarItem from "~components/ToolbarItem";
 import { classNames } from "~utils";
 
 export const ToolbarButton = ({
@@ -30,20 +31,30 @@ export const ToolbarButton = ({
 	);
 
 	return (
-		<li className={classNames("mde-toolbar-item", classes.mdetoolbaritem)}>
-			{tooltip ? (
+		<ToolbarItem className={classNames(classes.mdetoolbaritem)}>
+			{tooltip && !disabled ? (
 				<Tooltip
-					overlayClassName={classNames("mde-tooltip", classes.mdetooltip)}
+					arrow
+					classes={{
+						arrow: classes.mdetooltiparrow,
+						popper: classes.mdetooltippopper,
+						popperArrow: classes.mdetooltippopperarrow,
+						tooltip: classes.mdetooltip,
+						tooltipPlacementBottom: classes.mdetooltipplacementbottom,
+						tooltipPlacementLeft: classes.mdetooltipplacementleft,
+						tooltipPlacementRight: classes.mdetooltipplacementright,
+						tooltipPlacementTop: classes.mdetooltipplacementtop,
+						touch: classes.mdetooltiptouch,
+					}}
 					placement={tooltipPlacement}
-					trigger={["hover"]}
-					overlay={<span>{tooltip}</span>}
+					title={tooltip}
 				>
 					{button}
 				</Tooltip>
 			) : (
 				button
 			)}
-		</li>
+		</ToolbarItem>
 	);
 };
 

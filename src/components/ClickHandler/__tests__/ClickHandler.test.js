@@ -31,21 +31,21 @@ describe("Click Handler", () => {
 	});
 
 	it("renders without errors", () => {
-		expect(wrapper.find("ClickHandler").exists()).toBeTruthy();
+		expect(wrapper.find("ClickHandler")).toExist();
 	});
 
 	it("initially displays an open div", () => {
-		expect(wrapper.find("div.open").exists()).toBeTruthy();
+		expect(wrapper.find("div.open")).toExist();
 	});
 
 	it("handles open/close clicks", () => {
 		openMenu();
 
-		expect(wrapper.find("ClickHandler").state("isVisible")).toBeTruthy();
+		expect(wrapper.find("ClickHandler")).toHaveState("isVisible", true);
 
 		wrapper.find("div.close").simulate("click");
 
-		expect(wrapper.find("ClickHandler").state("isVisible")).toBeFalsy();
+		expect(wrapper.find("ClickHandler")).toHaveState("isVisible", false);
 
 		openMenu();
 
@@ -53,30 +53,30 @@ describe("Click Handler", () => {
 			target: wrapper.find("div.outside").getDOMNode(),
 		});
 
-		expect(wrapper.find("ClickHandler").state("isVisible")).toBeFalsy();
+		expect(wrapper.find("ClickHandler")).toHaveState("isVisible", false);
 	});
 
 	it("toggles when 'handleClick' is clicked", () => {
 		const toggleMenu = () => wrapper.find("div.toggle").simulate("click");
 
 		toggleMenu();
-		expect(wrapper.find("ClickHandler").state("isVisible")).toBeTruthy();
+		expect(wrapper.find("ClickHandler")).toHaveState("isVisible", true);
 
 		toggleMenu();
 
-		expect(wrapper.find("ClickHandler").state("isVisible")).toBeFalsy();
+		expect(wrapper.find("ClickHandler")).toHaveState("isVisible", false);
 	});
 
 	it("doesn't change the 'isVisible' state if a left click is on the wrapper", () => {
 		openMenu();
 
-		expect(wrapper.find("ClickHandler").state("isVisible")).toBeTruthy();
+		expect(wrapper.find("ClickHandler")).toHaveState("isVisible", true);
 
 		clickListener({
 			target: wrapper.find("div.wrapper").getDOMNode(),
 		});
 
-		expect(wrapper.find("ClickHandler").state("isVisible")).toBeTruthy();
+		expect(wrapper.find("ClickHandler")).toHaveState("isVisible", true);
 	});
 
 	it("removes the event listeners on unmount", () => {

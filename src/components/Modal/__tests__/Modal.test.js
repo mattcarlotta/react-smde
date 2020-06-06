@@ -11,7 +11,7 @@ const wrapper = mount(<Modal {...initProps} />);
 
 describe("Modal", () => {
 	it("renders a modal with some sample content without errors", () => {
-		expect(wrapper.find("Modal").exists()).toBeTruthy();
+		expect(wrapper.find("Modal")).toExist();
 	});
 
 	it("calls a passed in 'onClick' prop function", () => {

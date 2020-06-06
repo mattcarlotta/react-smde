@@ -1,10 +1,10 @@
-import React, { Component } from "react";
+import React from "react";
 import ReactMarkdown from "react-markdown";
 import Container from "~components/Container";
 import MDEditor from "~components/MDEditor";
 import ShowSource from "~components/ShowSource";
 
-class SimpleEditorExample extends Component {
+class SimpleEditorExample extends React.Component {
 	constructor() {
 		super();
 		this.state = {
@@ -36,7 +36,6 @@ class SimpleEditorExample extends Component {
 const text = `import React, { Component } from "react";
 import ReactMarkdown from "react-markdown";
 import MDEditor from "react-smde";
-import "react-smde/dist/styles/react-smde.css";
 import "./styles.scss";
 
 class SimpleEditorExample extends Component {

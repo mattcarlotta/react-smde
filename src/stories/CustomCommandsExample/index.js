@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import ReactMarkdown from "react-markdown";
 import { FaSmile } from "react-icons/fa";
 import Container from "~components/Container";
@@ -7,7 +7,7 @@ import { defaultCommandLayout } from "~commands";
 import replaceSelection from "~utils/ReplaceSelection";
 import ShowSource from "~components/ShowSource";
 
-class CustomCommandsExample extends Component {
+class CustomCommandsExample extends React.Component {
 	constructor() {
 		super();
 		this.state = {
@@ -91,6 +91,7 @@ class CustomCommandsExample extends Component {
 				]}
 				onChange={this.handleValueChange}
 				value={this.state.value}
+				maxEditorWidth={650}
 				textAreaProps={{
 					placeholder:
 						"This example demonstrates how to create your own custom button interactions.",
@@ -106,7 +107,6 @@ const text = `import React, { Component } from "react";
 import ReactMarkdown from "react-markdown";
 import MDEditor, { defaultCommandLayout, replaceSelection } from "react-smde";
 import { FaSmile } from "react-icons/fa";
-import "react-smde/dist/styles/react-smde.css";
 
 /* 
   replaceSelection expects two arguments: (editorRef, string)
@@ -212,6 +212,7 @@ class CustomCommandsExample extends Component {
           ],
         ]}
         onChange={this.handleValueChange}
+        maxEditorWidth={650}
         value={this.state.value}
         textAreaProps={{
           placeholder:

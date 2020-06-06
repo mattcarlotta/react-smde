@@ -2,6 +2,16 @@
 import styled from "styled-components";
 
 export default styled.div`
+	@keyframes fadeIn {
+		0% {
+			opacity: 0;
+		}
+		100% {
+			opacity: 1;
+		}
+	}
+
+	box-sizing: border-box;
 	text-align: center;
 	position: fixed;
 	top: 0;
@@ -15,6 +25,7 @@ export default styled.div`
 	z-index: 100;
 
 	&::before {
+		box-sizing: border-box;
 		display: inline-block;
 		width: 0;
 		height: 100%;

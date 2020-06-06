@@ -3,7 +3,6 @@ import { render } from "react-dom";
 import ReactMarkdown from "react-markdown";
 import MDEditor from "../../src/index.js";
 import CodeBlock from "./CodeBlock";
-import "../../src/styles/all.scss";
 import "./styles/demo.scss";
 
 class App extends Component {
@@ -46,8 +45,7 @@ class App extends Component {
 				onChange={this.handleValueChange}
 				value={this.state.value}
 				loadSuggestions={this.loadSuggestions}
-				maxEditorWidth={800}
-				maxCharacterLength={1000}
+				maxCharacterLength={10000}
 				showCharacterLength
 			>
 				<ReactMarkdown renderers={{ code: CodeBlock }}>

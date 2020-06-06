@@ -1,9 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
+import styled from "styled-components";
 import Commander from "~components/Commander";
+import Grip from "~components/Grip";
 import Toolbar from "~components/Toolbar";
 import TextArea from "~components/TextArea";
-import SvgIcon from "~icons";
 import { defaultCommandLayout } from "~commands";
 import { checkPropTypes, classNames } from "~utils";
 
@@ -118,6 +119,7 @@ export class MDEditor extends React.Component {
 
 	render() {
 		const {
+			className,
 			classes,
 			disableGrip,
 			disableHotKeys,
@@ -130,7 +132,8 @@ export class MDEditor extends React.Component {
 
 		return (
 			<div
-				className={classNames("mde", classes.mde)}
+				data-testid="mde"
+				className={classNames(className, classes.mde)}
 				style={{ maxWidth: maxEditorWidth }}
 			>
 				{!disableToolbar && (
@@ -153,12 +156,7 @@ export class MDEditor extends React.Component {
 					textAreaProps={textAreaProps}
 				/>
 				{!disableGrip && (
-					<div
-						className={classNames("mde-grip", classes.mdegrip)}
-						onMouseDown={this.handleGripMouseDown}
-					>
-						<SvgIcon icon="grip" />
-					</div>
+					<Grip classes={classes} onMouseDown={this.handleGripMouseDown} />
 				)}
 			</div>
 		);
@@ -177,7 +175,7 @@ MDEditor.defaultProps = {
 	editorRef: () => {},
 	maxCharacterLength: null,
 	maxEditorHeight: 600,
-	maxEditorWidth: "100%",
+	maxEditorWidth: 600,
 	minEditorHeight: 300,
 	readOnly: false,
 	selectedTab: "write",
@@ -235,4 +233,6 @@ MDEditor.propTypes = {
 	value: PropTypes.string,
 };
 
-export default MDEditor;
+export default styled(MDEditor)`
+	margin: 0 auto;
+`;

@@ -1,11 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
+import Tooltip from "@material-ui/core/Tooltip";
 import ClickHandler from "~components/ClickHandler";
-import Tooltip from "~components/Tooltip";
+import Dropdown from "~components/Dropdown";
 import ToolbarButton from "~components/ToolbarButton";
+import ToolbarItem from "~components/ToolbarItem";
 import { classNames } from "~utils";
-
-const { Fragment } = React;
 
 export const ToolbarDropdown = ({
 	buttonContent,
@@ -18,57 +18,78 @@ export const ToolbarDropdown = ({
 	onCommand,
 	tooltip,
 	tooltipPlacement,
-}) => (
-	<li className={classNames("mde-toolbar-item", classes.mdetoolbaritem)}>
-		<ClickHandler>
-			{({ isVisible, closeDropdown, handleClick }) => (
-				<Fragment>
-					<Tooltip
-						overlayClassName={classNames("mde-tooltip", classes.mdetooltip)}
-						placement={tooltipPlacement}
-						trigger={["hover"]}
-						overlay={<span>{tooltip}</span>}
-					>
-						<button
-							type="button"
-							data-name={name}
-							tabIndex="0"
-							className={disabled ? "disabled" : undefined}
-							onClick={handleClick}
-							disabled={disabled}
-							{...buttonProps}
-						>
-							{buttonContent}
-						</button>
-					</Tooltip>
-					{isVisible ? (
-						<ul className={classNames("mde-dropdown", classes.mdedrop)}>
-							{commands.map(({ name, buttonProps, icon, value }) => (
-								<ToolbarButton
-									key={name}
-									name={name}
-									buttonProps={buttonProps}
-									buttonContent={icon}
-									classes={classes}
-									onClick={() => {
-										if (onClick) {
-											onClick(value);
-										} else {
-											onCommand(name);
-										}
-										closeDropdown();
-									}}
-									readOnly={disabled}
-									tooltipPlacement={tooltipPlacement}
-								/>
-							))}
-						</ul>
-					) : null}
-				</Fragment>
-			)}
-		</ClickHandler>
-	</li>
-);
+}) => {
+	const button = onClick => (
+		<button
+			type="button"
+			data-name={name}
+			tabIndex="0"
+			className={disabled ? "disabled" : undefined}
+			onClick={onClick}
+			disabled={disabled}
+			{...buttonProps}
+		>
+			{buttonContent}
+		</button>
+	);
+
+	return (
+		<ToolbarItem className={classNames(classes.mdetoolbaritem)}>
+			<ClickHandler>
+				{({ isVisible, closeDropdown, handleClick }) => (
+					<React.Fragment>
+						{!disabled ? (
+							<Tooltip
+								arrow
+								classes={{
+									arrow: classes.mdetooltiparrow,
+									popper: classes.mdetooltippopper,
+									popperArrow: classes.mdetooltippopperarrow,
+									tooltip: classes.mdetooltip,
+									tooltipPlacementBottom: classes.mdetooltipplacementbottom,
+									tooltipPlacementLeft: classes.mdetooltipplacementleft,
+									tooltipPlacementRight: classes.mdetooltipplacementright,
+									tooltipPlacementTop: classes.mdetooltipplacementtop,
+									touch: classes.mdetooltiptouch,
+								}}
+								disabled={disabled}
+								placement={tooltipPlacement}
+								title={tooltip}
+							>
+								{button(handleClick)}
+							</Tooltip>
+						) : (
+							<React.Fragment>{button(null)}</React.Fragment>
+						)}
+						{isVisible ? (
+							<Dropdown className={classNames(classes.mdedrop)}>
+								{commands.map(({ name, buttonProps, icon, value }) => (
+									<ToolbarButton
+										key={name}
+										name={name}
+										buttonProps={buttonProps}
+										buttonContent={icon}
+										classes={classes}
+										onClick={() => {
+											if (onClick) {
+												onClick(value);
+											} else {
+												onCommand(name);
+											}
+											closeDropdown();
+										}}
+										readOnly={disabled}
+										tooltipPlacement={tooltipPlacement}
+									/>
+								))}
+							</Dropdown>
+						) : null}
+					</React.Fragment>
+				)}
+			</ClickHandler>
+		</ToolbarItem>
+	);
+};
 
 ToolbarDropdown.defaultProps = {
 	buttonProps: {},

@@ -1,11 +1,11 @@
-import React, { Component } from "react";
+import React from "react";
 import ReactMarkdown from "react-markdown";
 import Container from "~components/Container";
 import MDEditor from "~components/MDEditor";
 import ShowSource from "~components/ShowSource";
 import "./styles.scss";
 
-class CustomClasses extends Component {
+class CustomClasses extends React.Component {
 	constructor() {
 		super();
 		this.state = { value: "" };
@@ -22,13 +22,20 @@ class CustomClasses extends Component {
 				onChange={this.handleValueChange}
 				value={this.state.value}
 				classes={{
-					mde: "editor",
+					mdegrip: "grip",
+					mdetoolbar: "toolbar",
+					mdetoolbarseparator: "toolbar-separator",
+					mdepreview: "preview",
+					mdetextarea: "textarea",
+					mdetextareawrapper: "textarea-wrapper",
 					mdetooltip: "tooltip",
+					mdetooltiparrow: "tooltip-arrow",
 				}}
 				textAreaProps={{
 					placeholder:
 						"This example uses the 'classes' property to customize the look of the editor!",
 				}}
+				tooltipPlacement="bottom"
 			>
 				<ReactMarkdown>{this.state.value || "(empty)"}</ReactMarkdown>
 			</MDEditor>
@@ -39,7 +46,6 @@ class CustomClasses extends Component {
 const text = `import React, { Component } from "react";
 import ReactMarkdown from "react-markdown";
 import MDEditor from "react-smde";
-import "react-smde/dist/styles/react-smde.css";
 import "./styles.scss";
 
 class CustomClassesExample extends Component {
@@ -59,13 +65,19 @@ class CustomClassesExample extends Component {
         onChange={this.handleValueChange}
         value={this.state.value}
         classes={{
-          mde: "editor",
+          mdegrip: "grip",
+          mdetoolbar: "toolbar",
+          mdetoolbarseparator: "toolbar-separator",
+          mdepreview: "preview",
+          mdetextarea: "textarea",
+          mdetextareawrapper: "textarea-wrapper",
           mdetooltip: "tooltip",
+          mdetooltiparrow: "tooltip-arrow",
         }}
         textAreaProps={{
-          placeholder:
-            "This example uses the 'classes' property to customize the look of the editor!",
+          placeholder: "This example uses the 'classes' property to customize the look of the editor!",
         }}
+        tooltipPlacement="bottom"
       >
         <ReactMarkdown>{this.state.value || "(empty)"}</ReactMarkdown>
       </MDEditor>

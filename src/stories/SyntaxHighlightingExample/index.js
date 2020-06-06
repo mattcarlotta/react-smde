@@ -1,16 +1,15 @@
-import React, { Component } from "react";
+import React from "react";
 import ReactMarkdown from "react-markdown";
 import MDEditor from "~components/MDEditor";
 import ShowSource from "~components/ShowSource";
 import Container from "~components/Container";
 import CodeBlock from "./CodeBlock";
 
-class SyntaxHighlightExample extends Component {
+class SyntaxHighlightExample extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			value: `
-This example includes a configuration to add syntax highlighting to \`JSX\` code blocks! Please note that this example will vary depending on which previewer and which syntax highlighter you choose.
+			value: `This example includes a configuration to add syntax highlighting to \`JSX\` code blocks! Please note that this example will vary depending on which previewer and which syntax highlighter you choose.
 
 \`\`\`jsx
 import React, { useCallback, useEffect, useState } from "react";
@@ -85,7 +84,6 @@ const text = `import React, { Component, PureComponent } from "react";
 import ReactMarkdown from "react-markdown";
 import MDEditor from "react-smde";
 import hljs from "highlight.js";
-import "react-smde/dist/styles/react-smde.css";
 import "highlight.js/styles/atelier-forest-light.css";
 
 class CodeBlock extends PureComponent {

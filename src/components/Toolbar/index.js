@@ -1,16 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
+import styled from "styled-components";
+import Tooltip from "@material-ui/core/Tooltip";
 import Separator from "~components/Separator";
 import ToolbarButtonGroup from "~components/ToolbarButtonGroup";
 import ToolbarDropdown from "~components/ToolbarDropdown";
 import ToolbarButton from "~components/ToolbarButton";
-import Tooltip from "~components/Tooltip";
+import ToolbarItem from "~components/ToolbarItem";
 import { classNames } from "~utils";
 import { SvgIcon } from "~icons";
 
-const { Fragment } = React;
-
 export const Toolbar = ({
+	className,
 	classes,
 	commands,
 	disablePreview,
@@ -25,11 +26,11 @@ export const Toolbar = ({
 	const hasCommands = commands && commands.length > 0;
 
 	return (
-		<div className={classNames("mde-toolbar", classes.mdetoolbar)}>
+		<div className={classNames(className, classes.mdetoolbar)}>
 			{hasCommands &&
 				commands.map((commandGroup, i) => (
-					<Fragment key={i}>
-						<ToolbarButtonGroup classes={classes}>
+					<React.Fragment key={i}>
+						<ToolbarButtonGroup className={classNames(classes.mdetoolbargroup)}>
 							{commandGroup.map(props =>
 								props.children ? (
 									<ToolbarDropdown
@@ -55,27 +56,29 @@ export const Toolbar = ({
 								),
 							)}
 						</ToolbarButtonGroup>
-						<Separator classes={classes} />
-					</Fragment>
+						<Separator className={classNames(classes.mdetoolbarseparator)} />
+					</React.Fragment>
 				))}
 			{!disablePreview && (
-				<Fragment>
-					<ul
-						className={classNames("mde-toolbar-group", classes.mdetoolbargroup)}
-					>
-						<li
-							className={classNames("mde-toolbar-item", classes.mdetoolbaritem)}
-						>
+				<React.Fragment>
+					<ToolbarButtonGroup className={classNames(classes.mdetoolbargroup)}>
+						<ToolbarItem className={classNames(classes.mdetoolbaritem)}>
 							<Tooltip
-								overlayClassName={classNames("mde-tooltip", classes.mdetooltip)}
+								arrow
+								classes={{
+									arrow: classes.mdetooltiparrow,
+									popper: classes.mdetooltippopper,
+									popperArrow: classes.mdetooltippopperarrow,
+									tooltip: classes.mdetooltip,
+									tooltipPlacementBottom: classes.mdetooltipplacementbottom,
+									tooltipPlacementLeft: classes.mdetooltipplacementleft,
+									tooltipPlacementRight: classes.mdetooltipplacementright,
+									tooltipPlacementTop: classes.mdetooltipplacementtop,
+									touch: classes.mdetooltiptouch,
+								}}
 								placement={tooltipPlacement}
-								trigger={["hover"]}
-								overlay={
-									<span>
-										{isPreviewing
-											? "Hide Preview (ctrl+0)"
-											: "Preview (ctrl+0)"}
-									</span>
+								title={
+									isPreviewing ? "Hide Preview (ctrl+0)" : "Preview (ctrl+0)"
 								}
 							>
 								<button
@@ -88,16 +91,17 @@ export const Toolbar = ({
 									<SvgIcon icon={isPreviewing ? "eye-closed" : "eye-open"} />
 								</button>
 							</Tooltip>
-						</li>
-					</ul>
-					<Separator classes={classes} />
-				</Fragment>
+						</ToolbarItem>
+					</ToolbarButtonGroup>
+					<Separator className={classNames(classes.mdetoolbarseparator)} />
+				</React.Fragment>
 			)}
 		</div>
 	);
 };
 
 Toolbar.propTypes = {
+	className: PropTypes.string.isRequired,
 	classes: PropTypes.objectOf(PropTypes.string),
 	commands: PropTypes.arrayOf(
 		PropTypes.arrayOf(
@@ -123,4 +127,14 @@ Toolbar.propTypes = {
 	tooltipPlacement: PropTypes.string,
 };
 
-export default Toolbar;
+export default styled(Toolbar)`
+	flex-shrink: 0;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: stretch;
+	border-top: 1px solid #c8ccd0;
+	border-left: 1px solid #c8ccd0;
+	border-right: 1px solid #c8ccd0;
+	border-radius: 8px 8px 0 0;
+	background: #ececec;
+`;

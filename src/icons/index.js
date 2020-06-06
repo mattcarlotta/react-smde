@@ -1,8 +1,11 @@
 import React from "react";
 
+const css =
+	"width: 1.1em;height: 1.1em;display: inline-block;font-size: inherit;overflow: visible;vertical-align: -0.125em;";
+
 const checkedListIcon = (
 	<svg
-		className="svg-icon"
+		css={css}
 		aria-hidden="true"
 		role="img"
 		xmlns="http://www.w3.org/2000/svg"
@@ -18,7 +21,7 @@ const checkedListIcon = (
 
 const orderedListIcon = (
 	<svg
-		className="svg-icon"
+		css={css}
 		aria-hidden="true"
 		role="img"
 		xmlns="http://www.w3.org/2000/svg"
@@ -34,7 +37,7 @@ const orderedListIcon = (
 
 const unorderedListIcon = (
 	<svg
-		className="svg-icon"
+		css={css}
 		aria-hidden="true"
 		role="img"
 		xmlns="http://www.w3.org/2000/svg"
@@ -50,7 +53,7 @@ const unorderedListIcon = (
 
 const imageIcon = (
 	<svg
-		className="svg-icon"
+		css={css}
 		aria-hidden="true"
 		role="img"
 		xmlns="http://www.w3.org/2000/svg"
@@ -66,7 +69,7 @@ const imageIcon = (
 
 const codeIcon = (
 	<svg
-		className="svg-icon"
+		css={css}
 		aria-hidden="true"
 		role="img"
 		xmlns="http://www.w3.org/2000/svg"
@@ -82,7 +85,7 @@ const codeIcon = (
 
 const quoteIcon = (
 	<svg
-		className="svg-icon"
+		css={css}
 		aria-hidden="true"
 		role="img"
 		xmlns="http://www.w3.org/2000/svg"
@@ -98,7 +101,7 @@ const quoteIcon = (
 
 const linkIcon = (
 	<svg
-		className="svg-icon"
+		css={css}
 		aria-hidden="true"
 		role="img"
 		xmlns="http://www.w3.org/2000/svg"
@@ -114,7 +117,7 @@ const linkIcon = (
 
 const strikeThroughIcon = (
 	<svg
-		className="svg-icon"
+		css={css}
 		aria-hidden="true"
 		role="img"
 		xmlns="http://www.w3.org/2000/svg"
@@ -130,7 +133,7 @@ const strikeThroughIcon = (
 
 const italicIcon = (
 	<svg
-		className="svg-icon"
+		css={css}
 		aria-hidden="true"
 		role="img"
 		xmlns="http://www.w3.org/2000/svg"
@@ -146,7 +149,7 @@ const italicIcon = (
 
 const headerIcon = (
 	<svg
-		className="svg-icon"
+		css={css}
 		aria-hidden="true"
 		role="img"
 		xmlns="http://www.w3.org/2000/svg"
@@ -162,7 +165,7 @@ const headerIcon = (
 
 const boldIcon = (
 	<svg
-		className="svg-icon"
+		css={css}
 		aria-hidden="true"
 		role="img"
 		xmlns="http://www.w3.org/2000/svg"
@@ -178,7 +181,7 @@ const boldIcon = (
 
 export const eyeOpenIcon = (
 	<svg
-		className="svg-icon"
+		css={css}
 		aria-hidden="true"
 		role="img"
 		xmlns="http://www.w3.org/2000/svg"
@@ -194,7 +197,7 @@ export const eyeOpenIcon = (
 
 export const eyeClosedIcon = (
 	<svg
-		className="svg-icon"
+		css={css}
 		aria-hidden="true"
 		role="img"
 		xmlns="http://www.w3.org/2000/svg"
@@ -229,7 +232,7 @@ export const horizontalRule = (
 		role="img"
 		xmlns="http://www.w3.org/2000/svg"
 		viewBox="0 0 640 512"
-		className="svg-icon"
+		css={css}
 	>
 		<path
 			fill="currentColor"
@@ -244,7 +247,7 @@ export const underlineIcon = (
 		role="img"
 		xmlns="http://www.w3.org/2000/svg"
 		viewBox="4 3 19 17"
-		className="svg-icon"
+		css={css}
 	>
 		<path
 			fill="currentColor"
@@ -256,10 +259,10 @@ export const underlineIcon = (
 export const trashIcon = (
 	<svg
 		aria-hidden="true"
+		css={css}
 		role="img"
 		xmlns="http://www.w3.org/2000/svg"
 		viewBox="2 3 15 15"
-		className="svg-icon"
 	>
 		<path
 			fill="currentColor"
@@ -274,7 +277,7 @@ export const boldItalicIcon = (
 		role="img"
 		xmlns="http://www.w3.org/2000/svg"
 		viewBox="40 57 315 172"
-		className="svg-icon"
+		css={css}
 	>
 		<path
 			fill="currentColor"

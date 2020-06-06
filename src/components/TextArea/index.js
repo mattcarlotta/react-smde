@@ -1,7 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
+import styled from "styled-components";
+import CharacterLength from "~components/CharacterLength";
 import Spinner from "~components/Spinner";
+import SuggestionsContainer from "~components/SuggestionsContainer";
 import SuggestionsDropdown from "~components/SuggestionsDropdown";
+import TextAreaInput from "~components/TextAreaInput";
+import Preview from "~components/Preview";
 import { classNames, getCaretCoordinates, insertText, mod } from "~utils";
 
 const initialState = {
@@ -9,7 +14,7 @@ const initialState = {
 	suggestions: [],
 	focusIndex: null,
 	startPosition: null,
-	caret: {},
+	caret: { top: 0, left: 0 },
 	currentPromise: 0,
 };
 
@@ -154,7 +159,8 @@ export class TextArea extends React.Component {
 					() => this.handleSuggestionSearch(),
 				);
 			} else if (
-				((suggestionsActive || suggestionsLoading) && key === "Escape") ||
+				((suggestionsActive || suggestionsLoading) &&
+					(key === "Escape" || key === " ")) ||
 				((key === "Backspace" || undoKey) &&
 					selectionStart <= startPosition &&
 					this.props.value.substr(startPosition - 1) !== "@")
@@ -256,19 +262,19 @@ export class TextArea extends React.Component {
 			showCharacterLength,
 			value,
 		} = this.props;
+		const { caret } = this.state;
 		const [suggestionsActive, suggestionsLoading] = this.getSuggestionState();
-		const selectedTab = this.props.tab === "preview";
+		const selectedPreviewTab = this.props.tab === "preview";
 
 		return (
 			<div
-				className={classNames(
-					"mde-textarea-wrapper",
-					classes.mdetextareawrapper,
-				)}
+				data-testid="mde-textarea-wrapper"
+				className={classNames(this.props.className, classes.mdetextareawrapper)}
 			>
-				<textarea
-					className={classNames("mde-textarea", classes.mdetextarea, {
-						hidden: selectedTab,
+				<TextAreaInput
+					data-testid="mde-textarea"
+					className={classNames(classes.mdetextarea, {
+						hidden: selectedPreviewTab,
 					})}
 					style={{ height: editorHeight }}
 					ref={this.handleTextAreaRef}
@@ -283,40 +289,41 @@ export class TextArea extends React.Component {
 					maxLength={maxCharacterLength}
 					{...this.props.textAreaProps}
 				/>
-				{selectedTab && (
-					<div
-						className={classNames("mde-preview", classes.mdepreview)}
+				{selectedPreviewTab && (
+					<Preview
+						data-testid="mde-preview"
+						className={classNames(classes.mdepreview)}
 						style={{ height: editorHeight }}
 					>
-						<div
-							className={classNames(
-								"mde-preview-content",
-								classes.mdepreviewcontent,
-							)}
-						>
-							{this.props.children}
-						</div>
-					</div>
+						{this.props.children}
+					</Preview>
 				)}
-				{suggestionsActive ? (
-					<SuggestionsDropdown
-						{...this.props}
-						{...this.state}
-						onSuggestionSelected={this.handleSuggestionSelected}
-						onSuggestionFocus={this.handleSuggestionFocus}
-					/>
-				) : null}
-				{suggestionsLoading && <Spinner {...this.state} classes={classes} />}
-				{showCharacterLength && (
-					<span
-						className={classNames(
-							"mde-textarea-character-length",
-							classes.mdetextareacharacterlength,
+				{suggestionsActive || suggestionsLoading ? (
+					<SuggestionsContainer
+						data-testid="mde-suggestions"
+						style={{ left: caret.left, top: caret.top }}
+					>
+						{suggestionsActive ? (
+							<SuggestionsDropdown
+								{...this.props}
+								{...this.state}
+								onSuggestionSelected={this.handleSuggestionSelected}
+								onSuggestionFocus={this.handleSuggestionFocus}
+							/>
+						) : null}
+						{suggestionsLoading && (
+							<Spinner {...this.state} classes={classes} />
 						)}
+					</SuggestionsContainer>
+				) : null}
+				{showCharacterLength && !selectedPreviewTab && (
+					<CharacterLength
+						data-testid="mde-textarea-character-length"
+						className={classNames(classes.mdetextareacharacterlength)}
 					>
 						{value.length}
 						{maxCharacterLength && <span>&#47;{maxCharacterLength}</span>}
-					</span>
+					</CharacterLength>
 				)}
 			</div>
 		);
@@ -325,6 +332,7 @@ export class TextArea extends React.Component {
 
 TextArea.propTypes = {
 	children: PropTypes.node.isRequired,
+	className: PropTypes.string.isRequired,
 	classes: PropTypes.objectOf(PropTypes.string),
 	debounceSuggestions: PropTypes.number.isRequired,
 	disableHotKeys: PropTypes.bool.isRequired,
@@ -351,4 +359,15 @@ TextArea.propTypes = {
 	value: PropTypes.string,
 };
 
-export default TextArea;
+export default styled(TextArea)`
+	position: relative;
+	border: 1px solid #c8ccd0;
+	overflow: hidden;
+	overflow-wrap: break-word;
+	word-break: break-word;
+	padding: 0px 4px 0px 10px;
+
+	& .hidden {
+		display: none;
+	}
+`;

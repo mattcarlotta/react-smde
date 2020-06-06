@@ -1,25 +1,17 @@
-const { readdirSync, statSync } = require("fs");
-const { resolve } = require("path");
-
-const readDirectory = path =>
-	readdirSync(path).reduce((acc, folder) => {
-		const dirPath = `${path}${folder}`;
-		if (statSync(resolve(dirPath)).isDirectory()) {
-			acc[`~${folder.replace(/[^\w\s]/gi, "")}`] = dirPath;
-		}
-
-		return acc;
-	}, {});
-
-const alias = {
-	...readDirectory("./src/"),
-};
+const aliasDirs = require("alias-dirs");
 
 module.exports = function(api) {
-	api.cache(true);
+	const inProd = api.env("production");
+	const inTesting = api.env("testing");
+	api.cache(() => process.env.NODE_ENV);
 
 	return {
-		presets: ["@babel/preset-react"],
+		presets: [
+			"@babel/preset-react",
+			!inTesting
+				? ["@babel/preset-env", { modules: false, loose: true }]
+				: "@babel/preset-env",
+		].filter(Boolean),
 		plugins: [
 			"@babel/plugin-transform-runtime",
 			"@babel/plugin-proposal-export-namespace-from",
@@ -28,29 +20,23 @@ module.exports = function(api) {
 			[
 				"module-resolver",
 				{
-					alias,
+					alias: aliasDirs(),
 				},
 			],
-		],
-		env: {
-			production: {
-				presets: [["@babel/preset-env", { modules: false, loose: true }]],
-				plugins: [
-					[
-						"transform-react-remove-prop-types",
-						{
-							mode: "remove",
-							removeImport: true,
-						},
-					],
-				],
-			},
-			development: {
-				presets: [["@babel/preset-env", { modules: false, loose: true }]],
-			},
-			testing: {
-				presets: ["@babel/preset-env"],
-			},
-		},
+			[
+				"babel-plugin-styled-components",
+				{
+					displayName: true,
+				},
+			],
+			inProd && [
+				"transform-react-remove-prop-types",
+				{
+					mode: "remove",
+					removeImport: true,
+				},
+			],
+			inProd && ["react-remove-properties", { properties: ["data-testid"] }],
+		].filter(Boolean),
 	};
 };

@@ -31,7 +31,7 @@ export class ClickHandler extends React.Component {
 
 	render = () => (
 		<div
-			className="click-handler"
+			data-testid="click-handler"
 			style={{ height: "100%", width: "100%" }}
 			ref={ref => (this.dropdown = ref)}
 		>
