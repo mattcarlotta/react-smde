@@ -269,7 +269,11 @@ export class TextArea extends React.Component {
 		return (
 			<div
 				data-testid="mde-textarea-wrapper"
-				className={classNames(this.props.className, classes.mdetextareawrapper)}
+				className={classNames(
+					this.props.className,
+					classes.mdetextareawrapper,
+					{ preview: selectedPreviewTab },
+				)}
 			>
 				<TextAreaInput
 					data-testid="mde-textarea"
