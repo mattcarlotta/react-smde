@@ -28,6 +28,12 @@ export class MDEditor extends React.Component {
 		document.addEventListener("mouseup", this.handleGripMouseUp);
 	}
 
+	componentDidUpdate(prevProps) {
+		const { minEditorHeight, value } = this.props;
+		if (value !== prevProps.value && value === "")
+			this.setState({ editorHeight: parseInt(minEditorHeight, 10) });
+	}
+
 	componentWillUnmount() {
 		document.removeEventListener("mousemove", this.handleGripMouseMove);
 		document.removeEventListener("mouseup", this.handleGripMouseUp);
