@@ -259,12 +259,15 @@ export class TextArea extends React.Component {
 			classes,
 			editorHeight,
 			maxCharacterLength,
+			maxEditorHeight,
 			showCharacterLength,
 			value,
 		} = this.props;
 		const { caret } = this.state;
 		const [suggestionsActive, suggestionsLoading] = this.getSuggestionState();
 		const selectedPreviewTab = this.props.tab === "preview";
+		const height =
+			editorHeight < maxEditorHeight ? editorHeight : maxEditorHeight;
 
 		return (
 			<div
@@ -280,7 +283,9 @@ export class TextArea extends React.Component {
 					className={classNames(classes.mdetextarea, {
 						hidden: selectedPreviewTab,
 					})}
-					style={{ height: editorHeight }}
+					style={{
+						height,
+					}}
 					ref={this.handleTextAreaRef}
 					onBlur={
 						this.props.suggestionsEnabled && this.state.suggestions.length > 0
@@ -297,7 +302,7 @@ export class TextArea extends React.Component {
 					<Preview
 						data-testid="mde-preview"
 						className={classNames(classes.mdepreview)}
-						style={{ height: editorHeight }}
+						style={{ height }}
 					>
 						{this.props.children}
 					</Preview>

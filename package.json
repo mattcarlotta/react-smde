@@ -1,6 +1,6 @@
 {
 	"name": "react-smde",
-	"version": "1.0.11",
+	"version": "1.0.2",
 	"description": "Simple Markdown Editor for React",
 	"main": "dist/index.js",
 	"module": "dist/esm/index.esm.js",
@@ -13,8 +13,8 @@
 		"checkbuild": "es-check es5 './dist/index.js' './dist/umd/index.umd.js' './docs/**/*.js'",
 		"demo": "cross-env NODE_ENV=development BABEL_ENV=development PORT=8080 webpack-dev-server --config ./demo/webpack.config.js",
 		"build": "cross-env NODE_ENV=production rollup -c",
-		"story": "start-storybook -p 8000",
-		"storybook": "rimraf docs && build-storybook -o docs",
+		"story:build": "rimraf docs && build-storybook -o docs",
+		"story:demo": "start-storybook -p 8000",
 		"test": "cross-env NODE_ENV=testing jest --config ./jest.json",
 		"test:cov": "cross-env NODE_ENV=testing jest --config ./jest.json --coverage",
 		"test:watch": "cross-env NODE_ENV=testing jest --config ./jest.json --watch --onlyChanged",

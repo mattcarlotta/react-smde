@@ -137,7 +137,7 @@ describe("MDEditor", () => {
 		expect(wrapper).toHaveState("originalDragY", 0);
 	});
 
-	it("handlers editor autoGrow resizing", () => {
+	it("handles editor autoGrow resizing", () => {
 		Object.defineProperty(window, "getComputedStyle", {
 			value: () => ({
 				getPropertyValue: prop => (prop === "line-height" ? NaN : "13"),
@@ -165,7 +165,7 @@ describe("MDEditor", () => {
 
 		expect(wrapper.find("textarea")).toHaveStyle("height", 160);
 
-		// maxing out text to textarea
+		// going over text to textarea
 		wrapper.setState({
 			textAreaScrollHeight: 340.5,
 			textAreaOffsetHeight: 300,
@@ -173,7 +173,7 @@ describe("MDEditor", () => {
 		wrapper.instance().adjustEditorSize();
 		wrapper.update();
 
-		expect(wrapper.find("textarea")).toHaveStyle("height", 360);
+		expect(wrapper.find("textarea")).toHaveStyle("height", 300);
 
 		// going over maxEditorHeight
 		wrapper.setState({
@@ -183,7 +183,7 @@ describe("MDEditor", () => {
 		wrapper.instance().adjustEditorSize();
 		wrapper.update();
 
-		expect(wrapper.find("textarea")).toHaveStyle("height", 360);
+		expect(wrapper.find("textarea")).toHaveStyle("height", 300);
 	});
 
 	it("handles editor lineheight via 'font-size' property", () => {
@@ -281,10 +281,7 @@ describe("MDEditor", () => {
 
 		wrapper.find("button[data-name='emoji-menu']").simulate("click");
 
-		wrapper
-			.find("p")
-			.first()
-			.simulate("click");
+		wrapper.find("p").first().simulate("click");
 
 		expect(onClick).toHaveBeenCalledWith("🙂");
 	});

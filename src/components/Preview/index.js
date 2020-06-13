@@ -129,6 +129,10 @@ export default styled.div`
 		}
 	}
 
+	img {
+		width: 100%;
+	}
+
 	a {
 		color: #4078c0;
 		text-decoration: none;
