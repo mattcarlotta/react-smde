@@ -66,6 +66,7 @@ describe("TextArea", () => {
 		onCommand.mockClear();
 		onTabChange.mockClear();
 		preventDefault.mockClear();
+		document.removeEventListener.mockClear();
 	});
 
 	it("renders without errors", () => {
@@ -102,6 +103,24 @@ describe("TextArea", () => {
 
 		expect(wrapper.find("SuggestionsDropdown")).not.toExist();
 		expect(wrapper.find("Spinner")).not.toExist();
+	});
+
+	it("doesn't update the textarea when in 'readOnly'", () => {
+		document.removeEventListener.mockClear();
+		wrapper = mount(<TextArea {...initProps} readOnly />);
+
+		const spy = jest.spyOn(wrapper.instance(), "handleKeyDown");
+		wrapper.instance().forceUpdate();
+
+		keydownHandler({ key: "t" });
+		jest.runAllTimers();
+		wrapper.update();
+
+		expect(spy).toHaveBeenCalledTimes(0);
+
+		wrapper.unmount();
+
+		expect(document.removeEventListener).not.toHaveBeenCalled();
 	});
 
 	it("handles 'bold' hot key", async () => {

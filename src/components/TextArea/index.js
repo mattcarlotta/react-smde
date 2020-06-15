@@ -27,11 +27,13 @@ export class TextArea extends React.Component {
 	}
 
 	componentDidMount() {
-		document.addEventListener("keydown", this.handleKeyDown);
+		if (!this.props.readOnly)
+			document.addEventListener("keydown", this.handleKeyDown);
 	}
 
 	componentWillUnmount() {
-		document.removeEventListener("keydown", this.handleKeyDown);
+		if (!this.props.readOnly)
+			document.removeEventListener("keydown", this.handleKeyDown);
 		this.clearSearchTimer();
 		this.clearVoidSuggestionTimer();
 	}
