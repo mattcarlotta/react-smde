@@ -64,7 +64,7 @@ export default styled.ul`
 		width: 0;
 		height: 0;
 		border: 8px solid transparent;
-		border-bottom-color: rbga(0, 0, 0, 0.15);
+		border-bottom-color: rgba(0, 0, 0, 0.15);
 		top: -16px;
 		left: 3px;
 		transform: translateX(50%);
