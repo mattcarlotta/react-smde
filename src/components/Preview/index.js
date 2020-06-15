@@ -85,8 +85,9 @@ export default styled.div`
 		padding: 0.2em 0 0.2em 0;
 		margin: 0;
 		font-size: 90%;
-		background-color: rgba(0, 0, 0, 0.04);
+		background-color: #efefef;
 		border-radius: 3px;
+		white-space: pre-wrap;
 
 		&::before,
 		&::after {
@@ -100,7 +101,7 @@ export default styled.div`
 		overflow: auto;
 		font-size: 85%;
 		line-height: 1.45;
-		background-color: #f7f7f7;
+		background-color: #efefef;
 		border-radius: 3px;
 
 		code {
