@@ -1,6 +1,6 @@
 {
 	"name": "react-smde",
-	"version": "1.0.21",
+	"version": "1.0.22",
 	"description": "Simple Markdown Editor for React",
 	"main": "dist/index.js",
 	"module": "dist/esm/index.esm.js",

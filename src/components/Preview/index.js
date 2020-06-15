@@ -85,7 +85,7 @@ export default styled.div`
 		padding: 0.2em 0 0.2em 0;
 		margin: 0;
 		font-size: 90%;
-		background-color: rbga(0, 0, 0, 0.04);
+		background-color: rgba(0, 0, 0, 0.04);
 		border-radius: 3px;
 
 		&::before,
