@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import CharacterLength from "~components/CharacterLength";
 import Spinner from "~components/Spinner";
 import SuggestionsContainer from "~components/SuggestionsContainer";
 import SuggestionsDropdown from "~components/SuggestionsDropdown";
@@ -262,8 +261,6 @@ export class TextArea extends React.Component {
 			editorHeight,
 			maxCharacterLength,
 			maxEditorHeight,
-			showCharacterLength,
-			value,
 		} = this.props;
 		const { caret } = this.state;
 		const [suggestionsActive, suggestionsLoading] = this.getSuggestionState();
@@ -282,7 +279,7 @@ export class TextArea extends React.Component {
 			>
 				<TextAreaInput
 					data-testid="mde-textarea"
-					className={classNames(classes.mdetextarea, {
+					className={classNames(classes.mdetextarea, "mde-textarea", {
 						hidden: selectedPreviewTab,
 					})}
 					style={{
@@ -303,7 +300,7 @@ export class TextArea extends React.Component {
 				{selectedPreviewTab && (
 					<Preview
 						data-testid="mde-preview"
-						className={classNames(classes.mdepreview)}
+						className={classNames(classes.mdepreview, "mde-preview")}
 						style={{ height }}
 					>
 						{this.props.children}
@@ -312,6 +309,7 @@ export class TextArea extends React.Component {
 				{suggestionsActive || suggestionsLoading ? (
 					<SuggestionsContainer
 						data-testid="mde-suggestions"
+						className={classNames(classes.mdesuggestions, "mde-suggestions")}
 						style={{ left: caret.left, top: caret.top }}
 					>
 						{suggestionsActive ? (
@@ -327,15 +325,6 @@ export class TextArea extends React.Component {
 						)}
 					</SuggestionsContainer>
 				) : null}
-				{showCharacterLength && !selectedPreviewTab && (
-					<CharacterLength
-						data-testid="mde-textarea-character-length"
-						className={classNames(classes.mdetextareacharacterlength)}
-					>
-						{value.length}
-						{maxCharacterLength && <span>&#47;{maxCharacterLength}</span>}
-					</CharacterLength>
-				)}
 			</div>
 		);
 	}

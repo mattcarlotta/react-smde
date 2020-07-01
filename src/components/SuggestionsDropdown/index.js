@@ -32,7 +32,10 @@ export class SuggestionsDropdown extends React.PureComponent {
 		) : (
 			<NoSuggestions
 				data-testid="mde-no-suggestions"
-				className={classNames(this.props.classes.mdenosuggestions)}
+				className={classNames(
+					this.props.classes.mdenosuggestions,
+					"mde-no-suggestions",
+				)}
 			/>
 		);
 }

@@ -96,11 +96,13 @@ The following props are accepted by `MDEditor`:
 | `classes`(obj)                    | An optional `object` of `string` classNames that will be appended to the specified className. (see [Custom Styling](#custom-styling) for more info) |
 | `commands`(arr)                   | A single `array` with an array of grouped object commands. (see [Custom Commands](#custom-commands) for more info)                                  |
 | `debounceSuggestions`(num)        | A `number` set in `ms` to debounce calling the `loadSuggestions` function. (default: `300`)†                                                        |
-| `disableGrip`(bool)               | A `boolean` to disable the bottom textarea resizing button. (default: `false`)                                                                      |
-| `disableHotKeys`(bool)            | A `boolean` to disable the textarea hot keys. (default: `false`)                                                                                    |
+| `disableGrip`(bool)               | A `boolean` to hide and disable the bottom textarea resizing button. (default: `false`)                                                                      |
+| `disableHotKeys`(bool)            | A `boolean` to disable the textarea hot keys. (default: `true`)                                                                                    |
 | `disablePreview`(bool)            | A `boolean` to disable the preview button -- also disables the preview/write hot key. (default: `false`)                                            |
 | `disableToolbar`(bool)            | A `boolean` to disable the toolbar. (default: `false`)                                                                                              |
+| `hideGrip`(bool)                  | A `boolean` to hide the bottom textarea toolbar. (default: `false`)                                                                                              |
 | `editorRef`(func)                 | An optional callback `function` to hoist the MDEditor's `ref`.                                                                                      |
+| `grip`(str/node)                  | An optional custom grip `node` or `string`                                                                                    |
 | `loadSuggestions`(func)           | A `function` that returns an `array` of suggestions triggered by the `suggestionTriggerCharacter`. (see [Suggestions](#suggestions) for more info)  |
 | `maxCharacterLength`(num/str)     | A maximum MDEditor character length as a `number` or `string`. (default: `null`)                                                                    |
 | `maxEditorHeight`(num/str)        | A maximum MDEditor height `number` that is set in `px` or `string`. (default: `500`)                                                                |
@@ -109,13 +111,15 @@ The following props are accepted by `MDEditor`:
 | `onChange`(func)                  | A **required** callback `function` to handle value changes.                                                                                         |
 | `readOnly`(bool)                  | A `boolean` to disable editing the text within the textarea. (default: `false`)                                                                     |
 | `selectedTab`(str)                | A `string` (`write`/`preview`) to initialize the MDEditor's view in. (default: `write`)                                                             |
-| `showCharacterLength`(bool)       | A `boolean` to display the MDEditor's character length. (default: `false`)                                                                          |
+| `showCharacterLength`(bool)       | A `boolean` to display the MDEditor's character length. ††  (default: `false`)                                                                          |
 | `suggestionTriggerCharacter`(str) | A `string` character to trigger suggestions. (default: `@`)                                                                                         |
 | `textAreaProps`(obj)              | An optional `object` of properties to apply to the textarea.                                                                                        |
 | `tooltipPlacement`(str)           | The tooltip position relative to the target. (default: `top` -- see [Tooltips](#tooltips) for more info)                                            |
 | `value`(str)                      | A **required** `string` value.                                                                                                                      |
 
 † Setting `debounceSuggestions` lower than 300ms, will disable the suggestions loading indicator. In testing, a number lower than 300ms caused unavoidable UI flashes when the returned data is static. As such, this allows you to utilize an array of static data and avoid seeing a loading indicator for each key input.
+
+†† Setting `showCharacterLength` as true will only be visible if `hideGrip` is false. In order words, if you hide the bottom bar, it won't display the character length.
 
 ## Markdown Previewing
 
@@ -162,14 +166,14 @@ You can see use cases for these internals by visiting the [Live Demo](https://ma
 
 ## Hot Keys
 
-The `MDEditor` comes configured with hot keys:
+The `MDEditor` comes pre-configured with disabled hot keys:
 
 - Bold (ctrl+b)
 - Italic (ctrl+i)
 - Link (ctrl+k)
 - Edit/Preview toggle (ctrl+0)
 
-If you want to remove these keys, then they can be disabled by passing the `disableHotKeys` prop to the `MDEditor`.
+If you want to include these keys, then they can be enabled by passing the `disableHotKeys=false` prop to the `MDEditor`. By default, they're disabled because they can interfere with other key press triggered event listeners.
 
 ## Custom Styling
 
@@ -181,6 +185,7 @@ In order to change the style, pass a `classes` object property to the `MDEditor`
 <summary>Click to view a summary of available "mde" property overrides...</summary>
 <pre><code>
 mde (applied to root)
+mdedropdown (applied to header dropdown)
 mdetoolbar (applied to toolbar)
 mdetoolbargroup (applied to toolbar groups)
 mdetoolbaritem (applied to toolbar items)
@@ -192,7 +197,8 @@ mdesuggestions (applied to suggestions overlay)
 mdetextarea (applied to textarea input)
 mdetextareawrapper (applied to textarea wrapper)
 mdetextareacharacterlength (applied to textarea character length)
-mdegrip (applied to editor window grip)
+mdegripcontainer (applied to editor bottom grip container)
+mdegripicon (applied to editor bottom grip icon)
 mdetooltiparrow (tooltip arrow) 
 mdetooltippopper (tooltip container) 
 mdetooltippopperarrow (tooltip arrow container) 

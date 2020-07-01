@@ -3,7 +3,7 @@ import SvgIcon from "~icons";
 
 const link = {
 	name: "link",
-	tooltip: "Add link (ctrl+k)",
+	tooltip: "Add link",
 	buttonProps: { "aria-label": "Add link" },
 	icon: <SvgIcon icon="link" />,
 };

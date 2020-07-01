@@ -30,7 +30,12 @@ export const Toolbar = ({
 			{hasCommands &&
 				commands.map((commandGroup, i) => (
 					<React.Fragment key={i}>
-						<ToolbarButtonGroup className={classNames(classes.mdetoolbargroup)}>
+						<ToolbarButtonGroup
+							className={classNames(
+								classes.mdetoolbargroup,
+								"mde-toolbar-group",
+							)}
+						>
 							{commandGroup.map(props =>
 								props.children ? (
 									<ToolbarDropdown
@@ -56,13 +61,22 @@ export const Toolbar = ({
 								),
 							)}
 						</ToolbarButtonGroup>
-						<Separator className={classNames(classes.mdetoolbarseparator)} />
+						<Separator
+							className={classNames(
+								classes.mdetoolbarseparator,
+								"mde-toolbar-separator",
+							)}
+						/>
 					</React.Fragment>
 				))}
 			{!disablePreview && (
 				<React.Fragment>
-					<ToolbarButtonGroup className={classNames(classes.mdetoolbargroup)}>
-						<ToolbarItem className={classNames(classes.mdetoolbaritem)}>
+					<ToolbarButtonGroup
+						className={classNames(classes.mdetoolbargroup, "mde-toolbar-group")}
+					>
+						<ToolbarItem
+							className={classNames(classes.mdetoolbaritem, "mde-toolbar-item")}
+						>
 							<Tooltip
 								arrow
 								classes={{
@@ -77,9 +91,7 @@ export const Toolbar = ({
 									touch: classes.mdetooltiptouch,
 								}}
 								placement={tooltipPlacement}
-								title={
-									isPreviewing ? "Hide Preview (ctrl+0)" : "Preview (ctrl+0)"
-								}
+								title={isPreviewing ? "Hide Preview" : "Preview"}
 							>
 								<button
 									type="button"
@@ -93,7 +105,12 @@ export const Toolbar = ({
 							</Tooltip>
 						</ToolbarItem>
 					</ToolbarButtonGroup>
-					<Separator className={classNames(classes.mdetoolbarseparator)} />
+					<Separator
+						className={classNames(
+							classes.mdetoolbarseparator,
+							"mde-toolbar-separator",
+						)}
+					/>
 				</React.Fragment>
 			)}
 		</div>

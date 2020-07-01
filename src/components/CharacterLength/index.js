@@ -2,10 +2,10 @@
 import styled from "styled-components";
 
 export default styled.span`
-	position: absolute;
-	right: 20px;
-	bottom: 10px;
-	color: #a9a7a7;
-	background: #fff;
+	color: #a0a0a0;
 	user-select: none;
+	${({ disableGrip }) =>
+		!disableGrip
+			? "position:absolute;right: 20px;bottom: 0px;"
+			: "text-align: center;"};
 `;

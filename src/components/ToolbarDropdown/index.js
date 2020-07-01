@@ -34,7 +34,9 @@ export const ToolbarDropdown = ({
 	);
 
 	return (
-		<ToolbarItem className={classNames(classes.mdetoolbaritem)}>
+		<ToolbarItem
+			className={classNames(classes.mdetoolbaritem, "mde-toolbar-item")}
+		>
 			<ClickHandler>
 				{({ isVisible, closeDropdown, handleClick }) => (
 					<React.Fragment>
@@ -62,7 +64,9 @@ export const ToolbarDropdown = ({
 							<React.Fragment>{button(null)}</React.Fragment>
 						)}
 						{isVisible ? (
-							<Dropdown className={classNames(classes.mdedrop)}>
+							<Dropdown
+								className={classNames(classes.mdedropdown, "mde-dropdown")}
+							>
 								{commands.map(({ name, buttonProps, icon, value }) => (
 									<ToolbarButton
 										key={name}

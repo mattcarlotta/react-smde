@@ -8,6 +8,7 @@ export function checkPropTypes({
 	disableHotKeys,
 	disablePreview,
 	disableToolbar,
+	hideGrip,
 	editorRef,
 	maxCharacterLength,
 	maxEditorHeight,
@@ -66,6 +67,10 @@ export function checkPropTypes({
 	if (typeof disableToolbar !== "boolean")
 		throw Error(
 			"The MDEditor was initialized with an invalid 'disableToolbar' property. It must be a boolean!",
+		);
+	if (typeof hideGrip !== "boolean")
+		throw Error(
+			"The MDEditor was initialized with an invalid 'hideGrip' property. It must be a boolean!",
 		);
 	if (typeof editorRef !== "function")
 		throw Error(

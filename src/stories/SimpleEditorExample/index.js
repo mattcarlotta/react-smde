@@ -21,8 +21,9 @@ class SimpleEditorExample extends React.Component {
 	render() {
 		return (
 			<MDEditor
-				disableGrip
+				disableHotKeys={false}
 				disableToolbar
+				hideGrip
 				selectedTab="preview"
 				onChange={this.handleValueChange}
 				value={this.state.value}
@@ -55,8 +56,9 @@ class SimpleEditorExample extends Component {
   render() {
     return (
       <MDEditor
-        disableGrip
+        disableHotKeys={false}
         disableToolbar
+        hideGrip
         selectedTab="preview"
         onChange={this.handleValueChange}
         value={this.state.value}
