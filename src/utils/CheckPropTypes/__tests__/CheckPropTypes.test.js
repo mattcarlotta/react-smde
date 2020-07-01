@@ -16,6 +16,7 @@ const initProps = {
 	disableHotKeys: false,
 	disablePreview: false,
 	disableToolbar: false,
+	hideGrip: false,
 	editorRef,
 	maxCharacterLength: null,
 	maxEditorHeight: 600,
@@ -127,6 +128,12 @@ describe("Check MDEditor PropTypes", () => {
 			CheckPropTypes({ ...initProps, disableToolbar: undefined }),
 		).toThrow(
 			"The MDEditor was initialized with an invalid 'disableToolbar' property. It must be a boolean!",
+		);
+	});
+
+	it("handles hideGrip type checks", () => {
+		expect(() => CheckPropTypes({ ...initProps, hideGrip: undefined })).toThrow(
+			"The MDEditor was initialized with an invalid 'hideGrip' property. It must be a boolean!",
 		);
 	});
 

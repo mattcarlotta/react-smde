@@ -169,30 +169,6 @@ describe("TextArea", () => {
 		expect(onTabChange).toHaveBeenCalledTimes(0);
 	});
 
-	it("displays the characterLength", () => {
-		wrapper.setProps({ showCharacterLength: true });
-
-		expect(
-			wrapper.find("[data-testid='mde-textarea-character-length']"),
-		).toExist();
-
-		expect(
-			wrapper
-				.find("[data-testid='mde-textarea-character-length']")
-				.first()
-				.text(),
-		).toEqual("5");
-
-		wrapper.setProps({ maxCharacterLength: 100 });
-
-		expect(
-			wrapper
-				.find("[data-testid='mde-textarea-character-length']")
-				.first()
-				.text(),
-		).toEqual("5/100");
-	});
-
 	it("doesn't handle hot keys if 'disableHotKeys' is true", async () => {
 		wrapper.setProps({ disableHotKeys: true });
 		keydownHandler({ key: "0", ctrlKey: true });

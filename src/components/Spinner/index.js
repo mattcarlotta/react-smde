@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { classNames } from "~utils";
 
 const Spinner = ({ className, classes }) => (
-	<div className={classNames(className, classes.mdeloading)}>
+	<div className={classNames(className, classes.mdeloading, "mde-loading")}>
 		{[0, 1, 2].map(key => (
 			<span key={key} />
 		))}

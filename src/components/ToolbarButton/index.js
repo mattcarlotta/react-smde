@@ -31,7 +31,9 @@ export const ToolbarButton = ({
 	);
 
 	return (
-		<ToolbarItem className={classNames(classes.mdetoolbaritem)}>
+		<ToolbarItem
+			className={classNames(classes.mdetoolbaritem, "mde-toolbar-item")}
+		>
 			{tooltip && !disabled ? (
 				<Tooltip
 					arrow

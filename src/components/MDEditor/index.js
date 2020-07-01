@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import Commander from "~components/Commander";
-import Grip from "~components/Grip";
+import GripContainer from "~components/GripContainer";
 import Toolbar from "~components/Toolbar";
 import TextArea from "~components/TextArea";
 import { defaultCommandLayout } from "~commands";
@@ -127,9 +127,9 @@ export class MDEditor extends React.Component {
 		const {
 			className,
 			classes,
-			disableGrip,
 			disableHotKeys,
 			disableToolbar,
+			hideGrip,
 			loadSuggestions,
 			maxEditorWidth,
 			textAreaProps,
@@ -139,7 +139,7 @@ export class MDEditor extends React.Component {
 		return (
 			<div
 				data-testid="mde"
-				className={classNames(className, classes.mde)}
+				className={classNames(className, classes.mde, "mde")}
 				style={{ maxWidth: maxEditorWidth }}
 			>
 				{!disableToolbar && (
@@ -161,8 +161,11 @@ export class MDEditor extends React.Component {
 					suggestionsEnabled={suggestionTriggerCharacter && !!loadSuggestions}
 					textAreaProps={textAreaProps}
 				/>
-				{!disableGrip && (
-					<Grip classes={classes} onMouseDown={this.handleGripMouseDown} />
+				{!hideGrip && (
+					<GripContainer
+						{...this.props}
+						onMouseDown={this.handleGripMouseDown}
+					/>
 				)}
 			</div>
 		);
@@ -175,14 +178,16 @@ MDEditor.defaultProps = {
 	commands: defaultCommandLayout,
 	debounceSuggestions: 300,
 	disableGrip: false,
-	disableHotKeys: false,
+	disableHotKeys: true,
 	disablePreview: false,
 	disableToolbar: false,
+	hideGrip: false,
+	grip: null,
 	editorRef: () => {},
 	maxCharacterLength: null,
 	maxEditorHeight: 600,
 	maxEditorWidth: 600,
-	minEditorHeight: 300,
+	minEditorHeight: 250,
 	readOnly: false,
 	selectedTab: "write",
 	showCharacterLength: false,
@@ -215,6 +220,8 @@ MDEditor.propTypes = {
 	disableHotKeys: PropTypes.bool.isRequired,
 	disablePreview: PropTypes.bool.isRequired,
 	disableToolbar: PropTypes.bool.isRequired,
+	grip: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
+	hideGrip: PropTypes.bool.isRequired,
 	maxCharacterLength: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 	maxEditorHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 		.isRequired,
